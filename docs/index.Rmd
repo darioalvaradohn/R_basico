@@ -30,7 +30,7 @@ Curso R básico: [Página del curso](https://www.hnbiology.org/)
 
 [Clase 2: Estadística descriptiva, Pruebas de normalidad y T-Student](Estadistica_descriptiva.html)
 
-[Clase 3: Análisis de frecuencias y Pruebas de Correlación]()
+[Clase 3: Análisis de frecuencias y Pruebas de Correlación](Analisis_de_frecuencias.html)
 
 [Clase 4: Análisis de varianza (ANOVA) y pruebas de contraste]()
 
