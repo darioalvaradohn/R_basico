@@ -69,6 +69,18 @@ En este caso se utiliza la función `sqrt` y entre los paréntesis `( )` se colo
 sqrt(49)
 ```
 
+- Logaritmo
+
+```{r}
+log(4)
+```
+
+- Exponenciales
+
+```{r}
+exp(4)
+```
+
 #### Creación de objetos
 
 En R puedes asignar variables a un objeto para utilizarlos en el proceso de análisis.
@@ -113,6 +125,26 @@ altura <- c(180, 150, 169, 161, 174, 168, 192)
 altura
 ```
 
+También puedes crear una variable con datos aleatorios con la función `rnorm` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
+
+```{r}
+altura2 <- rnorm(n = 7, mean = 160, sd = 11)
+```
+
+```{r}
+altura2
+```
+
+O puedes hacerlo de una forma completamente aleatoria con la función `sample` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
+
+```{r}
+altura3 <- sample(150:190, size = 7)
+```
+
+```{r}
+altura3
+```
+
 Para crear un vector de texto cada uno debe ir entre comillas `" "`.
 
 ```{r}
@@ -135,5 +167,73 @@ tabla <- data.frame(Nombre = nombre, Altura = altura)
 
 ```{r}
 tabla
+```
+
+También puedes agregar más variables a tu tabla.
+Para eso creamos nuestra nueva variable:
+
+```{r}
+peso <- c(80, 67, 54, 62, 65, 79, 102)
+```
+
+Ahora la agregamos a nuestra tabla de la siguiente manera:
+
+```{r}
+tabla$Peso <- peso
+```
+
+```{r}
+tabla
+```
+
+Ya tenemos dos variables numéricas continuas en nuestra tabla. Ahora agreguemos una variable categórica.
+
+```{r}
+sexo <- c("M", "M", "F", "F", "F", "M", "M")
+```
+
+```{r}
+tabla$Sexo <- sexo
+```
+
+```{r}
+tabla
+```
+
+Algunas formas para explorar nuestras tablas son las siguientes:
+
+```{r}
+View(tabla)
+```
+
+
+```{r}
+head(tabla)
+```
+
+```{r}
+summary(tabla)
+```
+
+```{r}
+str(tabla)
+```
+
+Ahora guardemos nuestra tabla.
+Para eso guardaremos usando la función `write.csv`, con esto generamos un archivo de valores separados por comas `(csv)` altamente reproducible.
+
+```{r}
+write.csv(tabla, file = "data/tabla1.csv")
+```
+
+Ahora carguemos nuestra tabla.
+Para eso utilizaremos la función `read.csv`.
+
+```{r}
+tabla1 <- read.csv("data/tabla1.csv")
+```
+
+```{r}
+tabla1
 ```
 
