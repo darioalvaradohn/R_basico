@@ -15,3 +15,125 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+En esta clase implementaremos comandos básicos en R, aprenderás a crear objetos que contengan variables, tablas y también a cargar tus bases de datos para analizarlas en R.
+
+### Contenido{.tabset .tabset-pills}
+
+#### Comandos básicos
+
+Pues usar R como una calculadora para ejecutar operaciones matemáticas
+
+- Sumas
+
+```{r}
+2 + 4
+```
+```{r}
+2 + 4 + 3
+```
+
+- Restas
+
+```{r}
+4 - 2
+```
+
+```{r}
+4 - 2 - 1
+```
+
+- Multiplicaciones
+
+```{r}
+4 * 2
+```
+
+- Divisiones
+
+```{r}
+8 / 2
+```
+
+- Operaciones combinadas
+
+```{r}
+4 * 2 + 4 - 1 / 2
+```
+
+- Raíz cuadrada
+
+En este caso se utiliza la función `sqrt` y entre los paréntesis `( )` se coloca el número del que se desea obtener la raíz cuadrada.
+
+```{r}
+sqrt(49)
+```
+
+#### Creación de objetos
+
+En R puedes asignar variables a un objeto para utilizarlos en el proceso de análisis.
+Para asignar una variable a un objeto utilizamos el comando `<-` o el comando `=`. 
+
+_objeto_ `<-` _variable_
+
+_objeto_ `=` _variable_
+
+_variable_ `->` _objeto_
+
+
+```{r}
+a <- 4 + 8
+```
+
+Para ver el contenido del objeto solamente tienes que llamarlo
+
+```{r}
+a
+```
+Observa que la variable dentro del objeto es el resultado de la operación matemática que colocamos.
+
+También puedes asignar texto a tus objetos. Para esto tienes que colocar el texto entre comillas `" "`.
+
+```{r}
+b <- "Rbasico"
+```
+
+```{r}
+b
+```
+
+Puedes crear vectores tanto numéricos como de texto.
+Para esto se utiliza el comando `c()` para _concatenar_ lo que irá dentro del objeto.
+
+```{r}
+altura <- c(180, 150, 169, 161, 174, 168, 192)
+```
+
+```{r}
+altura
+```
+
+Para crear un vector de texto cada uno debe ir entre comillas `" "`.
+
+```{r}
+nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier")
+```
+
+```{r}
+nombre
+```
+
+#### Creación de tablas
+
+Para crear una tabla o cuadro utilizaremos el comando `data.frame`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, todos los objetos deben contener el mismo número de observaciones. 
+En nuestro caso, la variable `altura` coniene siete observaciones, y la variable `nombre` también contiene siete observaciones.
+¡Hagamos nuestra tabla!
+
+```{r}
+tabla <- data.frame(Nombre = nombre, Altura = altura)
+```
+
+```{r}
+tabla
+```
+
