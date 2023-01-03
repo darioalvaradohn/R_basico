@@ -28,7 +28,7 @@ Curso R básico: [Página del curso](https://www.hnbiology.org/)
 
 [Clase 1: Comandos básicos de R y uso de scripts](Comandos.html)
 
-[Clase 2: Estadística descriptiva](Estadistica_descriptiva.html)[, Pruebas de normalidad]() [y T-Student](T-Student.html)
+[Clase 2: Estadística descriptiva](Estadistica_descriptiva.html)[, Pruebas de normalidad](Pruebas_normalidad.html) [y T-Student](T-Student.html)
 
 [Clase 3: Análisis de frecuencias](Analisis_de_frecuencias.html) 
 [y Pruebas de Correlación](Pruebas_de_correlacion.html)
