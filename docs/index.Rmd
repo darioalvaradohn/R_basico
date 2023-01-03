@@ -1,0 +1,41 @@
+---
+title: "Curso R básico"
+output:
+  html_document: default
+  pdf_document: default
+header-includes:
+- \usepackage{float}
+- \floatstyle{boxed}
+- \restylefloat{figure}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### ¡Bienvenidos!
+
+Este es un curso introductorio al análisis estadístico en R utilizando R Studio desde cero. Navegaremos por la interfaz de R Studio ubicando sus herramientas y opciones para trabajar de manera fluida, crearemos scripts para guardar nuestros códigos. Aprenderás a sacarle provecho a R para el análisis de tus datos mediante ejemplos prácticos aplicando diferentes métodos estadísticos y realizando gráficos para la visualización de tus análisis.
+¡Comencemos!
+
+Sitio web: [Página principal](https://www.hnbiology.org/)
+
+Curso R básico: [Página del curso](https://www.hnbiology.org/)
+
+### Contenido{.tabset .tabset-pills}
+
+[Introducción al curso](Introduccion.html)
+
+[Clase 1: Comandos básicos de R y uso de scripts](Comandos.html)
+
+[Clase 2: Estadística descriptiva, Pruebas de normalidad y T-Student](Estadistica_descriptiva.html)
+
+[Clase 3: Análisis de frecuencias y Pruebas de Correlación]()
+
+[Clase 4: Análisis de varianza (ANOVA) y pruebas de contraste]()
+
+[Clase 5: Análisis de varianza (Kruskal-Wallis) y pruebas de contraste]()
+
+<div style="display:flex; align-items:center;">
+  <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;">
+</div>
