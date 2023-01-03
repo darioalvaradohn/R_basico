@@ -135,7 +135,18 @@ altura2 <- rnorm(n = 7, mean = 160, sd = 11)
 altura2
 ```
 
-O puedes hacerlo de una forma completamente aleatoria con la función `sample` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
+Con la función `round` puedes redondear los valores para quitar o reducir la cantidad de decimales
+
+```{r}
+round(altura2, digits = 2)
+```
+
+```{r}
+round(altura2, digits = 0)
+```
+
+
+También puedes hacerlo de una forma completamente aleatoria con la función `sample` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
 
 ```{r}
 altura3 <- sample(150:190, size = 7)

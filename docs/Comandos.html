@@ -445,14 +445,20 @@ dentro del objeto.</p>
 la media <code>mean</code> y la desviación estándar <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 7, mean = 160, sd = 11)</code></pre>
 <pre class="r"><code>altura2</code></pre>
-<pre><code>## [1] 169.8239 178.8114 166.3170 159.8494 170.6341 164.9214 137.1290</code></pre>
-<p>O puedes hacerlo de una forma completamente aleatoria con la función
-<code>sample</code> definiendo el <code>rango</code> que contendrá tus
-observaciones y la cantidad de <code>muestras</code> que es el número de
-observaciones</p>
+<pre><code>## [1] 164.4724 162.6834 165.5694 155.2719 147.7820 149.3590 163.2603</code></pre>
+<p>Con la función <code>round</code> puedes redondear los valores para
+quitar o reducir la cantidad de decimales</p>
+<pre class="r"><code>round(altura2, digits = 2)</code></pre>
+<pre><code>## [1] 164.47 162.68 165.57 155.27 147.78 149.36 163.26</code></pre>
+<pre class="r"><code>round(altura2, digits = 0)</code></pre>
+<pre><code>## [1] 164 163 166 155 148 149 163</code></pre>
+<p>También puedes hacerlo de una forma completamente aleatoria con la
+función <code>sample</code> definiendo el <code>rango</code> que
+contendrá tus observaciones y la cantidad de <code>muestras</code> que
+es el número de observaciones</p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 7)</code></pre>
 <pre class="r"><code>altura3</code></pre>
-<pre><code>## [1] 158 166 169 173 154 159 184</code></pre>
+<pre><code>## [1] 164 160 175 190 163 177 184</code></pre>
 <p>Para crear un vector de texto cada uno debe ir entre comillas
 <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;)</code></pre>
