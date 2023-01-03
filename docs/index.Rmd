@@ -33,9 +33,9 @@ Curso R básico: [Página del curso](https://www.hnbiology.org/)
 [Clase 3: Análisis de frecuencias](Analisis_de_frecuencias.html) 
 [y Pruebas de Correlación](Pruebas_de_correlacion.html)
 
-[Clase 4: Análisis de varianza (ANOVA) y pruebas de contraste]()
+[Clase 4: Análisis de varianza (ANOVA)](ANOVA.html)
 
-[Clase 5: Análisis de varianza (Kruskal-Wallis) y pruebas de contraste]()
+[Clase 5: Análisis de varianza (Kruskal-Wallis)](Kruskal-Wallis.html)
 
 <div style="display:flex; align-items:center;">
   <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;">
