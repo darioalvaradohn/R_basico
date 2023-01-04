@@ -18,3 +18,132 @@ knitr::opts_chunk$set(echo = TRUE)
 
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
+
+#### Cargar paquetes
+
+```{r, message=FALSE, warning=FALSE}
+library(rio)
+library(tidyverse)
+```
+
+#### Cargar nuestra base de datos
+```{r}
+read.csv("data/tabla1.csv")
+```
+
+```{r}
+tabla <- import("data/tabla1.csv")
+```
+
+```{r}
+head(tabla)
+```
+
+
+### Contenido{.tabset .tabset-pills}
+
+#### Medidas de tendencia central
+
+Son medidas que nos ayudan a resumir nuestros datos en valores "típicos" que caracterizan la muestra.
+Las medidas de tendencia central más conocidas son la *media*, la *mediana* y la *moda*
+
+- Media
+
+```{r}
+mean(tabla$Altura)
+```
+
+```{r}
+mean(tabla$Peso)
+```
+
+- Mediana
+
+```{r}
+median(tabla$Altura)
+```
+
+```{r}
+median(tabla$Peso)
+```
+
+- Moda
+
+```{r}
+library(modeest)
+```
+
+```{r}
+mlv(tabla$Altura)
+```
+
+```{r}
+mlv(tabla$Peso)
+```
+
+#### Medidas de dispersión
+
+Muestran la variabilidad de nuestro conjunto de datos. A mayor variabilidad variabilidad en nuestros datos, mayor será la incertidumbre en los valores de los parámetros estimados para ese conjunto de datos.
+
+- Desviación estándar
+
+```{r}
+sd(tabla$Altura)
+```
+
+```{r}
+sd(tabla$Peso)
+```
+
+- Varianza
+
+```{r}
+var(tabla$Altura)
+```
+
+```{r}
+var(tabla$Peso)
+```
+
+```{r}
+library(psych)
+```
+
+```{r}
+describe(tabla$Altura)
+```
+
+#### Gráficos exploratorios
+
+```{r}
+hist(tabla$Altura)
+```
+
+```{r}
+boxplot(Altura ~ Sexo, data = tabla)
+```
+
+```{r}
+plot(x = tabla$Peso, y = tabla$Altura)
+```
+
+```{r}
+ggplot(tabla, aes(Sexo, Altura)) +
+  geom_jitter(width = 0.2) +
+  geom_boxplot(aes(fill = Sexo), alpha = 0.4, show.legend = NULL) +
+  theme_bw()
+```
+
+```{r}
+library(palmerpenguins)
+data("penguins")
+head(penguins)
+```
+
+```{r}
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_jitter(width = 0.2) +
+  geom_violin(alpha = 0.4, aes(fill = species), show.legend = NULL) +
+  stat_summary(fun = "mean", color = "red") +
+  theme_bw()
+```

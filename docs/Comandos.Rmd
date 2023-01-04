@@ -118,7 +118,7 @@ Puedes crear vectores tanto numéricos como de texto.
 Para esto se utiliza el comando `c()` para _concatenar_ lo que irá dentro del objeto.
 
 ```{r}
-altura <- c(180, 150, 169, 161, 174, 168, 192)
+altura <- c(180, 150, 169, 161, 174, 168, 192, 174)
 ```
 
 ```{r}
@@ -128,7 +128,7 @@ altura
 También puedes crear una variable con datos aleatorios con la función `rnorm` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
 
 ```{r}
-altura2 <- rnorm(n = 7, mean = 160, sd = 11)
+altura2 <- rnorm(n = 8, mean = 160, sd = 11)
 ```
 
 ```{r}
@@ -149,7 +149,7 @@ round(altura2, digits = 0)
 También puedes hacerlo de una forma completamente aleatoria con la función `sample` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
 
 ```{r}
-altura3 <- sample(150:190, size = 7)
+altura3 <- sample(150:190, size = 8)
 ```
 
 ```{r}
@@ -159,7 +159,7 @@ altura3
 Para crear un vector de texto cada uno debe ir entre comillas `" "`.
 
 ```{r}
-nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier")
+nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier", "Andrea")
 ```
 
 ```{r}
@@ -184,7 +184,7 @@ También puedes agregar más variables a tu tabla.
 Para eso creamos nuestra nueva variable:
 
 ```{r}
-peso <- c(80, 67, 54, 62, 65, 79, 102)
+peso <- c(80, 67, 54, 62, 65, 79, 102, 65)
 ```
 
 Ahora la agregamos a nuestra tabla de la siguiente manera:
@@ -200,7 +200,7 @@ tabla
 Ya tenemos dos variables numéricas continuas en nuestra tabla. Ahora agreguemos una variable categórica.
 
 ```{r}
-sexo <- c("M", "M", "F", "F", "F", "M", "M")
+sexo <- c("M", "M", "F", "F", "F", "M", "M", "F")
 ```
 
 ```{r}

@@ -437,33 +437,33 @@ colocar el texto entre comillas <code>&quot; &quot;</code>.</p>
 <p>Puedes crear vectores tanto numéricos como de texto. Para esto se
 utiliza el comando <code>c()</code> para <em>concatenar</em> lo que irá
 dentro del objeto.</p>
-<pre class="r"><code>altura &lt;- c(180, 150, 169, 161, 174, 168, 192)</code></pre>
+<pre class="r"><code>altura &lt;- c(180, 150, 169, 161, 174, 168, 192, 174)</code></pre>
 <pre class="r"><code>altura</code></pre>
-<pre><code>## [1] 180 150 169 161 174 168 192</code></pre>
+<pre><code>## [1] 180 150 169 161 174 168 192 174</code></pre>
 <p>También puedes crear una variable con datos aleatorios con la función
 <code>rnorm</code> definiendo el número de observaciones <code>n</code>,
 la media <code>mean</code> y la desviación estándar <code>sd</code></p>
-<pre class="r"><code>altura2 &lt;- rnorm(n = 7, mean = 160, sd = 11)</code></pre>
+<pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)</code></pre>
 <pre class="r"><code>altura2</code></pre>
-<pre><code>## [1] 164.4724 162.6834 165.5694 155.2719 147.7820 149.3590 163.2603</code></pre>
+<pre><code>## [1] 153.2713 171.6681 179.6925 168.6696 158.7383 159.6816 179.0944 161.1830</code></pre>
 <p>Con la función <code>round</code> puedes redondear los valores para
 quitar o reducir la cantidad de decimales</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 164.47 162.68 165.57 155.27 147.78 149.36 163.26</code></pre>
+<pre><code>## [1] 153.27 171.67 179.69 168.67 158.74 159.68 179.09 161.18</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 164 163 166 155 148 149 163</code></pre>
+<pre><code>## [1] 153 172 180 169 159 160 179 161</code></pre>
 <p>También puedes hacerlo de una forma completamente aleatoria con la
 función <code>sample</code> definiendo el <code>rango</code> que
 contendrá tus observaciones y la cantidad de <code>muestras</code> que
 es el número de observaciones</p>
-<pre class="r"><code>altura3 &lt;- sample(150:190, size = 7)</code></pre>
+<pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)</code></pre>
 <pre class="r"><code>altura3</code></pre>
-<pre><code>## [1] 164 160 175 190 163 177 184</code></pre>
+<pre><code>## [1] 173 187 154 175 162 179 181 160</code></pre>
 <p>Para crear un vector de texto cada uno debe ir entre comillas
 <code>&quot; &quot;</code>.</p>
-<pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;)</code></pre>
+<pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)</code></pre>
 <pre class="r"><code>nombre</code></pre>
-<pre><code>## [1] &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot;  &quot;Nancy&quot;  &quot;Pedro&quot;  &quot;Javier&quot;</code></pre>
+<pre><code>## [1] &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot;  &quot;Nancy&quot;  &quot;Pedro&quot;  &quot;Javier&quot; &quot;Andrea&quot;</code></pre>
 </div>
 <div id="creación-de-tablas" class="section level4">
 <h4>Creación de tablas</h4>
@@ -483,10 +483,11 @@ nuestra tabla!</p>
 ## 4  Laura    161
 ## 5  Nancy    174
 ## 6  Pedro    168
-## 7 Javier    192</code></pre>
+## 7 Javier    192
+## 8 Andrea    174</code></pre>
 <p>También puedes agregar más variables a tu tabla. Para eso creamos
 nuestra nueva variable:</p>
-<pre class="r"><code>peso &lt;- c(80, 67, 54, 62, 65, 79, 102)</code></pre>
+<pre class="r"><code>peso &lt;- c(80, 67, 54, 62, 65, 79, 102, 65)</code></pre>
 <p>Ahora la agregamos a nuestra tabla de la siguiente manera:</p>
 <pre class="r"><code>tabla$Peso &lt;- peso</code></pre>
 <pre class="r"><code>tabla</code></pre>
@@ -497,10 +498,11 @@ nuestra nueva variable:</p>
 ## 4  Laura    161   62
 ## 5  Nancy    174   65
 ## 6  Pedro    168   79
-## 7 Javier    192  102</code></pre>
+## 7 Javier    192  102
+## 8 Andrea    174   65</code></pre>
 <p>Ya tenemos dos variables numéricas continuas en nuestra tabla. Ahora
 agreguemos una variable categórica.</p>
-<pre class="r"><code>sexo &lt;- c(&quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;)</code></pre>
+<pre class="r"><code>sexo &lt;- c(&quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;)</code></pre>
 <pre class="r"><code>tabla$Sexo &lt;- sexo</code></pre>
 <pre class="r"><code>tabla</code></pre>
 <pre><code>##   Nombre Altura Peso Sexo
@@ -510,7 +512,8 @@ agreguemos una variable categórica.</p>
 ## 4  Laura    161   62    F
 ## 5  Nancy    174   65    F
 ## 6  Pedro    168   79    M
-## 7 Javier    192  102    M</code></pre>
+## 7 Javier    192  102    M
+## 8 Andrea    174   65    F</code></pre>
 <p>Algunas formas para explorar nuestras tablas son las siguientes:</p>
 <pre class="r"><code>View(tabla)</code></pre>
 <pre class="r"><code>head(tabla)</code></pre>
@@ -523,17 +526,17 @@ agreguemos una variable categórica.</p>
 ## 6  Pedro    168   79    M</code></pre>
 <pre class="r"><code>summary(tabla)</code></pre>
 <pre><code>##     Nombre              Altura           Peso            Sexo          
-##  Length:7           Min.   :150.0   Min.   : 54.00   Length:7          
-##  Class :character   1st Qu.:164.5   1st Qu.: 63.50   Class :character  
-##  Mode  :character   Median :169.0   Median : 67.00   Mode  :character  
-##                     Mean   :170.6   Mean   : 72.71                     
-##                     3rd Qu.:177.0   3rd Qu.: 79.50                     
+##  Length:8           Min.   :150.0   Min.   : 54.00   Length:8          
+##  Class :character   1st Qu.:166.2   1st Qu.: 64.25   Class :character  
+##  Mode  :character   Median :171.5   Median : 66.00   Mode  :character  
+##                     Mean   :171.0   Mean   : 71.75                     
+##                     3rd Qu.:175.5   3rd Qu.: 79.25                     
 ##                     Max.   :192.0   Max.   :102.00</code></pre>
 <pre class="r"><code>str(tabla)</code></pre>
-<pre><code>## &#39;data.frame&#39;:    7 obs. of  4 variables:
+<pre><code>## &#39;data.frame&#39;:    8 obs. of  4 variables:
 ##  $ Nombre: chr  &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot; ...
-##  $ Altura: num  180 150 169 161 174 168 192
-##  $ Peso  : num  80 67 54 62 65 79 102
+##  $ Altura: num  180 150 169 161 174 168 192 174
+##  $ Peso  : num  80 67 54 62 65 79 102 65
 ##  $ Sexo  : chr  &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; ...</code></pre>
 <p>Ahora guardemos nuestra tabla. Para eso guardaremos usando la función
 <code>write.csv</code>, con esto generamos un archivo de valores
@@ -550,7 +553,8 @@ separados por comas <code>(csv)</code> altamente reproducible.</p>
 ## 4 4  Laura    161   62    F
 ## 5 5  Nancy    174   65    F
 ## 6 6  Pedro    168   79    M
-## 7 7 Javier    192  102    M</code></pre>
+## 7 7 Javier    192  102    M
+## 8 8 Andrea    174   65    F</code></pre>
 </div>
 </div>
 
