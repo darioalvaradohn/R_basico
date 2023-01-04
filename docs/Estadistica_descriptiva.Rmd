@@ -142,8 +142,7 @@ head(penguins)
 
 ```{r}
 ggplot(penguins, aes(species, body_mass_g)) +
-  geom_jitter(width = 0.2) +
   geom_violin(alpha = 0.4, aes(fill = species), show.legend = NULL) +
-  stat_summary(fun = "mean", color = "red") +
+  stat_summary(fun = "mean", geom = "point") +
   theme_bw()
 ```
