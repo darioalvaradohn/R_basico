@@ -15,3 +15,33 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Las `pruebas paramétricas` como la `T-Student` o el `ANOVA` requieren que la varianza de los datos cumpla una distribución normal y que tenga homogeneidad.
+Para comprobar estos supuestos utilizaremos la base de datos de los pingüinos del archipielago de Palmer
+
+```{r}
+library(palmerpenguins)
+```
+
+```{r}
+data("penguins")
+```
+
+```{r}
+head(penguins)
+```
+
+### Contenido{.tabset .tabset-pills}
+
+#### Pruebas de normalidad
+
+Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro
+
+```{r}
+shapiro.test(penguins$body_mass_g)
+```
+
+##### Interpretación
+
+Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
+Si el valor de P es mayor que alpha (0.05), nuestros datos presentan una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
+En este caso, el valor de P = 3.679e-08 (0.00000003679) es menor que alpha (0.05), por lo tanto, los datos de masa corporal de los pingüinos no presentan una distribución normal
