@@ -128,21 +128,46 @@ plot(x = tabla$Peso, y = tabla$Altura)
 ```
 
 ```{r}
-ggplot(tabla, aes(Sexo, Altura)) +
-  geom_jitter(width = 0.2) +
-  geom_boxplot(aes(fill = Sexo), alpha = 0.4, show.legend = NULL) +
-  theme_bw()
-```
-
-```{r}
 library(palmerpenguins)
 data("penguins")
 head(penguins)
 ```
 
 ```{r}
+library(visdat)
+```
+
+```{r}
+vis_dat(penguins)
+```
+
+```{r}
+ggplot(penguins, aes(body_mass_g)) +
+  geom_histogram() 
+```
+
+```{r}
+ggplot(penguins, aes(body_mass_g)) +
+  geom_density(fill = "tomato", alpha = 0.4) 
+```
+
+```{r}
+ggplot(penguins, aes(y = body_mass_g)) +
+  geom_boxplot(fill = "tomato", alpha = 0.4)
+```
+
+```{r}
+ggplot(penguins, aes(species, body_mass_g)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.3) +
+  theme_classic()
+```
+
+```{r}
 ggplot(penguins, aes(species, body_mass_g)) +
   geom_violin(alpha = 0.4, aes(fill = species), show.legend = NULL) +
+  geom_jitter(width = 0.2, alpha = 0.3) +
   stat_summary(fun = "mean", geom = "point") +
   theme_bw()
 ```
+

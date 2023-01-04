@@ -19,22 +19,23 @@ Para realizar algunos métodos estadísticos es necesario que nuestros datos cum
 Para comprobar estos supuestos utilizaremos la base de datos de los pingüinos del archipielago de Palmer
 
 ```{r}
+library(car)
 library(palmerpenguins)
 ```
 
 ```{r}
-data("penguins")
+data("cars")
 ```
 
 ```{r}
-head(penguins)
+head(cars)
 ```
 
 ### Contenido{.tabset .tabset-pills}
 
 #### Pruebas de normalidad
 
-Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro
+Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro-Wilk
 
 ```{r}
 shapiro.test(penguins$body_mass_g)
@@ -43,6 +44,25 @@ shapiro.test(penguins$body_mass_g)
 ##### Interpretación
 
 Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
-Si el valor de P es mayor que alpha (0.05), nuestros datos presentan una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
-En este caso, el valor de P = 3.679e-08 (0.00000003679) es menor que alpha (0.05), por lo tanto, los datos de masa corporal de los pingüinos no presentan una distribución normal
+Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
+También podemos verificar la normalidad de los datos de forma gráfica con la función `qqPlot` del paquete `car`.
+
+```{r}
+qqPlot(penguins$body_mass_g)
+```
+
+Una distribución normal de los datos se vería representada con todas las observaciones dentro del intervalo asemejando una línea recta.
+
+#### Prueba de homogeneidad
+
+Para evaluar la homogeneidad de la varianza entre grupos utilizaremos la prueba de Levene con la función `leveneTest` del paquete `car`.
+
+```{r}
+leveneTest(body_mass_g ~ species, data = penguins)
+```
+
+##### Interpretación
+
+Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
+Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
