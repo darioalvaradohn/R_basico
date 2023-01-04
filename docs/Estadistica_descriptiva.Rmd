@@ -19,26 +19,23 @@ knitr::opts_chunk$set(echo = TRUE)
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
 
-#### Cargar paquetes
-
-```{r, message=FALSE, warning=FALSE}
-library(rio)
-library(tidyverse)
-```
-
-#### Cargar nuestra base de datos
 ```{r}
-read.csv("data/tabla1.csv")
+ops <- c("M", "F")
+sexo <- sample(ops, size = 100, replace = T)
+altura <- sample(145:190, 100, replace = T)
+peso <- sample(50:100, 100, replace = T)
+edad <- sample(18:50, 100, replace = T)
 ```
 
 ```{r}
-tabla <- import("data/tabla1.csv")
+datos <- data.frame(sexo = sexo, altura = altura, peso = peso, edad = edad)
+head(datos)
 ```
 
 ```{r}
-head(tabla)
+datos$sexo <- as.factor(datos$sexo)
+head(datos)
 ```
-
 
 ### Contenido{.tabset .tabset-pills}
 
@@ -50,21 +47,29 @@ Las medidas de tendencia central más conocidas son la *media*, la *mediana* y l
 - Media
 
 ```{r}
-mean(tabla$Altura)
+mean(datos$altura)
 ```
 
 ```{r}
-mean(tabla$Peso)
+mean(datos$peso)
+```
+
+```{r}
+mean(datos$edad)
 ```
 
 - Mediana
 
 ```{r}
-median(tabla$Altura)
+median(datos$altura)
 ```
 
 ```{r}
-median(tabla$Peso)
+median(datos$peso)
+```
+
+```{r}
+median(datos$edad)
 ```
 
 - Moda
@@ -74,11 +79,15 @@ library(modeest)
 ```
 
 ```{r}
-mlv(tabla$Altura)
+mlv(datos$altura)
 ```
 
 ```{r}
-mlv(tabla$Peso)
+mlv(datos$peso)
+```
+
+```{r}
+mlv(datos$edad)
 ```
 
 #### Medidas de dispersión
@@ -88,21 +97,29 @@ Muestran la variabilidad de nuestro conjunto de datos. A mayor variabilidad vari
 - Desviación estándar
 
 ```{r}
-sd(tabla$Altura)
+sd(datos$altura)
 ```
 
 ```{r}
-sd(tabla$Peso)
+sd(datos$peso)
+```
+
+```{r}
+sd(datos$edad)
 ```
 
 - Varianza
 
 ```{r}
-var(tabla$Altura)
+var(datos$altura)
 ```
 
 ```{r}
-var(tabla$Peso)
+var(datos$peso)
+```
+
+```{r}
+var(datos$edad)
 ```
 
 ```{r}
@@ -110,21 +127,21 @@ library(psych)
 ```
 
 ```{r}
-describe(tabla$Altura)
+describe(datos)
 ```
 
 #### Gráficos exploratorios
 
 ```{r}
-hist(tabla$Altura)
+hist(datos$altura)
 ```
 
 ```{r}
-boxplot(Altura ~ Sexo, data = tabla)
+boxplot(altura ~ sexo, data = datos)
 ```
 
 ```{r}
-plot(x = tabla$Peso, y = tabla$Altura)
+plot(x = datos$peso, y = datos$altura)
 ```
 
 ```{r}
@@ -139,6 +156,10 @@ library(visdat)
 
 ```{r}
 vis_dat(penguins)
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
 ```
 
 ```{r}
