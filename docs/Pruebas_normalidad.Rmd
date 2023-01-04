@@ -15,7 +15,7 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Las `pruebas paramétricas` como la `T-Student` o el `ANOVA` requieren que la varianza de los datos cumpla una distribución normal y que tenga homogeneidad.
+Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Las `pruebas paramétricas` como la `T-Student` o el `ANOVA` requieren que la varianza de los datos cumpla una **distribución normal** y que tenga **homogeneidad**.
 Para comprobar estos supuestos utilizaremos la base de datos de los pingüinos del archipielago de Palmer
 
 ```{r}
