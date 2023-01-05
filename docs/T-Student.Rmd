@@ -16,16 +16,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 La prueba de T-Student sirve para comprobar si hay diferencias entre dos grupos. Es una prueba paramétrica por lo que la varianza de los datos debe tener una distribución normal y debe ser homogenea.
+La T-Student es una prueba de hipótesis que compara dos grupos entre sí para ver si hay diferencias entre ellos.
+La hipótesis nula es que no hay diferencias entre los grupos `grupo1` = `grupo2` y la hipotesis alternativa es que si hay diferencias entre los grupos `grupo1` ≠ `grupo2`.
 
 ```{r}
-sexo <- c(rep("M", 47), rep("F", 53))
-altura <- c(rnorm(47, 165, 30), rnorm(53, 150, 15))
-peso <- c(sample(60:110, 47, replace = T), sample(47:80, 53, replace = T))
-edad <- sample(18:50, 100, replace = T)
+library(rio)
 ```
 
 ```{r}
-datos <- data.frame(sexo = sexo, altura = altura, peso = peso, edad = edad)
+datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
 
@@ -47,3 +46,16 @@ car::leveneTest(altura ~ sexo, data = datos)
 t.test(altura ~ sexo, data = datos)
 ```
 
+El valor de P no tiene unidades y depende del tamaño de la muestra, para obtener un resultado estadísticamente significativo se debe aumentar el tamaño de la muestra.
+La variabilidad de los datos también influye en el valor de P, a menor variabilidad en los datos, menor el valor de P, a mayor variabilidad en los datos, mayor el valor de P.
+El valor de P es condiconal a que la hipotesis nula es verdadera.
+
+Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística no paramétrica para analizar los datos. La alternativa no paramétrica a la T-Student es la prueba de Wilcoxon. Esta tiene el mismo principio pero no requiere que los datos provengan de una muestra con distribución normal.
+
+```{r}
+shapiro.test(datos$peso)
+```
+
+```{r}
+wilcox.test(peso ~ sexo, data = datos)
+```

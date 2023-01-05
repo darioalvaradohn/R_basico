@@ -360,20 +360,22 @@ T-Student
 </div>
 <p>La prueba de T-Student sirve para comprobar si hay diferencias entre
 dos grupos. Es una prueba paramétrica por lo que la varianza de los
-datos debe tener una distribución normal y debe ser homogenea.</p>
-<pre class="r"><code>sexo &lt;- c(rep(&quot;M&quot;, 47), rep(&quot;F&quot;, 53))
-altura &lt;- c(rnorm(47, 165, 30), rnorm(53, 150, 15))
-peso &lt;- c(sample(60:110, 47, replace = T), sample(47:80, 53, replace = T))
-edad &lt;- sample(18:50, 100, replace = T)</code></pre>
-<pre class="r"><code>datos &lt;- data.frame(sexo = sexo, altura = altura, peso = peso, edad = edad)
+datos debe tener una distribución normal y debe ser homogenea. La
+T-Student es una prueba de hipótesis que compara dos grupos entre sí
+para ver si hay diferencias entre ellos. La hipótesis nula es que no hay
+diferencias entre los grupos <code>grupo1</code> = <code>grupo2</code> y
+la hipotesis alternativa es que si hay diferencias entre los grupos
+<code>grupo1</code> ≠ <code>grupo2</code>.</p>
+<pre class="r"><code>library(rio)</code></pre>
+<pre class="r"><code>datos &lt;- import(&quot;data/medidas_personas.csv&quot;)
 head(datos)</code></pre>
-<pre><code>##   sexo   altura peso edad
-## 1    M 152.1627  106   49
-## 2    M 212.2405   88   25
-## 3    M 230.6784   64   30
-## 4    M 164.8558   81   42
-## 5    M 209.3497   85   25
-## 6    M 142.0351   93   48</code></pre>
+<pre><code>##   V1 sexo   altura peso edad
+## 1  1    M 101.4360   71   47
+## 2  2    M 162.4378   79   36
+## 3  3    M 130.0476   86   43
+## 4  4    M 181.2487   97   23
+## 5  5    M 139.8041   98   29
+## 6  6    M 165.4728  107   49</code></pre>
 <pre class="r"><code>sM &lt;- subset(datos, sexo == &quot;M&quot;)
 sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 <pre class="r"><code>shapiro.test(sM$altura)</code></pre>
@@ -381,14 +383,14 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  sM$altura
-## W = 0.96506, p-value = 0.1706</code></pre>
+## W = 0.98191, p-value = 0.6724</code></pre>
 <pre class="r"><code>car::leveneTest(altura ~ sexo, data = datos)</code></pre>
 <pre><code>## Warning in leveneTest.default(y = y, group = group, ...): group coerced to
 ## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
-##       Df F value  Pr(&gt;F)  
-## group  1  6.3102 0.01364 *
-##       98                  
+##       Df F value    Pr(&gt;F)    
+## group  1  19.484 2.612e-05 ***
+##       98                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>t.test(altura ~ sexo, data = datos)</code></pre>
@@ -396,13 +398,37 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ##  Welch Two Sample t-test
 ## 
 ## data:  altura by sexo
-## t = -1.9586, df = 72.712, p-value = 0.054
+## t = -3.9452, df = 63.704, p-value = 0.0002013
 ## alternative hypothesis: true difference in means between group F and group M is not equal to 0
 ## 95 percent confidence interval:
-##  -16.7558411   0.1465809
+##  -26.794259  -8.779385
 ## sample estimates:
 ## mean in group F mean in group M 
-##        153.1716        161.4762</code></pre>
+##        150.1159        167.9027</code></pre>
+<p>El valor de P no tiene unidades y depende del tamaño de la muestra,
+para obtener un resultado estadísticamente significativo se debe
+aumentar el tamaño de la muestra. La variabilidad de los datos también
+influye en el valor de P, a menor variabilidad en los datos, menor el
+valor de P, a mayor variabilidad en los datos, mayor el valor de P. El
+valor de P es condiconal a que la hipotesis nula es verdadera.</p>
+<p>Cuando los datos no provienen de una muestra con distribución normal
+existen alternativas de estadística no paramétrica para analizar los
+datos. La alternativa no paramétrica a la T-Student es la prueba de
+Wilcoxon. Esta tiene el mismo principio pero no requiere que los datos
+provengan de una muestra con distribución normal.</p>
+<pre class="r"><code>shapiro.test(datos$peso)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  datos$peso
+## W = 0.96751, p-value = 0.01431</code></pre>
+<pre class="r"><code>wilcox.test(peso ~ sexo, data = datos)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  peso by sexo
+## W = 432.5, p-value = 1.974e-08
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
 
 
 
