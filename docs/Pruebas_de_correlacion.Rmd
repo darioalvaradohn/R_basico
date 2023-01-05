@@ -15,3 +15,113 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Las pruebas de correlación sirven para determinar si dos variables están relacionadas o no.
+
+```{r, message=FALSE, warning=FALSE}
+library(rio)
+library(tidyverse)
+library(GGally)
+library(correlation)
+library(see)
+library(inspectdf)
+```
+
+```{r}
+suelos <- import("data/suelos.xlsx")
+head(suelos)
+```
+
+Un método paramétrico para determinar la correlación entre dos variables es la **prueba de correlación de Pearson**.
+Para utilizar la correlación de Pearson nuestros datos deben provenir de una muestra con distribución normal.
+
+```{r}
+shapiro.test(suelos$K)
+```
+
+```{r}
+shapiro.test(suelos$Mg)
+```
+
+Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test`.
+Aquí no importa el orden de las variables.
+
+```{r}
+cor.test(suelos$K, suelos$Mg)
+```
+
+El `valor de P` indica la significancia estadística de la correlación entre las dos variables.
+El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa.
+
+Si una de las variables no cumple con el supuesto de distribución normal se puede utilizar una prueba no paramétrica, la **prueba de correlación de Spearman**.
+
+```{r}
+shapiro.test(suelos$pH)
+```
+
+Para esto se utiliza la misma función `cor.test` pero se especifica el `method` = "spearman".
+
+```{r}
+cor.test(suelos$pH, suelos$K, method = "spearman")
+```
+
+En este caso, el valor de `rho` indica la magnitud y dirección de la correlación.
+
+También podemos evaluar la correlación entre más de dos variables
+
+Podemos utilizar la función `ggpairs` del paquete `GGAlly`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
+
+```{r}
+suelosb <- suelos[,6:14]
+head(suelosb)
+```
+
+```{r, message=FALSE}
+ggpairs(suelosb)
+```
+
+Si la relación de una variable con la otra no es lineal, la correlación será baja.
+
+También podemos evaluar la correlación entre las variables con la función `correlation` del paquete `correlation`
+
+```{r}
+c <- correlation(suelos)
+c
+```
+
+Aquí, `r` = correlación de Pearson.
+si el IC95 no contiene (traslapa) el 0, la correlación es significativa
+
+También podemos graficarlo. Para esto generamos un resumen de las correlaciones entre las variables:
+
+```{r}
+sc <- summary(c)
+sc
+```
+
+Y graficamos con la función `plot` del paquete `see`.
+
+```{r}
+plot(sc)
+```
+
+Otra forma de evaluar la correlación entre variables es con la función `inspect_cor` del paquete `inspectdf`
+
+```{r}
+ic <- inspect_cor(suelos)
+ic
+```
+
+Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot` del paquete `inspectdf`.
+
+```{r}
+show_plot(ic)
+```
+
+Como se puede observar, todas las correlaciones de esta base de datos son significativas, ya que ningún intervalo de confianza traslapa con el 0.
+
+Un ejemplo de correlaciones no significativas:
+
+```{r}
+inspect_cor(mtcars) |>
+  show_plot()
+```
