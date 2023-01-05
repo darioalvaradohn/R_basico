@@ -15,16 +15,15 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas requieren que la varianza de los datos cumpla una **distribución normal** y que tenga **homogeneidad**.
+Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas requieren que la varianza de los datos cumpla una **distribución normal** y que tenga **homogeneidad** (homocedasticidad).
 
 ```{r}
-library(car)
-library(palmerpenguins)
+library(rio)
 ```
 
 ```{r}
-data("penguins")
-head(penguins)
+datos <- import("data/medidas_personas.csv")
+head(datos)
 ```
 
 ### Contenido{.tabset .tabset-pills}
@@ -34,7 +33,7 @@ head(penguins)
 Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro-Wilk
 
 ```{r}
-shapiro.test(penguins$body_mass_g)
+shapiro.test(datos$altura)
 ```
 
 ##### Interpretación
@@ -42,21 +41,33 @@ shapiro.test(penguins$body_mass_g)
 Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
+Es recomendable hacer las pruebas de normalidad para una variable separándola por cada grupo de interés.
+Utilizaremos la función `subset` para separar nuestras variables de acuerdo con los grupos de interés.
+
 ```{r}
-data("mtcars")
-head(mtcars)
+sM <- subset(datos, sexo == "M")
+sF <- subset(datos, sexo == "F")
 ```
 
 ```{r}
-shapiro.test(mtcars$mpg)
+shapiro.test(sM$altura)
 ```
+
+```{r}
+shapiro.test(sF$altura)
+```
+
 
 #### Prueba de homogeneidad (homocedasticidad)
 
 Para evaluar la homogeneidad de la varianza entre grupos utilizaremos la prueba de Levene con la función `leveneTest` del paquete `car`.
 
 ```{r}
-leveneTest(body_mass_g ~ species, data = penguins)
+library(car)
+```
+
+```{r}
+leveneTest(altura ~ sexo, data = datos)
 ```
 
 ##### Interpretación
@@ -64,12 +75,13 @@ leveneTest(body_mass_g ~ species, data = penguins)
 Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
 
+También podemos utilizar la función `LeveneTest` del paquete `DescTools`.
 
 ```{r}
-mtcars$vs <- as.factor(mtcars$vs)
+library(DescTools)
 ```
 
 ```{r}
-leveneTest(mpg ~ vs, data = mtcars)
+LeveneTest(altura ~ sexo, data = datos)
 ```
 

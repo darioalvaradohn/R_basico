@@ -361,35 +361,29 @@ Pruebas de normalidad y homocedasticidad
 <p>Para realizar algunos métodos estadísticos es necesario que nuestros
 datos cumplan algunos supuestos. Algunas pruebas requieren que la
 varianza de los datos cumpla una <strong>distribución normal</strong> y
-que tenga <strong>homogeneidad</strong>.</p>
-<pre class="r"><code>library(car)</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
-<pre class="r"><code>library(palmerpenguins)</code></pre>
-<pre><code>## Warning: package &#39;palmerpenguins&#39; was built under R version 4.2.2</code></pre>
-<pre class="r"><code>data(&quot;penguins&quot;)
-head(penguins)</code></pre>
-<pre><code>## # A tibble: 6 × 8
-##   species island    bill_length_mm bill_depth_mm flipper_l…¹ body_…² sex    year
-##   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;       &lt;int&gt;   &lt;int&gt; &lt;fct&gt; &lt;int&gt;
-## 1 Adelie  Torgersen           39.1          18.7         181    3750 male   2007
-## 2 Adelie  Torgersen           39.5          17.4         186    3800 fema…  2007
-## 3 Adelie  Torgersen           40.3          18           195    3250 fema…  2007
-## 4 Adelie  Torgersen           NA            NA            NA      NA &lt;NA&gt;   2007
-## 5 Adelie  Torgersen           36.7          19.3         193    3450 fema…  2007
-## 6 Adelie  Torgersen           39.3          20.6         190    3650 male   2007
-## # … with abbreviated variable names ¹​flipper_length_mm, ²​body_mass_g</code></pre>
+que tenga <strong>homogeneidad</strong> (homocedasticidad).</p>
+<pre class="r"><code>library(rio)</code></pre>
+<pre class="r"><code>datos &lt;- import(&quot;data/medidas_personas.csv&quot;)
+head(datos)</code></pre>
+<pre><code>##   V1 sexo altura peso edad
+## 1  1    M    101   71   47
+## 2  2    M    162   79   36
+## 3  3    M    130   86   43
+## 4  4    M    181   97   23
+## 5  5    M    140   98   29
+## 6  6    M    165  107   49</code></pre>
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
 <div id="pruebas-de-normalidad" class="section level4">
 <h4>Pruebas de normalidad</h4>
 <p>Para evaluar la normalidad de nuestros datos utilizaremos la prueba
 de Shapiro-Wilk</p>
-<pre class="r"><code>shapiro.test(penguins$body_mass_g)</code></pre>
+<pre class="r"><code>shapiro.test(datos$altura)</code></pre>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
-## data:  penguins$body_mass_g
-## W = 0.95921, p-value = 3.679e-08</code></pre>
+## data:  datos$altura
+## W = 0.94445, p-value = 0.0003639</code></pre>
 <div id="interpretación" class="section level5">
 <h5>Interpretación</h5>
 <p>Para interpretar el resultado de la prueba de Shapiro se observa el
@@ -399,21 +393,24 @@ provienen de una muestra con una distribución normal. Si el valor de P
 es menor que alpha (0.05), los datos no presentan una distribución
 normal y se debería utilizar una prueba no paramétrica para analizar los
 datos.</p>
-<pre class="r"><code>data(&quot;mtcars&quot;)
-head(mtcars)</code></pre>
-<pre><code>##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</code></pre>
-<pre class="r"><code>shapiro.test(mtcars$mpg)</code></pre>
+<p>Es recomendable hacer las pruebas de normalidad para una variable
+separándola por cada grupo de interés. Utilizaremos la función
+<code>subset</code> para separar nuestras variables de acuerdo con los
+grupos de interés.</p>
+<pre class="r"><code>sM &lt;- subset(datos, sexo == &quot;M&quot;)
+sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
+<pre class="r"><code>shapiro.test(sM$altura)</code></pre>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
-## data:  mtcars$mpg
-## W = 0.94756, p-value = 0.1229</code></pre>
+## data:  sM$altura
+## W = 0.98161, p-value = 0.6599</code></pre>
+<pre class="r"><code>shapiro.test(sF$altura)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  sF$altura
+## W = 0.98531, p-value = 0.7557</code></pre>
 </div>
 </div>
 <div id="prueba-de-homogeneidad-homocedasticidad" class="section level4">
@@ -421,11 +418,15 @@ head(mtcars)</code></pre>
 <p>Para evaluar la homogeneidad de la varianza entre grupos utilizaremos
 la prueba de Levene con la función <code>leveneTest</code> del paquete
 <code>car</code>.</p>
-<pre class="r"><code>leveneTest(body_mass_g ~ species, data = penguins)</code></pre>
+<pre class="r"><code>library(car)</code></pre>
+<pre><code>## Loading required package: carData</code></pre>
+<pre class="r"><code>leveneTest(altura ~ sexo, data = datos)</code></pre>
+<pre><code>## Warning in leveneTest.default(y = y, group = group, ...): group coerced to
+## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
-##        Df F value   Pr(&gt;F)   
-## group   2  5.1203 0.006445 **
-##       339                    
+##       Df F value    Pr(&gt;F)    
+## group  1  19.863 2.213e-05 ***
+##       98                      
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <div id="interpretación-1" class="section level5">
@@ -435,12 +436,23 @@ observa el valor de P tomando como referencia el valor de alpha que por
 defecto es de 0.05. Si el valor de P es mayor que alpha (0.05), la
 varianza de nuestros datos es homogenea. Si el valor de P es menor que
 alpha (0.05), si hay diferencias en la varianza de nuestros datos.</p>
-<pre class="r"><code>mtcars$vs &lt;- as.factor(mtcars$vs)</code></pre>
-<pre class="r"><code>leveneTest(mpg ~ vs, data = mtcars)</code></pre>
+<p>También podemos utilizar la función <code>LeveneTest</code> del
+paquete <code>DescTools</code>.</p>
+<pre class="r"><code>library(DescTools)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;DescTools&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:car&#39;:
+## 
+##     Recode</code></pre>
+<pre class="r"><code>LeveneTest(altura ~ sexo, data = datos)</code></pre>
+<pre><code>## Warning in LeveneTest.default(y = y, group = group, ...): group coerced to
+## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
-##       Df F value Pr(&gt;F)
-## group  1  1.5922 0.2167
-##       30</code></pre>
+##       Df F value    Pr(&gt;F)    
+## group  1  19.863 2.213e-05 ***
+##       98                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 </div>
 </div>
