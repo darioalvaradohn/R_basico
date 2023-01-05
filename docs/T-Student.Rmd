@@ -15,11 +15,11 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-La prueba de T-Student sirve para comprobar si hay diferencias entre dos grupos. Es una prueba paramétrica por lo que la varianza de los datos debe tener una distribución normal y debe ser homogenea.
-La T-Student es una prueba de hipótesis que compara dos grupos entre sí para ver si hay diferencias entre ellos.
+La prueba de **T-Student** sirve para comprobar si hay diferencias entre dos grupos. Es una **prueba paramétrica**, por lo que la varianza de los datos debe tener una distribución normal y debe ser homogenea.
+La T-Student es una **prueba de hipótesis** que compara dos grupos entre sí para ver si hay diferencias entre ellos.
 La hipótesis nula es que no hay diferencias entre los grupos `grupo1` = `grupo2` y la hipotesis alternativa es que si hay diferencias entre los grupos `grupo1` ≠ `grupo2`.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(rio)
 ```
 
@@ -27,6 +27,7 @@ library(rio)
 datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
+
 
 ```{r}
 sM <- subset(datos, sexo == "M")
@@ -38,9 +39,8 @@ shapiro.test(sM$altura)
 ```
 
 ```{r}
-car::leveneTest(altura ~ sexo, data = datos)
+shapiro.test(sF$altura)
 ```
-
 
 ```{r}
 t.test(altura ~ sexo, data = datos)
@@ -50,7 +50,9 @@ El valor de P no tiene unidades y depende del tamaño de la muestra, para obtene
 La variabilidad de los datos también influye en el valor de P, a menor variabilidad en los datos, menor el valor de P, a mayor variabilidad en los datos, mayor el valor de P.
 El valor de P es condiconal a que la hipotesis nula es verdadera.
 
-Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística no paramétrica para analizar los datos. La alternativa no paramétrica a la T-Student es la prueba de Wilcoxon. Esta tiene el mismo principio pero no requiere que los datos provengan de una muestra con distribución normal.
+<br>
+
+Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**. Esta tiene el mismo principio pero no requiere que los datos provengan de una muestra con distribución normal.
 
 ```{r}
 shapiro.test(datos$peso)
@@ -59,3 +61,20 @@ shapiro.test(datos$peso)
 ```{r}
 wilcox.test(peso ~ sexo, data = datos)
 ```
+
+Otra forma de analizar si hay diferencias entre dos grupos sin tener que recurrir a la estadística no paramétrica o pruebas de hipótesis, es mediante la **estimación de parámetros**. Para esto se genera un estimado de punto y un intervalo de confianza (tamaño del efecto) en las unidades de la variable.
+
+Podemos estimarlo con la función `meanCI` del paquete `interpretCI`:
+
+```{r}
+library(interpretCI)
+```
+
+```{r}
+meanCI(datos, sexo, altura)
+```
+
+```{r}
+meanCI(datos, sexo, peso)
+```
+
