@@ -15,7 +15,7 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi- cuadrado** para ver si un grupo es mayor que el otro.
+Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi-cuadrado** para ver si un grupo es mayor que el otro.
 
 ```{r}
 x <- c(RM = 54, B = 46)
@@ -37,3 +37,47 @@ y <- c(RM = 170, B = 130)
 ```{r}
 chisq.test(y)
 ```
+
+La fórmula del Chi-cuadrado es la siguiente:
+
+$$
+X^2 = \Sigma \frac{(O-E)^2}E
+$$
+Donde:
+  O = valores observados
+  E = valores esperados
+  
+```{r}
+chi <- chisq.test(y)
+```
+
+```{r}
+chi$expected
+```
+
+```{r}
+chi$observed
+```
+
+```{r}
+chi$statistic
+```
+
+```{r}
+chi$residuals
+```
+
+```{r}
+chi$stdres
+```
+
+#### Alternativa de análisis con datos binomiales
+
+```{r}
+binom.test(170, 300)
+```
+
+```{r}
+binom.test(130, 300)
+```
+
