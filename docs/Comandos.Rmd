@@ -169,7 +169,7 @@ nombre
 #### Creación de tablas
 
 Para crear una tabla o cuadro utilizaremos el comando `data.frame`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, todos los objetos deben contener el mismo número de observaciones. 
-En nuestro caso, la variable `altura` coniene siete observaciones, y la variable `nombre` también contiene siete observaciones.
+En nuestro caso, la variable `altura` coniene ocho observaciones, y la variable `nombre` también contiene ocho observaciones.
 ¡Hagamos nuestra tabla!
 
 ```{r}
@@ -197,7 +197,7 @@ tabla$Peso <- peso
 tabla
 ```
 
-Ya tenemos dos variables numéricas continuas en nuestra tabla. Ahora agreguemos una variable categórica.
+Ya tenemos dos variables numéricas en nuestra tabla. Ahora agreguemos una variable categórica.
 
 ```{r}
 sexo <- c("M", "M", "F", "F", "F", "M", "M", "F")
@@ -237,6 +237,16 @@ Para eso guardaremos usando la función `write.csv`, con esto generamos un archi
 write.csv(tabla, file = "data/tabla1.csv")
 ```
 
+También podemos utilizar paquetes para exportar nuestra base de datos. Para eso utilizaremos la función `export` del paquete `rio`.
+
+```{r}
+library(rio)
+```
+
+```{r}
+export(tabla, "data/tabla1.xlsx")
+```
+
 Ahora carguemos nuestra tabla.
 Para eso utilizaremos la función `read.csv`.
 
@@ -246,5 +256,11 @@ tabla1 <- read.csv("data/tabla1.csv")
 
 ```{r}
 tabla1
+```
+
+Y también podemos hacerlo con la función `import` del paquete `rio`.
+
+```{r}
+import("data/tabla1.xlsx")
 ```
 

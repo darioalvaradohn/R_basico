@@ -42,6 +42,15 @@ shapiro.test(penguins$body_mass_g)
 Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
+```{r}
+data("mtcars")
+head(mtcars)
+```
+
+```{r}
+shapiro.test(mtcars$mpg)
+```
+
 #### Prueba de homogeneidad (homocedasticidad)
 
 Para evaluar la homogeneidad de la varianza entre grupos utilizaremos la prueba de Levene con la función `leveneTest` del paquete `car`.
@@ -54,3 +63,13 @@ leveneTest(body_mass_g ~ species, data = penguins)
 
 Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
+
+
+```{r}
+mtcars$vs <- as.factor(mtcars$vs)
+```
+
+```{r}
+leveneTest(mpg ~ vs, data = mtcars)
+```
+
