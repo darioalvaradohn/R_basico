@@ -38,7 +38,7 @@ head(datos)
 #### Medidas de tendencia central
 
 Son medidas que nos ayudan a resumir nuestros datos en valores "típicos" que caracterizan la muestra.
-Las medidas de tendencia central más conocidas son la *media*, la *mediana* y la *moda*
+Las medidas de tendencia central más conocidas son la **media**, la **mediana** y la **moda**
 
 - Media
 
@@ -70,6 +70,8 @@ median(datos$edad)
 
 - Moda
 
+Para calcular la moda utilizaremos la función `mlv` (most likely values) del paquete `modeest`.
+
 ```{r}
 library(modeest)
 ```
@@ -88,7 +90,7 @@ mlv(datos$edad)
 
 #### Medidas de dispersión
 
-Muestran la variabilidad de nuestro conjunto de datos. A mayor variabilidad variabilidad en nuestros datos, mayor será la incertidumbre en los valores de los parámetros estimados para ese conjunto de datos.
+Las medidas de dispersión muestran la **variabilidad** de nuestro conjunto de datos. A mayor variabilidad en nuestros datos, mayor será la **incertidumbre** en los valores de los parámetros estimados para ese conjunto de datos.
 
 - Desviación estándar
 
@@ -128,9 +130,13 @@ describe(datos)
 
 #### Gráficos exploratorios
 
+##### Gráficos univariados
+
 ```{r}
 hist(datos$altura)
 ```
+
+##### Gráficos multivariados
 
 ```{r}
 boxplot(altura ~ sexo, data = datos)
