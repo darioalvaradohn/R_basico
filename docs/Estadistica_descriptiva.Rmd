@@ -20,15 +20,11 @@ La estadística descriptiva es la que describe, analiza y representa un conjunto
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
 
 ```{r}
-ops <- c("M", "F")
-sexo <- sample(ops, size = 100, replace = T)
-altura <- sample(145:190, 100, replace = T)
-peso <- sample(50:100, 100, replace = T)
-edad <- sample(18:50, 100, replace = T)
+library(rio)
 ```
 
 ```{r}
-datos <- data.frame(sexo = sexo, altura = altura, peso = peso, edad = edad)
+datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
 
