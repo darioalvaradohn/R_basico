@@ -7,7 +7,7 @@ header-includes:
 ---
 
 <div style="display:flex; align-items:center;">
-  <h1 style="margin:0;">Pruebas de normalidad</h1>
+  <h1 style="margin:0;">Pruebas de normalidad y homocedasticidad</h1>
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
@@ -42,7 +42,7 @@ shapiro.test(penguins$body_mass_g)
 Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
-#### Prueba de homogeneidad
+#### Prueba de homogeneidad (homocedasticidad)
 
 Para evaluar la homogeneidad de la varianza entre grupos utilizaremos la prueba de Levene con la función `leveneTest` del paquete `car`.
 
