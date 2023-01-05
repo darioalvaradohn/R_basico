@@ -15,3 +15,25 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi- cuadrado** para ver si un grupo es mayor que el otro.
+
+```{r}
+x <- c(RM = 54, B = 46)
+```
+
+La función para ejecutar la prueba de Chi-cuadrado es `chisq.test`.
+
+```{r}
+chisq.test(x)
+```
+
+Se interpreta el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05. Si P < 0.05, si hay diferencias estadísticamente significativas entre los dos grupos. Si P ≥ 0.05, los grupos no presentan diferencias estadísticamente significativas.
+Al aumentar el tamaño de la muestra se consigue la significancia del valor de P.
+
+```{r}
+y <- c(RM = 170, B = 130)
+```
+
+```{r}
+chisq.test(y)
+```
