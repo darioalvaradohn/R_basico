@@ -71,7 +71,7 @@ chi$residuals
 chi$stdres
 ```
 
-#### Alternativa de análisis con datos binomiales
+Para conocer las proporciones de cada grupo respecto al total de la muestra podemos utilizar la función `binom.test` (para datos binomiales).
 
 ```{r}
 binom.test(170, 300)
@@ -80,4 +80,27 @@ binom.test(170, 300)
 ```{r}
 binom.test(130, 300)
 ```
+
+También podemos estimar la diferencia (en proporción) entre los dos grupos con la función `BinomDiffCI` del paquete `DescTools`
+
+```{r}
+library(DescTools)
+```
+
+```{r}
+BinomDiffCI(170, 300, 130, 300)
+```
+
+Aquí, la diferencia es del 13% y se puede decir con un 95% de confianza que la verdadera diferencia entre los dos grupos está entre 5 y 21%
+
+También se puede conocer la proporción cuando hay más de dos grupos (datos multinomiales) con la función `MultinomCI` del paquete `DescTools`.
+
+```{r}
+MultinomCI(c(170, 130, 105))
+```
+
+El estimado es la proporción (%) para cada grupo, y también muestra su intervalo de confianza.
+
+Tablas de contingencia
+
 

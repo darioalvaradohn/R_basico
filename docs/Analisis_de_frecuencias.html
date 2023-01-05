@@ -403,8 +403,9 @@ X^2 = \Sigma \frac{(O-E)^2}E
 <pre class="r"><code>chi$stdres</code></pre>
 <pre><code>##        RM         B 
 ##  2.309401 -2.309401</code></pre>
-<div id="alternativa-de-análisis-con-datos-binomiales" class="section level4">
-<h4>Alternativa de análisis con datos binomiales</h4>
+<p>Para conocer las proporciones de cada grupo respecto al total de la
+muestra podemos utilizar la función <code>binom.test</code> (para datos
+binomiales).</p>
 <pre class="r"><code>binom.test(170, 300)</code></pre>
 <pre><code>## 
 ##  Exact binomial test
@@ -429,7 +430,27 @@ X^2 = \Sigma \frac{(O-E)^2}E
 ## sample estimates:
 ## probability of success 
 ##              0.4333333</code></pre>
-</div>
+<p>También podemos estimar la diferencia (en proporción) entre los dos
+grupos con la función <code>BinomDiffCI</code> del paquete
+<code>DescTools</code></p>
+<pre class="r"><code>library(DescTools)</code></pre>
+<pre class="r"><code>BinomDiffCI(170, 300, 130, 300)</code></pre>
+<pre><code>##            est     lwr.ci    upr.ci
+## [1,] 0.1333333 0.05340315 0.2114975</code></pre>
+<p>Aquí, la diferencia es del 13% y se puede decir con un 95% de
+confianza que la verdadera diferencia entre los dos grupos está entre 5
+y 21%</p>
+<p>También se puede conocer la proporción cuando hay más de dos grupos
+(datos multinomiales) con la función <code>MultinomCI</code> del paquete
+<code>DescTools</code>.</p>
+<pre class="r"><code>MultinomCI(c(170, 130, 105))</code></pre>
+<pre><code>##            est    lwr.ci    upr.ci
+## [1,] 0.4197531 0.3679012 0.4739909
+## [2,] 0.3209877 0.2691358 0.3752255
+## [3,] 0.2592593 0.2074074 0.3134971</code></pre>
+<p>El estimado es la proporción (%) para cada grupo, y también muestra
+su intervalo de confianza.</p>
+<p>Tablas de contingencia</p>
 
 
 
