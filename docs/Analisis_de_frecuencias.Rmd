@@ -101,6 +101,79 @@ MultinomCI(c(170, 130, 105))
 
 El estimado es la proporción (%) para cada grupo, y también muestra su intervalo de confianza.
 
-Tablas de contingencia
+#### Tablas de contingencia
 
+Las tablas de contingencia son matrices que muestras la distribución de frecuencias de las variables y son muy utilizadas cuando se realizan encuestas.
 
+```{r}
+library(rio)
+```
+
+Para este ejercicio utilizaremos la base de datos de oncocercosis (seguera de rio provocada por un nematodo).
+
+```{r}
+onco <- import("data/oncocercosis.xlsx")
+head(onco)
+```
+
+Resuminos los datos en una tabla de contingencia
+
+```{r}
+cont <- table(onco$mf, onco$area)
+cont
+```
+
+También se puede elaborar una tabla más compleja con la función `tbl_cross` del paquete `gtsummary`.
+
+```{r}
+library(gtsummary)
+```
+
+```{r}
+cont2 <- tbl_cross(onco, mf, area, percent = "cell")
+cont2
+```
+
+También podemos representarlo de forma gráfica con la función `mosaic` del paquete `vcd`
+
+```{r}
+library(vcd)
+```
+
+```{r}
+mosaic(~ mf + area, data = onco, shade = T)
+```
+
+Parece que hay una relación entre las personas infectadas y que vienen de Rainforest. Esta prueba evalua la igualdad de proporciones y la independencia de los datos.
+
+**Igualdad de proporciones:** El análisis de esos datos dio una diferencia significativa (entre proporciones) analizada con un chi sqrt
+
+**Independencia de los datos:** También prueba la independencia de los datos evaluados, si los datos que vienen de un lado son independientes de los que vienen del otro lado
+
+Los grises en el gráfico representan los valores que están dentro de los valores esperados
+El azul son los que se pasaron del esperado y el rosado son los que están por debajo de lo que se esperaba
+
+Si hacemos una prueba de Chi-cuadrado de nuestra tabla tendremos lo siguiente:
+
+```{r}
+chicont <- chisq.test(cont)
+chicont
+```
+
+```{r}
+chicont$expected
+```
+
+```{r}
+chicont$observed
+```
+
+```{r}
+chicont$residuals
+```
+
+Los residuales que se pasan de -2 o 2 son los que provocan la significancia estadística.
+
+```{r}
+chicont$stdres
+```
