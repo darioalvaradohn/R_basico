@@ -415,14 +415,14 @@ influye en el valor de P, a menor variabilidad en los datos, menor el
 valor de P, a mayor variabilidad en los datos, mayor el valor de P. El
 valor de P es condiconal a que la hipotesis nula es verdadera.</p>
 </div>
-<div id="prueba-de-wilcoxon-no-paramétrica" class="section level4">
-<h4>Prueba de Wilcoxon (no paramétrica)</h4>
+<div id="prueba-de-wilcoxon-mann-whitney-no-paramétrica" class="section level4">
+<h4>Prueba de Wilcoxon (Mann-Whitney) (no paramétrica)</h4>
 <p>Cuando los datos no provienen de una muestra con distribución normal
 existen alternativas de estadística <strong>no paramétrica</strong> para
 analizar los datos. La alternativa no paramétrica a la T-Student es la
-<strong>prueba de Wilcoxon</strong>. Esta tiene el mismo principio pero
-no requiere que los datos provengan de una muestra con distribución
-normal.</p>
+<strong>prueba de Wilcoxon</strong>, también conocida como
+<strong>prueba de Mann-Whitney</strong>. Esta tiene el mismo principio
+pero no requiere que los datos cumplan el supuesto de normalidad.</p>
 <pre class="r"><code>shapiro.test(datos$peso)</code></pre>
 <pre><code>## 
 ##  Shapiro-Wilk normality test

@@ -16,11 +16,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (o el promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
-A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre más de dos grupos.
-El ANOVA es una prueba paramétrica, por lo que require que los datos cumplan los supuestos de normalidad y homocedasticidad de la varianza.
 
 ```{r, warning=FALSE, message=FALSE}
-library(rio)
+library(car)
 library(tidyverse)
 library(agricolae)
 library(palmerpenguins)
@@ -28,22 +26,49 @@ library(FSA)
 ```
 
 ```{r}
-datos <- import("data/medidas_personas.csv")
+data("penguins")
+head(penguins)
 ```
 
 ### Contenido{.tabset .tabset-pills}
 
 #### ANOVA (paramétrica)
 
+A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre tres o más grupos.
 Podemos realizar un ANOVA con la función `aov`.
 Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
+Para realizar un ANOVA nuestros datos deben cumplir los supuestos de normalidad y homogeneidad de la varianza.
+
 
 ```{r}
-anova <- aov(altura ~ sexo, data = datos)
+sa <- subset(penguins, species == "Adelie")
+sc <- subset(penguins, species == "Chinstrap")
+sg <- subset(penguins, species == "Gentoo")
 ```
 
 ```{r}
-summary(anova)
+shapiro.test(sa$flipper_length_mm)
+```
+
+```{r}
+shapiro.test(sc$flipper_length_mm)
+```
+
+```{r}
+shapiro.test(sg$flipper_length_mm)
+```
+
+```{r}
+leveneTest(flipper_length_mm ~ species, data = penguins)
+```
+
+
+```{r}
+p <- aov(flipper_length_mm ~ species, data = penguins)
+```
+
+```{r}
+summary(p)
 ```
 
 El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
@@ -55,37 +80,18 @@ El valor de P muestra la significancia estadística de la comparación entre los
 El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD` y especificando la variable que contiene los diferentes grupos.
 
 ```{r}
-TukeyHSD(anova, "sexo")
-```
-
-También se puede realizar este contraste con la función `HSD.test` del paquete `agricolae`
-
-```{r}
-contraste <- HSD.test(anova, "sexo")
-contraste
-```
-
-```{r}
-data("penguins")
-```
-
-```{r}
-p <- aov(body_mass_g ~ species, data = penguins)
-```
-
-```{r}
-summary(p)
-```
-
-```{r}
 pt <- TukeyHSD(p, "species")
 pt
 ```
+
+También se puede realizar este contraste con la función `HSD.test` del paquete `agricolae`.
 
 ```{r}
 pc <- HSD.test(p, "species")
 pc
 ```
+
+##### Prueba post hoc de Duncan
 
 Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test` del paquete `agricolae`.
 
@@ -93,7 +99,6 @@ Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemo
 pd <- duncan.test(p, "species")
 pd
 ```
-
 
 #### Gráficos
 
@@ -118,10 +123,10 @@ plot(pd)
 ```
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
-Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por especie con la función `Summarize` del paquete `FSA`
+Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos por especie con la función `Summarize` del paquete `FSA`.
 
 ```{r}
-sum <- Summarize(body_mass_g ~ species, data = penguins)
+sum <- Summarize(flipper_length_mm ~ species, data = penguins)
 sum
 ```
 
@@ -140,12 +145,12 @@ Con estos datos procedemos a graficarlo.
 ggplot(sum, aes(species, mean)) +
   geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
   geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
-labs(title = "Diferencias entre masa corporal de pingüinos por especie",
-     y = "Masa corporal (g)",
+labs(title = "Diferencias entre el largo de la aleta de pingüinos por especie",
+     y = "Largo de aleta (mm)",
      x = "Especie") +
-  annotate("text", x = "Adelie", y = 3850, label = "b") +
-  annotate("text", x = "Chinstrap", y = 3900, label = "b") +
-  annotate("text", x = "Gentoo", y = 5250, label = "a") +
+  annotate("text", x = "Adelie", y = 193, label = "c") +
+  annotate("text", x = "Chinstrap", y = 200, label = "b") +
+  annotate("text", x = "Gentoo", y = 220, label = "a") +
   theme_classic()
 ```
 

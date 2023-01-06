@@ -15,9 +15,91 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Pruebas No Paramétricas
-## Kruskal-Wallis
 
-La prueba de Kruskal-Wallis es un método no paramétrico para probar si un grupo de datos proviene de la misma población. Intuitivamente, es idéntico al ANOVA con los datos reemplazados por categorías. Es una extensión de la prueba de la U de Mann-Whitney para 3 o más grupos.
+Cuando los datos no cumplen con los supuestos de normalidad y homogeneidad de la varianza se pueden utilizar métodos no paramétricos para realizar la comparación entre grupos.
 
-Ya que es una prueba no paramétrica, la prueba de Kruskal-Wallis no asume normalidad en los datos, en oposición al tradicional ANOVA. Sí asume, bajo la hipótesis nula, que los datos vienen de la misma distribución.
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(agricolae)
+library(FSA)
+```
+
+```{r}
+data("penguins")
+head(penguins)
+```
+
+### Contenido{.tabset .tabset-pills}
+
+#### Kruskal-Wallis
+
+La prueba de Kruskal-Wallis es un método no paramétrico para comprobar si un grupo de datos proviene de la misma población. Es idéntico al ANOVA y es una extensión de la prueba de Mann-Whitney para tres o más grupos.
+Ya que es una prueba no paramétrica, la prueba de Kruskal-Wallis no asume normalidad en los datos.
+
+Podemos ejecutar la prueba de Kruskal-Wallis con la función `kruskal.test`.
+
+```{r}
+kruskal.test(body_mass_g ~ island, data = penguins)
+```
+
+El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+
+También podemos hacerlo con la función `kruskal` del paquete `agricolae`
+
+```{r}
+k <- kruskal(penguins$body_mass_g, penguins$island)
+k
+```
+
+Esta función nos brinda más información que la anterior, incluso realiza la prueba de contraste entre los grupos.
+
+#### Pruebas de contraste
+
+Para realizar la prueba de contraste después de realizar la prueba de Kruskal-Wallis con la función `kruskal.test` utilizaremos la prueba de Dunn con la función `dunnTest` del paquete `FSA`.
+
+```{r}
+dunnTest(body_mass_g ~ island, data = penguins)
+```
+
+#### Gráficos
+
+Podemos representarlo gráficamente con la función `plot`.
+
+Gráfico de la función `kruskal`.
+
+```{r}
+plot(k)
+```
+
+Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
+Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por isla con la función `Summarize` del paquete `FSA`.
+
+```{r}
+sumbm <- Summarize(body_mass_g ~ island, data = penguins)
+sumbm
+```
+
+Después agregamos una columna con el error estándar (medida de precisión del estimado) y una columna para el intervalo de confianza al 95% calculad a partir del error estándar.
+
+```{r}
+sumbm$SE <- sumbm$sd / sqrt(sumbm$n)
+sumbm$liIC95 <- sumbm$mean - sumbm$SE * 1.96
+sumbm$lsIC95 <- sumbm$mean + sumbm$SE * 1.96
+sumbm
+```
+
+Con estos datos procedemos a graficarlo.
+
+```{r}
+ggplot(sumbm, aes(island, mean)) +
+  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
+  geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
+labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
+     y = "Masa corporal (g)",
+     x = "Isla") +
+  annotate("text", x = "Biscoe", y = 4900, label = "a") +
+  annotate("text", x = "Dream", y = 3850, label = "b") +
+  annotate("text", x = "Torgersen", y = 3900, label = "b") +
+  theme_classic()
+```

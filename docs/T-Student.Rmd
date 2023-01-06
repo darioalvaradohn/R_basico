@@ -53,9 +53,9 @@ El valor de P no tiene unidades y depende del tamaño de la muestra, para obtene
 La variabilidad de los datos también influye en el valor de P, a menor variabilidad en los datos, menor el valor de P, a mayor variabilidad en los datos, mayor el valor de P.
 El valor de P es condiconal a que la hipotesis nula es verdadera.
 
-#### Prueba de Wilcoxon (no paramétrica)
+#### Prueba de Wilcoxon (Mann-Whitney) (no paramétrica)
 
-Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**. Esta tiene el mismo principio pero no requiere que los datos provengan de una muestra con distribución normal.
+Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**, también conocida como **prueba de Mann-Whitney**. Esta tiene el mismo principio pero no requiere que los datos cumplan el supuesto de normalidad.
 
 ```{r}
 shapiro.test(datos$peso)
