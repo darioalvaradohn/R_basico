@@ -25,12 +25,6 @@ Este es un curso introductorio al análisis estadístico en R utilizando R Studi
 
 <br>
 
-Sitio web: [Página principal](https://www.hnbiology.org/)
-
-Curso R básico: [Página del curso](https://www.hnbiology.org/)
-
-<br>
-
 ### Contenido{.tabset .tabset-pills}
 
 [Introducción al curso](Introduccion.html)
@@ -47,6 +41,18 @@ Curso R básico: [Página del curso](https://www.hnbiology.org/)
 [Clase 5: Análisis de varianza (Kruskal-Wallis)](Kruskal-Wallis.html)
 
 <br>
+
+### Contacto
+
+Sitio web: [hnbiology.org](https://www.hnbiology.org/)
+
+Página del curso: [Análisis Estadístico con R Nivel Básico](https://www.hnbiology.org/)
+
+Facebook: [HN Biology Investigation](https://www.facebook.com/Hn.Biology.Investigation)
+
+email: [admi@hnbiology.org](admi@hnbiology.org)
+
+Whatsapp: [+50499549551](+50499549551)
 
 <br>
 
