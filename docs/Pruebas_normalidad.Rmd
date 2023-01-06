@@ -36,8 +36,6 @@ Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro-W
 shapiro.test(datos$altura)
 ```
 
-##### Interpretación
-
 Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
@@ -69,8 +67,6 @@ library(car)
 ```{r}
 leveneTest(altura ~ sexo, data = datos)
 ```
-
-##### Interpretación
 
 Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.

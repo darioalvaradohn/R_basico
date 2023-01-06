@@ -7,7 +7,7 @@ header-includes:
 ---
 
 <div style="display:flex; align-items:center;">
-  <h1 style="margin:0;">T-Student</h1>
+  <h1 style="margin:0;">Pruebas de hipótesis</h1>
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
@@ -15,9 +15,13 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula (H0) de que no hay efecto o diferencia entre dos grupos (`grupo1` = `grupo2`). El valor de P obtenido refleja la probabilidad de rechazar la H0, pero no prueba que la hipótesis alternativa, de que si hay efecto o diferencia (`grupo1` ≠ `grupo2`), sea verdadera. 
+
+### Contenido{.tabset .tabset-pills}
+
+#### Prueba de T-Student (paramétrica)
+
 La prueba de **T-Student** sirve para comprobar si hay diferencias entre dos grupos. Es una **prueba paramétrica**, por lo que la varianza de los datos debe tener una distribución normal y debe ser homogenea.
-La T-Student es una **prueba de hipótesis** que compara dos grupos entre sí para ver si hay diferencias entre ellos.
-La hipótesis nula es que no hay diferencias entre los grupos `grupo1` = `grupo2` y la hipotesis alternativa es que si hay diferencias entre los grupos `grupo1` ≠ `grupo2`.
 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
@@ -50,7 +54,7 @@ El valor de P no tiene unidades y depende del tamaño de la muestra, para obtene
 La variabilidad de los datos también influye en el valor de P, a menor variabilidad en los datos, menor el valor de P, a mayor variabilidad en los datos, mayor el valor de P.
 El valor de P es condiconal a que la hipotesis nula es verdadera.
 
-<br>
+#### Prueba de Wilcoxon (no paramétrica)
 
 Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**. Esta tiene el mismo principio pero no requiere que los datos provengan de una muestra con distribución normal.
 
@@ -62,7 +66,9 @@ shapiro.test(datos$peso)
 wilcox.test(peso ~ sexo, data = datos)
 ```
 
-Otra forma de analizar si hay diferencias entre dos grupos sin tener que recurrir a la estadística no paramétrica o pruebas de hipótesis, es mediante la **estimación de parámetros**. Para esto se genera un estimado de punto y un intervalo de confianza (tamaño del efecto) en las unidades de la variable.
+#### Alternativa con estimación de parámetros
+
+Otra forma de analizar si hay diferencias entre dos grupos sin tener que recurrir a la estadística no paramétrica o pruebas de hipótesis, es mediante la **estimación de parámetros**. Para esto se genera un **estimado de punto** y un **intervalo de confianza** (tamaño del efecto) en las unidades de la variable.
 
 Podemos estimarlo con la función `meanCI` del paquete `interpretCI`:
 
