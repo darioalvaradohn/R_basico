@@ -78,7 +78,8 @@ summary(p)
 ```
 
 ```{r}
-TukeyHSD(p, "species")
+pt <- TukeyHSD(p, "species")
+pt
 ```
 
 ```{r}
@@ -86,12 +87,34 @@ pc <- HSD.test(p, "species")
 pc
 ```
 
+Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test` del paquete `agricolae`.
+
+```{r}
+pd <- duncan.test(p, "species")
+pd
+```
+
+
 #### Gráficos
 
 Podemos representarlo gráficamente con la función `plot`.
 
+Gráfico de la función `TukeyHSD`.
+
+```{r}
+plot(pt)
+```
+
+Gráfico de la función `HSD.test`.
+
 ```{r}
 plot(pc)
+```
+
+Gráfico de la función `duncan.test`
+
+```{r}
+plot(pd)
 ```
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.

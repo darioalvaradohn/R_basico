@@ -21,7 +21,7 @@ Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula 
 
 #### Prueba de T-Student (paramétrica)
 
-La prueba de **T-Student** sirve para comprobar si hay diferencias entre dos grupos. Es una **prueba paramétrica**, por lo que la varianza de los datos debe tener una distribución normal y debe ser homogenea.
+La prueba de **T-Student** sirve para comprobar si hay diferencias entre dos grupos. Es una **prueba paramétrica**, por lo que los datos deben cumplir con el supuesto de normalidad de la varianza.
 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
@@ -31,7 +31,6 @@ library(rio)
 datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
-
 
 ```{r}
 sM <- subset(datos, sexo == "M")

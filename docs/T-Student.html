@@ -370,17 +370,17 @@ hipótesis alternativa, de que si hay efecto o diferencia
 <h4>Prueba de T-Student (paramétrica)</h4>
 <p>La prueba de <strong>T-Student</strong> sirve para comprobar si hay
 diferencias entre dos grupos. Es una <strong>prueba
-paramétrica</strong>, por lo que la varianza de los datos debe tener una
-distribución normal y debe ser homogenea.</p>
+paramétrica</strong>, por lo que los datos deben cumplir con el supuesto
+de normalidad de la varianza.</p>
 <pre class="r"><code>library(rio)</code></pre>
 <pre class="r"><code>datos &lt;- import(&quot;data/medidas_personas.csv&quot;)
 head(datos)</code></pre>
 <pre><code>##   V1 sexo altura peso edad
-## 1  1    M    101   71   47
+## 1  1    M    170   71   47
 ## 2  2    M    162   79   36
-## 3  3    M    130   86   43
+## 3  3    M    149   86   43
 ## 4  4    M    181   97   23
-## 5  5    M    140   98   29
+## 5  5    M    156   98   29
 ## 6  6    M    165  107   49</code></pre>
 <pre class="r"><code>sM &lt;- subset(datos, sexo == &quot;M&quot;)
 sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
@@ -389,25 +389,25 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  sM$altura
-## W = 0.98161, p-value = 0.6599</code></pre>
+## W = 0.97863, p-value = 0.5368</code></pre>
 <pre class="r"><code>shapiro.test(sF$altura)</code></pre>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  sF$altura
-## W = 0.98531, p-value = 0.7557</code></pre>
+## W = 0.97515, p-value = 0.333</code></pre>
 <pre class="r"><code>t.test(altura ~ sexo, data = datos)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
 ## data:  altura by sexo
-## t = -3.9323, df = 63.692, p-value = 0.0002103
+## t = -6.8691, df = 95.195, p-value = 6.622e-10
 ## alternative hypothesis: true difference in means between group F and group M is not equal to 0
 ## 95 percent confidence interval:
-##  -26.757432  -8.727915
+##  -22.30890 -12.30531
 ## sample estimates:
 ## mean in group F mean in group M 
-##        150.1509        167.8936</code></pre>
+##        151.9057        169.2128</code></pre>
 <p>El valor de P no tiene unidades y depende del tamaño de la muestra,
 para obtener un resultado estadísticamente significativo se debe
 aumentar el tamaño de la muestra. La variabilidad de los datos también
@@ -457,9 +457,9 @@ variable.</p>
 ## 
 ## Results
 ## # A tibble: 1 × 6
-##   control test  DF     CI                          t       p        
-##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;                       &lt;chr&gt;   &lt;chr&gt;    
-## 1 F       M     63.692 -17.74 [95CI -26.76; -8.73] -3.9323 0.0002103</code></pre>
+##   control test  DF     CI                           t       p        
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;                        &lt;chr&gt;   &lt;chr&gt;    
+## 1 F       M     95.195 -17.31 [95CI -22.31; -12.31] -6.8691 6.622e-10</code></pre>
 <pre class="r"><code>meanCI(datos, sexo, peso)</code></pre>
 <pre><code>## 
 ## call: meanCI.data.frame(x = datos, sexo, peso) 
