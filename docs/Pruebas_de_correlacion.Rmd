@@ -31,6 +31,10 @@ suelos <- import("data/suelos.xlsx")
 head(suelos)
 ```
 
+### Contenido{.tabset .tabset-pills}
+
+#### Prueba de correlación de Pearson (paramétrica)
+
 Un método paramétrico para determinar la correlación entre dos variables es la **prueba de correlación de Pearson**.
 Para utilizar la correlación de Pearson nuestros datos deben provenir de una muestra con distribución normal.
 
@@ -52,6 +56,8 @@ cor.test(suelos$K, suelos$Mg)
 El `valor de P` indica la significancia estadística de la correlación entre las dos variables.
 El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa.
 
+#### Prueba de correlación de Spearman (no paramétrica)
+
 Si una de las variables no cumple con el supuesto de distribución normal se puede utilizar una prueba no paramétrica, la **prueba de correlación de Spearman**.
 
 ```{r}
@@ -65,6 +71,8 @@ cor.test(suelos$pH, suelos$K, method = "spearman")
 ```
 
 En este caso, el valor de `rho` indica la magnitud y dirección de la correlación.
+
+#### Correlación entre múltiples variables
 
 También podemos evaluar la correlación entre más de dos variables
 
