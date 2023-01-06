@@ -1,5 +1,5 @@
 ---
-title: "Curso R básico"
+title: "Curso de Análisis Estadístico en R Nivel Básico"
 output:
   html_document: default
   pdf_document: default
