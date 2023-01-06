@@ -15,5 +15,102 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Pruebas paramétricas
-## ANOVA
+Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (o el promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
+A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre más de dos grupos.
+El ANOVA es una prueba paramétrica, por lo que require que los datos cumplan los supuestos de normalidad y homocedasticidad de la varianza.
+
+```{r, warning=FALSE, message=FALSE}
+library(rio)
+library(tidyverse)
+library(agricolae)
+library(palmerpenguins)
+library(FSA)
+```
+
+```{r}
+datos <- import("data/medidas_personas.csv")
+```
+
+Podemos realizar un ANOVA con la función `aov`.
+Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
+
+```{r}
+anova <- aov(altura ~ sexo, data = datos)
+```
+
+```{r}
+summary(anova)
+```
+
+El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD` y especificando la variable que contiene los diferentes grupos.
+
+```{r}
+TukeyHSD(anova, "sexo")
+```
+
+También se puede realizar este contraste con la función `HSD.test` del paquete `agricolae`
+
+```{r}
+contraste <- HSD.test(anova, "sexo")
+contraste
+```
+
+```{r}
+data("penguins")
+```
+
+```{r}
+p <- aov(body_mass_g ~ species, data = penguins)
+```
+
+```{r}
+summary(p)
+```
+
+```{r}
+TukeyHSD(p, "species")
+```
+
+```{r}
+pc <- HSD.test(p, "species")
+pc
+```
+
+Podemos representarlo gráficamente con la función `plot`.
+
+```{r}
+plot(pc)
+```
+
+Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
+Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por especie con la función `Summarize` del paquete `FSA`
+
+```{r}
+sum <- Summarize(body_mass_g ~ species, data = penguins)
+sum
+```
+
+Después agregamos una columna con el error estándar (medida de precisión del estimado) y una columna para el intervalo de confianza al 95% calculad a partir del error estándar.
+
+```{r}
+sum$SE <- sum$sd / sqrt(sum$n)
+sum$liIC95 <- sum$mean - sum$SE * 1.96
+sum$lsIC95 <- sum$mean + sum$SE * 1.96
+sum
+```
+
+Con estos datos procedemos a graficarlo.
+
+```{r}
+ggplot(sum, aes(species, mean)) +
+  geom_point(shape = 19, size = 3) +
+  geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
+labs(title = "Diferencias entre masa corporal de pingüinos por especie",
+     y = "Masa corporal (g)",
+     x = "Especie") +
+  annotate("text", x = "Adelie", y = 3850, label = "b") +
+  annotate("text", x = "Chinstrap", y = 3900, label = "b") +
+  annotate("text", x = "Gentoo", y = 5250, label = "a") +
+  theme_classic()
+```
+
