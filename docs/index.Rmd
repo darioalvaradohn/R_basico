@@ -13,14 +13,23 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
+<br>
+
 #### ¡Bienvenidos!
 
 Este es un curso introductorio al análisis estadístico en R utilizando R Studio desde cero. Navegaremos por la interfaz de R Studio ubicando sus herramientas y opciones para trabajar de manera fluida, crearemos scripts para guardar nuestros códigos. Aprenderás a sacarle provecho a R para el análisis de tus datos mediante ejemplos prácticos aplicando diferentes métodos estadísticos y realizando gráficos para la visualización de tus análisis.
+
 ¡Comencemos!
+
+<br>
 
 Sitio web: [Página principal](https://www.hnbiology.org/)
 
 Curso R básico: [Página del curso](https://www.hnbiology.org/)
+
+<br>
 
 ### Contenido{.tabset .tabset-pills}
 
@@ -36,6 +45,10 @@ Curso R básico: [Página del curso](https://www.hnbiology.org/)
 [Clase 4: Análisis de varianza (ANOVA)](ANOVA.html)
 
 [Clase 5: Análisis de varianza (Kruskal-Wallis)](Kruskal-Wallis.html)
+
+<br>
+
+<br>
 
 <div style="display:flex; align-items:center;">
   <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;">

@@ -12,12 +12,20 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Este es un curso introductorio al análisis estadístico en R brindado por personal de `HN Biology Investigation` en el que aprenderás a usar la interfaz de R Studio desde cero.
+<br>
+
+Este es un curso introductorio al análisis estadístico en R brindado por personal de `HN Biology Investigation` en el que aprenderás a usar la interfaz de R Studio desde cero para analizar tus datos apropiadamente.
+
+<br>
+
 En los siguientes enlaces puedes decargar los instaladores de R base y de R Studio.
+
 
 Descargar R base: [R base](https://cran.r-project.org/bin/windows/base/)
 
 Descargar R Studio: [R Studio](https://posit.co/download/rstudio-desktop/)
+
+<br>
 
 También puedes visitar nuestra página principal y conocer un poco más de nosotros
 
@@ -26,6 +34,10 @@ Sitio web: [Página principal](https://www.hnbiology.org/)
 Recuerda que puedes ingresar a todo el material del curso con el siguiente enlace:
 
 Curso R básico: [Página del curso](https://www.hnbiology.org/)
+
+<br>
+
+<br>
 
 <div style="display:flex; align-items:center;">
   <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;">
