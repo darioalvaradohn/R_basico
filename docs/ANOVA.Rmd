@@ -33,7 +33,7 @@ datos <- import("data/medidas_personas.csv")
 
 ### Contenido{.tabset .tabset-pills}
 
-#### ANOVA
+#### ANOVA (paramétrica)
 
 Podemos realizar un ANOVA con la función `aov`.
 Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
