@@ -1,9 +1,11 @@
 ---
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 header-includes:
-  - \usepackage{float}
-  - \floatstyle{boxed}
-  - \restylefloat{figure}
+- \usepackage{float}
+- \floatstyle{boxed}
+- \restylefloat{figure}
 ---
 
 <div style="display:flex; align-items:center;">
@@ -14,7 +16,6 @@ header-includes:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 Cuando los datos no cumplen con los supuestos de normalidad y homogeneidad de la varianza se pueden utilizar métodos no paramétricos para realizar la comparación entre grupos.
 
@@ -102,4 +103,8 @@ labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
   annotate("text", x = "Dream", y = 3850, label = "b") +
   annotate("text", x = "Torgersen", y = 3900, label = "b") +
   theme_classic()
+```
+
+```{r}
+ggsave("Imagenes/kruskal.jpg")
 ```
