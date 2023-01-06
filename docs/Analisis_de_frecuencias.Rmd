@@ -15,6 +15,10 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+### Contenido{.tabset .tabset-pills}
+
+#### Chi-cuadrado
+
 Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi-cuadrado** para ver si un grupo es mayor que el otro.
 
 ```{r}
@@ -71,6 +75,8 @@ chi$residuals
 chi$stdres
 ```
 
+#### Proporciones para datos binomiales
+
 Para conocer las proporciones de cada grupo respecto al total de la muestra podemos utilizar la función `binom.test` (para datos binomiales).
 
 ```{r}
@@ -80,6 +86,8 @@ binom.test(170, 300)
 ```{r}
 binom.test(130, 300)
 ```
+
+#### Estimación de parámetros para proporciones
 
 También podemos estimar la diferencia (en proporción) entre los dos grupos con la función `BinomDiffCI` del paquete `DescTools`
 
