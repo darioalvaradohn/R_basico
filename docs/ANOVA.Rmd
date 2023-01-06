@@ -126,3 +126,7 @@ labs(title = "Diferencias entre masa corporal de pingüinos por especie",
   theme_classic()
 ```
 
+```{r}
+ggsave("Imagenes/anova.jpg")
+```
+
