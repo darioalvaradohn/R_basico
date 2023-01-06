@@ -194,3 +194,7 @@ ggplot(penguins, aes(species, body_mass_g)) +
   theme_bw()
 ```
 
+```{r}
+ggsave("Imagenes/estdesc.jpg")
+```
+

@@ -112,6 +112,10 @@ Y graficamos con la función `plot` del paquete `see`.
 plot(sc)
 ```
 
+```{r}
+ggsave("Imagenes/corr.jpg")
+```
+
 Otra forma de evaluar la correlación entre variables es con la función `inspect_cor` del paquete `inspectdf`
 
 ```{r}
