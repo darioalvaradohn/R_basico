@@ -31,6 +31,10 @@ library(FSA)
 datos <- import("data/medidas_personas.csv")
 ```
 
+### Contenido{.tabset .tabset-pills}
+
+#### ANOVA
+
 Podemos realizar un ANOVA con la función `aov`.
 Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
 
@@ -41,6 +45,12 @@ anova <- aov(altura ~ sexo, data = datos)
 ```{r}
 summary(anova)
 ```
+
+El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+
+#### Pruebas de contraste
+
+##### Prueba post hoc de Tukey
 
 El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD` y especificando la variable que contiene los diferentes grupos.
 
@@ -76,6 +86,8 @@ pc <- HSD.test(p, "species")
 pc
 ```
 
+#### Gráficos
+
 Podemos representarlo gráficamente con la función `plot`.
 
 ```{r}
@@ -103,7 +115,7 @@ Con estos datos procedemos a graficarlo.
 
 ```{r}
 ggplot(sum, aes(species, mean)) +
-  geom_point(shape = 19, size = 3) +
+  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
   geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
 labs(title = "Diferencias entre masa corporal de pingüinos por especie",
      y = "Masa corporal (g)",
