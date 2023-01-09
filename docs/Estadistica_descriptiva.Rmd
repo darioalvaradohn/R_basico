@@ -179,7 +179,7 @@ library(tidyverse)
 
 ```{r}
 ggplot(penguins, aes(body_mass_g)) +
-  geom_histogram() 
+  geom_histogram(fill = "dodgerblue3", bins = 10) 
 ```
 
 ```{r}
