@@ -160,6 +160,19 @@ library(visdat)
 vis_dat(penguins)
 ```
 
+```{r}
+library(SmartEDA)
+```
+
+```{r}
+ExpNumViz(penguins)
+```
+
+```{r}
+ExpCatViz(penguins)
+```
+
+
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
 ```
