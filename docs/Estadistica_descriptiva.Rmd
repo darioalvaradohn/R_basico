@@ -193,8 +193,13 @@ ggplot(penguins, aes(y = body_mass_g)) +
 ```
 
 ```{r}
+ggplot(penguins, aes(species, fill=sex))+
+  geom_bar()
+```
+
+```{r}
 ggplot(penguins, aes(species, body_mass_g)) +
-  geom_boxplot() +
+  geom_boxplot(aes(fill = species), show.legend = NULL) +
   geom_jitter(width = 0.2, alpha = 0.3) +
   theme_classic()
 ```
@@ -209,5 +214,11 @@ ggplot(penguins, aes(species, body_mass_g)) +
 
 ```{r}
 ggsave("Imagenes/estdesc.jpg")
+```
+
+```{r}
+ggplot(penguins, aes(body_mass_g, flipper_length_mm)) +
+  geom_point() +
+  stat_smooth(method = "lm")
 ```
 

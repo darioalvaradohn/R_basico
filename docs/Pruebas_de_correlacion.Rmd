@@ -89,6 +89,11 @@ ggpairs(suelosb)
 
 Si la relación de una variable con la otra no es lineal, la correlación será baja.
 
+```{r, message=FALSE, warning=FALSE}
+ggpairs(suelosb, c("pH", "N", "P", "K"))
+```
+
+
 También podemos evaluar la correlación entre las variables con la función `correlation` del paquete `correlation`
 
 ```{r}
