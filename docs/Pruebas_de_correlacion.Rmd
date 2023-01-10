@@ -121,6 +121,12 @@ plot(sc)
 ggsave("Imagenes/corr.jpg")
 ```
 
+```{r}
+c %>%
+  as.table()%>%
+  plot(type = "tile", show_values= TRUE, show_p= TRUE)
+```
+
 Otra forma de evaluar la correlación entre variables es con la función `inspect_cor` del paquete `inspectdf`
 
 ```{r}
