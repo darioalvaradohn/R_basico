@@ -48,7 +48,9 @@ $$
 X^2 = \Sigma \frac{(O-E)^2}E
 $$
 Donde:
+
   O = valores observados
+
   E = valores esperados
   
 ```{r}
