@@ -69,7 +69,7 @@ wilcox.test(peso ~ sexo, data = datos)
 
 Otra forma de analizar si hay diferencias entre dos grupos sin tener que recurrir a la estadística no paramétrica o pruebas de hipótesis, es mediante la **estimación de parámetros**. Para esto se genera un **estimado de punto** y un **intervalo de confianza** (tamaño del efecto) en las unidades de la variable.
 
-Podemos estimarlo con la función `meanCI` del paquete `interpretCI`:
+Podemos estimarlo con la función `meanCI()` del paquete `interpretCI`:
 
 ```{r}
 library(interpretCI)

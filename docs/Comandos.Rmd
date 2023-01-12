@@ -63,7 +63,7 @@ Pues usar R como una calculadora para ejecutar operaciones matemáticas
 
 - Raíz cuadrada
 
-En este caso se utiliza la función `sqrt` y entre los paréntesis `( )` se coloca el número del que se desea obtener la raíz cuadrada.
+En este caso se utiliza la función `sqrt()` y entre los paréntesis `( )` se coloca el número del que se desea obtener la raíz cuadrada.
 
 ```{r}
 sqrt(49)
@@ -125,7 +125,7 @@ altura <- c(180, 150, 169, 161, 174, 168, 192, 174)
 altura
 ```
 
-También puedes crear una variable con datos aleatorios con la función `rnorm` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
+También puedes crear una variable con datos aleatorios con la función `rnorm()` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
 
 ```{r}
 altura2 <- rnorm(n = 8, mean = 160, sd = 11)
@@ -135,7 +135,7 @@ altura2 <- rnorm(n = 8, mean = 160, sd = 11)
 altura2
 ```
 
-Con la función `round` puedes redondear los valores para quitar o reducir la cantidad de decimales
+Con la función `round()` puedes redondear los valores para quitar o reducir la cantidad de decimales con el argumento `digits`.
 
 ```{r}
 round(altura2, digits = 2)
@@ -146,7 +146,7 @@ round(altura2, digits = 0)
 ```
 
 
-También puedes hacerlo de una forma completamente aleatoria con la función `sample` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
+También puedes hacerlo de una forma completamente aleatoria con la función `sample()` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
 
 ```{r}
 altura3 <- sample(150:190, size = 8)
@@ -168,7 +168,7 @@ nombre
 
 #### Creación de tablas
 
-Para crear una tabla o cuadro utilizaremos el comando `data.frame`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, todos los objetos deben contener el mismo número de observaciones. 
+Para crear una tabla o cuadro utilizaremos el comando `data.frame()`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, todos los objetos deben contener el mismo número de observaciones. 
 En nuestro caso, la variable `altura` coniene ocho observaciones, y la variable `nombre` también contiene ocho observaciones.
 ¡Hagamos nuestra tabla!
 
@@ -231,13 +231,13 @@ str(tabla)
 ```
 
 Ahora guardemos nuestra tabla.
-Para eso guardaremos usando la función `write.csv`, con esto generamos un archivo de valores separados por comas `(csv)` altamente reproducible.
+Para eso guardaremos usando la función `write.csv()`, con esto generamos un archivo de valores separados por comas (`csv`) altamente reproducible.
 
 ```{r}
 write.csv(tabla, file = "data/tabla1.csv")
 ```
 
-También podemos utilizar paquetes para exportar nuestra base de datos. Para eso utilizaremos la función `export` del paquete `rio`.
+También podemos utilizar paquetes para exportar nuestra base de datos. Para eso utilizaremos la función `export()` del paquete `rio`.
 
 ```{r}
 library(rio)
@@ -248,7 +248,7 @@ export(tabla, "data/tabla1.xlsx")
 ```
 
 Ahora carguemos nuestra tabla.
-Para eso utilizaremos la función `read.csv`.
+Para eso utilizaremos la función `read.csv()`.
 
 ```{r}
 tabla1 <- read.csv("data/tabla1.csv")
@@ -258,7 +258,7 @@ tabla1 <- read.csv("data/tabla1.csv")
 tabla1
 ```
 
-Y también podemos hacerlo con la función `import` del paquete `rio`.
+Y también podemos hacerlo con la función `import()` del paquete `rio`.
 
 ```{r}
 import("data/tabla1.xlsx")

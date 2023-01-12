@@ -46,7 +46,7 @@ shapiro.test(suelos$K)
 shapiro.test(suelos$Mg)
 ```
 
-Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test`.
+Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test()`.
 Aquí no importa el orden de las variables.
 
 ```{r}
@@ -64,7 +64,7 @@ Si una de las variables no cumple con el supuesto de distribución normal se pue
 shapiro.test(suelos$pH)
 ```
 
-Para esto se utiliza la misma función `cor.test` pero se especifica el `method` = "spearman".
+Para esto se utiliza la misma función `cor.test()` pero se especifica el `method = "spearman"`.
 
 ```{r}
 cor.test(suelos$pH, suelos$K, method = "spearman")
@@ -76,7 +76,7 @@ En este caso, el valor de `rho` indica la magnitud y dirección de la correlaci�
 
 También podemos evaluar la correlación entre más de dos variables
 
-Podemos utilizar la función `ggpairs` del paquete `GGAlly`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
+Podemos utilizar la función `ggpairs()` del paquete `GGAlly`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
 
 ```{r}
 suelosb <- suelos[,6:14]
@@ -94,7 +94,7 @@ ggpairs(suelosb, c("pH", "N", "P", "K"))
 ```
 
 
-También podemos evaluar la correlación entre las variables con la función `correlation` del paquete `correlation`
+También podemos evaluar la correlación entre las variables con la función `correlation()` del paquete `correlation`
 
 ```{r}
 c <- correlation(suelos)
@@ -111,7 +111,7 @@ sc <- summary(c)
 sc
 ```
 
-Y graficamos con la función `plot` del paquete `see`.
+Y graficamos con la función `plot()` del paquete `see`.
 
 ```{r}
 plot(sc)
@@ -127,14 +127,14 @@ c %>%
   plot(type = "tile", show_values= TRUE, show_p= TRUE)
 ```
 
-Otra forma de evaluar la correlación entre variables es con la función `inspect_cor` del paquete `inspectdf`
+Otra forma de evaluar la correlación entre variables es con la función `inspect_cor()` del paquete `inspectdf`
 
 ```{r}
 ic <- inspect_cor(suelos)
 ic
 ```
 
-Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot` del paquete `inspectdf`.
+Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot()` del paquete `inspectdf`.
 
 ```{r}
 show_plot(ic)

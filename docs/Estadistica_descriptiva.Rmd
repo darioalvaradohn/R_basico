@@ -70,7 +70,7 @@ median(datos$edad)
 
 - Moda
 
-Para calcular la moda utilizaremos la función `mlv` (most likely values) del paquete `modeest`.
+Para calcular la moda utilizaremos la función `mlv()` (most likely values) del paquete `modeest`.
 
 ```{r}
 library(modeest)

@@ -25,7 +25,7 @@ Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi-cuad
 x <- c(RM = 54, B = 46)
 ```
 
-La función para ejecutar la prueba de Chi-cuadrado es `chisq.test`.
+La función para ejecutar la prueba de Chi-cuadrado es `chisq.test()`.
 
 ```{r}
 chisq.test(x)
@@ -79,7 +79,7 @@ chi$stdres
 
 #### Proporciones para datos binomiales
 
-Para conocer las proporciones de cada grupo respecto al total de la muestra podemos utilizar la función `binom.test` (para datos binomiales).
+Para conocer las proporciones de cada grupo respecto al total de la muestra podemos utilizar la función `binom.test()` (para datos binomiales).
 
 ```{r}
 binom.test(170, 300)
@@ -91,7 +91,7 @@ binom.test(130, 300)
 
 #### Estimación de parámetros para proporciones
 
-También podemos estimar la diferencia (en proporción) entre los dos grupos con la función `BinomDiffCI` del paquete `DescTools`
+También podemos estimar la diferencia (en proporción) entre los dos grupos con la función `BinomDiffCI()` del paquete `DescTools`
 
 ```{r}
 library(DescTools)
@@ -103,7 +103,7 @@ BinomDiffCI(170, 300, 130, 300)
 
 Aquí, la diferencia es del 13% y se puede decir con un 95% de confianza que la verdadera diferencia entre los dos grupos está entre 5 y 21%
 
-También se puede conocer la proporción cuando hay más de dos grupos (datos multinomiales) con la función `MultinomCI` del paquete `DescTools`.
+También se puede conocer la proporción cuando hay más de dos grupos (datos multinomiales) con la función `MultinomCI()` del paquete `DescTools`.
 
 ```{r}
 MultinomCI(c(170, 130, 105))
@@ -133,7 +133,7 @@ cont <- table(onco$mf, onco$area)
 cont
 ```
 
-También se puede elaborar una tabla más compleja con la función `tbl_cross` del paquete `gtsummary`.
+También se puede elaborar una tabla más compleja con la función `tbl_cross()` del paquete `gtsummary`.
 
 ```{r}
 library(gtsummary)
@@ -144,7 +144,7 @@ cont2 <- tbl_cross(onco, mf, area, percent = "cell")
 cont2
 ```
 
-También podemos representarlo de forma gráfica con la función `mosaic` del paquete `vcd`
+También podemos representarlo de forma gráfica con la función `mosaic()` del paquete `vcd`
 
 ```{r}
 library(vcd)
@@ -187,3 +187,5 @@ Los residuales que se pasan de -2 o 2 son los que provocan la significancia esta
 ```{r}
 chicont$stdres
 ```
+
+<br>

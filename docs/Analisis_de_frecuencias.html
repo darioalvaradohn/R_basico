@@ -367,7 +367,7 @@ Análisis de frecuencias
 otro.</p>
 <pre class="r"><code>x &lt;- c(RM = 54, B = 46)</code></pre>
 <p>La función para ejecutar la prueba de Chi-cuadrado es
-<code>chisq.test</code>.</p>
+<code>chisq.test()</code>.</p>
 <pre class="r"><code>chisq.test(x)</code></pre>
 <pre><code>## 
 ##  Chi-squared test for given probabilities
@@ -413,8 +413,8 @@ X^2 = \Sigma \frac{(O-E)^2}E
 <div id="proporciones-para-datos-binomiales" class="section level4">
 <h4>Proporciones para datos binomiales</h4>
 <p>Para conocer las proporciones de cada grupo respecto al total de la
-muestra podemos utilizar la función <code>binom.test</code> (para datos
-binomiales).</p>
+muestra podemos utilizar la función <code>binom.test()</code> (para
+datos binomiales).</p>
 <pre class="r"><code>binom.test(170, 300)</code></pre>
 <pre><code>## 
 ##  Exact binomial test
@@ -443,7 +443,7 @@ binomiales).</p>
 <div id="estimación-de-parámetros-para-proporciones" class="section level4">
 <h4>Estimación de parámetros para proporciones</h4>
 <p>También podemos estimar la diferencia (en proporción) entre los dos
-grupos con la función <code>BinomDiffCI</code> del paquete
+grupos con la función <code>BinomDiffCI()</code> del paquete
 <code>DescTools</code></p>
 <pre class="r"><code>library(DescTools)</code></pre>
 <pre class="r"><code>BinomDiffCI(170, 300, 130, 300)</code></pre>
@@ -453,8 +453,8 @@ grupos con la función <code>BinomDiffCI</code> del paquete
 confianza que la verdadera diferencia entre los dos grupos está entre 5
 y 21%</p>
 <p>También se puede conocer la proporción cuando hay más de dos grupos
-(datos multinomiales) con la función <code>MultinomCI</code> del paquete
-<code>DescTools</code>.</p>
+(datos multinomiales) con la función <code>MultinomCI()</code> del
+paquete <code>DescTools</code>.</p>
 <pre class="r"><code>MultinomCI(c(170, 130, 105))</code></pre>
 <pre><code>##            est    lwr.ci    upr.ci
 ## [1,] 0.4197531 0.3679012 0.4739909
@@ -488,16 +488,16 @@ cont</code></pre>
 ##   Infected            541      281
 ##   Not-infected        213      267</code></pre>
 <p>También se puede elaborar una tabla más compleja con la función
-<code>tbl_cross</code> del paquete <code>gtsummary</code>.</p>
+<code>tbl_cross()</code> del paquete <code>gtsummary</code>.</p>
 <pre class="r"><code>library(gtsummary)</code></pre>
 <pre><code>## Warning: package &#39;gtsummary&#39; was built under R version 4.2.2</code></pre>
 <pre class="r"><code>cont2 &lt;- tbl_cross(onco, mf, area, percent = &quot;cell&quot;)
 cont2</code></pre>
-<div id="dvonxysqrp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="omxbfdmpry" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
 font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
-#dvonxysqrp .gt_table {
+#omxbfdmpry .gt_table {
 display: table;
 border-collapse: collapse;
 margin-left: auto;
@@ -521,7 +521,7 @@ border-left-style: none;
 border-left-width: 2px;
 border-left-color: #D3D3D3;
 }
-#dvonxysqrp .gt_heading {
+#omxbfdmpry .gt_heading {
 background-color: #FFFFFF;
 text-align: center;
 border-bottom-color: #FFFFFF;
@@ -532,11 +532,11 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dvonxysqrp .gt_caption {
+#omxbfdmpry .gt_caption {
 padding-top: 4px;
 padding-bottom: 4px;
 }
-#dvonxysqrp .gt_title {
+#omxbfdmpry .gt_title {
 color: #333333;
 font-size: 125%;
 font-weight: initial;
@@ -547,7 +547,7 @@ padding-right: 5px;
 border-bottom-color: #FFFFFF;
 border-bottom-width: 0;
 }
-#dvonxysqrp .gt_subtitle {
+#omxbfdmpry .gt_subtitle {
 color: #333333;
 font-size: 85%;
 font-weight: initial;
@@ -558,12 +558,12 @@ padding-right: 5px;
 border-top-color: #FFFFFF;
 border-top-width: 0;
 }
-#dvonxysqrp .gt_bottom_border {
+#omxbfdmpry .gt_bottom_border {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvonxysqrp .gt_col_headings {
+#omxbfdmpry .gt_col_headings {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -577,7 +577,7 @@ border-right-style: none;
 border-right-width: 1px;
 border-right-color: #D3D3D3;
 }
-#dvonxysqrp .gt_col_heading {
+#omxbfdmpry .gt_col_heading {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -596,7 +596,7 @@ padding-left: 5px;
 padding-right: 5px;
 overflow-x: hidden;
 }
-#dvonxysqrp .gt_column_spanner_outer {
+#omxbfdmpry .gt_column_spanner_outer {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -607,13 +607,13 @@ padding-bottom: 0;
 padding-left: 4px;
 padding-right: 4px;
 }
-#dvonxysqrp .gt_column_spanner_outer:first-child {
+#omxbfdmpry .gt_column_spanner_outer:first-child {
 padding-left: 0;
 }
-#dvonxysqrp .gt_column_spanner_outer:last-child {
+#omxbfdmpry .gt_column_spanner_outer:last-child {
 padding-right: 0;
 }
-#dvonxysqrp .gt_column_spanner {
+#omxbfdmpry .gt_column_spanner {
 border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
@@ -624,7 +624,7 @@ overflow-x: hidden;
 display: inline-block;
 width: 100%;
 }
-#dvonxysqrp .gt_group_heading {
+#omxbfdmpry .gt_group_heading {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -649,7 +649,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 text-align: left;
 }
-#dvonxysqrp .gt_empty_group_heading {
+#omxbfdmpry .gt_empty_group_heading {
 padding: 0.5px;
 color: #333333;
 background-color: #FFFFFF;
@@ -663,13 +663,13 @@ border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 vertical-align: middle;
 }
-#dvonxysqrp .gt_from_md > :first-child {
+#omxbfdmpry .gt_from_md > :first-child {
 margin-top: 0;
 }
-#dvonxysqrp .gt_from_md > :last-child {
+#omxbfdmpry .gt_from_md > :last-child {
 margin-bottom: 0;
 }
-#dvonxysqrp .gt_row {
+#omxbfdmpry .gt_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -687,7 +687,7 @@ border-right-color: #D3D3D3;
 vertical-align: middle;
 overflow-x: hidden;
 }
-#dvonxysqrp .gt_stub {
+#omxbfdmpry .gt_stub {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -699,7 +699,7 @@ border-right-color: #D3D3D3;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvonxysqrp .gt_stub_row_group {
+#omxbfdmpry .gt_stub_row_group {
 color: #333333;
 background-color: #FFFFFF;
 font-size: 100%;
@@ -712,10 +712,10 @@ padding-left: 5px;
 padding-right: 5px;
 vertical-align: top;
 }
-#dvonxysqrp .gt_row_group_first td {
+#omxbfdmpry .gt_row_group_first td {
 border-top-width: 2px;
 }
-#dvonxysqrp .gt_summary_row {
+#omxbfdmpry .gt_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -724,14 +724,14 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvonxysqrp .gt_first_summary_row {
+#omxbfdmpry .gt_first_summary_row {
 border-top-style: solid;
 border-top-color: #D3D3D3;
 }
-#dvonxysqrp .gt_first_summary_row.thick {
+#omxbfdmpry .gt_first_summary_row.thick {
 border-top-width: 2px;
 }
-#dvonxysqrp .gt_last_summary_row {
+#omxbfdmpry .gt_last_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -740,7 +740,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvonxysqrp .gt_grand_summary_row {
+#omxbfdmpry .gt_grand_summary_row {
 color: #333333;
 background-color: #FFFFFF;
 text-transform: inherit;
@@ -749,7 +749,7 @@ padding-bottom: 8px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvonxysqrp .gt_first_grand_summary_row {
+#omxbfdmpry .gt_first_grand_summary_row {
 padding-top: 8px;
 padding-bottom: 8px;
 padding-left: 5px;
@@ -758,10 +758,10 @@ border-top-style: double;
 border-top-width: 6px;
 border-top-color: #D3D3D3;
 }
-#dvonxysqrp .gt_striped {
+#omxbfdmpry .gt_striped {
 background-color: rgba(128, 128, 128, 0.05);
 }
-#dvonxysqrp .gt_table_body {
+#omxbfdmpry .gt_table_body {
 border-top-style: solid;
 border-top-width: 2px;
 border-top-color: #D3D3D3;
@@ -769,7 +769,7 @@ border-bottom-style: solid;
 border-bottom-width: 2px;
 border-bottom-color: #D3D3D3;
 }
-#dvonxysqrp .gt_footnotes {
+#omxbfdmpry .gt_footnotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -782,7 +782,7 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dvonxysqrp .gt_footnote {
+#omxbfdmpry .gt_footnote {
 margin: 0px;
 font-size: 90%;
 padding-left: 4px;
@@ -790,7 +790,7 @@ padding-right: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvonxysqrp .gt_sourcenotes {
+#omxbfdmpry .gt_sourcenotes {
 color: #333333;
 background-color: #FFFFFF;
 border-bottom-style: none;
@@ -803,58 +803,58 @@ border-right-style: none;
 border-right-width: 2px;
 border-right-color: #D3D3D3;
 }
-#dvonxysqrp .gt_sourcenote {
+#omxbfdmpry .gt_sourcenote {
 font-size: 90%;
 padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 5px;
 padding-right: 5px;
 }
-#dvonxysqrp .gt_left {
+#omxbfdmpry .gt_left {
 text-align: left;
 }
-#dvonxysqrp .gt_center {
+#omxbfdmpry .gt_center {
 text-align: center;
 }
-#dvonxysqrp .gt_right {
+#omxbfdmpry .gt_right {
 text-align: right;
 font-variant-numeric: tabular-nums;
 }
-#dvonxysqrp .gt_font_normal {
+#omxbfdmpry .gt_font_normal {
 font-weight: normal;
 }
-#dvonxysqrp .gt_font_bold {
+#omxbfdmpry .gt_font_bold {
 font-weight: bold;
 }
-#dvonxysqrp .gt_font_italic {
+#omxbfdmpry .gt_font_italic {
 font-style: italic;
 }
-#dvonxysqrp .gt_super {
+#omxbfdmpry .gt_super {
 font-size: 65%;
 }
-#dvonxysqrp .gt_footnote_marks {
+#omxbfdmpry .gt_footnote_marks {
 font-style: italic;
 font-weight: normal;
 font-size: 75%;
 vertical-align: 0.4em;
 }
-#dvonxysqrp .gt_asterisk {
+#omxbfdmpry .gt_asterisk {
 font-size: 100%;
 vertical-align: 0;
 }
-#dvonxysqrp .gt_indent_1 {
+#omxbfdmpry .gt_indent_1 {
 text-indent: 5px;
 }
-#dvonxysqrp .gt_indent_2 {
+#omxbfdmpry .gt_indent_2 {
 text-indent: 10px;
 }
-#dvonxysqrp .gt_indent_3 {
+#omxbfdmpry .gt_indent_3 {
 text-indent: 15px;
 }
-#dvonxysqrp .gt_indent_4 {
+#omxbfdmpry .gt_indent_4 {
 text-indent: 20px;
 }
-#dvonxysqrp .gt_indent_5 {
+#omxbfdmpry .gt_indent_5 {
 text-indent: 25px;
 }
 </style>
@@ -896,7 +896,7 @@ text-indent: 25px;
 </table>
 </div>
 <p>También podemos representarlo de forma gráfica con la función
-<code>mosaic</code> del paquete <code>vcd</code></p>
+<code>mosaic()</code> del paquete <code>vcd</code></p>
 <pre class="r"><code>library(vcd)</code></pre>
 <pre><code>## Loading required package: grid</code></pre>
 <pre class="r"><code>mosaic(~ mf + area, data = onco, shade = T)</code></pre>
@@ -944,6 +944,7 @@ significancia estadística.</p>
 ##                Rainforest  Savannah
 ##   Infected       7.559839 -7.559839
 ##   Not-infected  -7.559839  7.559839</code></pre>
+<p><br></p>
 </div>
 </div>
 

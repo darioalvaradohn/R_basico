@@ -40,7 +40,7 @@ Para interpretar el resultado de la prueba de Shapiro se observa el valor de P t
 Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
 Es recomendable hacer las pruebas de normalidad para una variable separándola por cada grupo de interés.
-Utilizaremos la función `subset` para separar nuestras variables de acuerdo con los grupos de interés.
+Utilizaremos la función `subset()` para separar nuestras variables de acuerdo con los grupos de interés.
 
 ```{r}
 sM <- subset(datos, sexo == "M")
@@ -58,7 +58,7 @@ shapiro.test(sF$altura)
 
 #### Prueba de homogeneidad (homocedasticidad)
 
-Algunas pruebas paramétricas como el ANOVA requieren que nuestros datos cumplan el supuesto de homogeneidad de la varianza, también conocido como supuesto de homocedasticidad. Para evaluar la homogeneidad de la varianza de una variable entre diferentes grupos utilizaremos la prueba de Levene con la función `leveneTest` del paquete `car`.
+Algunas pruebas paramétricas como el ANOVA requieren que nuestros datos cumplan el supuesto de homogeneidad de la varianza, también conocido como supuesto de homocedasticidad. Para evaluar la homogeneidad de la varianza de una variable entre diferentes grupos utilizaremos la prueba de Levene con la función `leveneTest()` del paquete `car`.
 
 ```{r}
 library(car)
@@ -71,7 +71,7 @@ leveneTest(altura ~ sexo, data = datos)
 Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
 Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
 
-También podemos utilizar la función `LeveneTest` del paquete `DescTools`.
+También podemos utilizar la función `LeveneTest()` del paquete `DescTools`.
 
 ```{r}
 library(DescTools)

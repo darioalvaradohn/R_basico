@@ -38,7 +38,7 @@ head(penguins)
 La prueba de Kruskal-Wallis es un método no paramétrico para comprobar si un grupo de datos proviene de la misma población. Es idéntico al ANOVA y es una extensión de la prueba de Mann-Whitney para tres o más grupos.
 Ya que es una prueba no paramétrica, la prueba de Kruskal-Wallis no asume normalidad en los datos.
 
-Podemos ejecutar la prueba de Kruskal-Wallis con la función `kruskal.test`.
+Podemos ejecutar la prueba de Kruskal-Wallis con la función `kruskal.test()`.
 
 ```{r}
 kruskal.test(body_mass_g ~ island, data = penguins)
@@ -46,7 +46,7 @@ kruskal.test(body_mass_g ~ island, data = penguins)
 
 El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
 
-También podemos hacerlo con la función `kruskal` del paquete `agricolae`
+También podemos hacerlo con la función `kruskal()` del paquete `agricolae`
 
 ```{r}
 k <- kruskal(penguins$body_mass_g, penguins$island)
@@ -57,7 +57,7 @@ Esta función nos brinda más información que la anterior, incluso realiza la p
 
 #### Pruebas de contraste
 
-Para realizar la prueba de contraste después de realizar la prueba de Kruskal-Wallis con la función `kruskal.test` utilizaremos la prueba de Dunn con la función `dunnTest` del paquete `FSA`.
+Para realizar la prueba de contraste después de realizar la prueba de Kruskal-Wallis con la función `kruskal.test()` utilizaremos la prueba de Dunn con la función `dunnTest()` del paquete `FSA`.
 
 ```{r}
 dunnTest(body_mass_g ~ island, data = penguins)
@@ -65,16 +65,16 @@ dunnTest(body_mass_g ~ island, data = penguins)
 
 #### Gráficos
 
-Podemos representarlo gráficamente con la función `plot`.
+Podemos representarlo gráficamente con la función `plot()`.
 
-Gráfico de la función `kruskal`.
+Gráfico de la función `kruskal()`.
 
 ```{r}
 plot(k)
 ```
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
-Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por isla con la función `Summarize` del paquete `FSA`.
+Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por isla con la función `Summarize()` del paquete `FSA`.
 
 ```{r}
 sumbm <- Summarize(body_mass_g ~ island, data = penguins)

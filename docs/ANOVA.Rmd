@@ -35,7 +35,7 @@ head(penguins)
 #### ANOVA (paramétrica)
 
 A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre tres o más grupos.
-Podemos realizar un ANOVA con la función `aov`.
+Podemos realizar un ANOVA con la función `aov()`.
 Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
 Para realizar un ANOVA nuestros datos deben cumplir los supuestos de normalidad y homogeneidad de la varianza.
 
@@ -77,14 +77,14 @@ El valor de P muestra la significancia estadística de la comparación entre los
 
 ##### Prueba post hoc de Tukey
 
-El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD` y especificando la variable que contiene los diferentes grupos.
+El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD()` y especificando la variable que contiene los diferentes grupos.
 
 ```{r}
 pt <- TukeyHSD(p, "species")
 pt
 ```
 
-También se puede realizar este contraste con la función `HSD.test` del paquete `agricolae`.
+También se puede realizar este contraste con la función `HSD.test()` del paquete `agricolae`.
 
 ```{r}
 pc <- HSD.test(p, "species")
@@ -93,7 +93,7 @@ pc
 
 ##### Prueba post hoc de Duncan
 
-Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test` del paquete `agricolae`.
+Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`.
 
 ```{r}
 pd <- duncan.test(p, "species")
@@ -102,28 +102,28 @@ pd
 
 #### Gráficos
 
-Podemos representarlo gráficamente con la función `plot`.
+Podemos representarlo gráficamente con la función `plot()`.
 
-Gráfico de la función `TukeyHSD`.
+Gráfico de la función `TukeyHSD()`.
 
 ```{r}
 plot(pt)
 ```
 
-Gráfico de la función `HSD.test`.
+Gráfico de la función `HSD.test()`.
 
 ```{r}
 plot(pc)
 ```
 
-Gráfico de la función `duncan.test`
+Gráfico de la función `duncan.test()`
 
 ```{r}
 plot(pd)
 ```
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
-Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos por especie con la función `Summarize` del paquete `FSA`.
+Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos por especie con la función `Summarize()` del paquete `FSA`.
 
 ```{r}
 sum <- Summarize(flipper_length_mm ~ species, data = penguins)
