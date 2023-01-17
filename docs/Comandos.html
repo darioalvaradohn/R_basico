@@ -446,22 +446,22 @@ dentro del objeto.</p>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)</code></pre>
 <pre class="r"><code>altura2</code></pre>
-<pre><code>## [1] 169.0880 151.8435 155.1918 161.2119 144.6967 163.7324 151.8162 151.6805</code></pre>
+<pre><code>## [1] 153.5553 159.0788 160.9739 157.3258 147.4518 150.7576 180.9086 152.1812</code></pre>
 <p>Con la función <code>round()</code> puedes redondear los valores para
 quitar o reducir la cantidad de decimales con el argumento
 <code>digits</code>.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 169.09 151.84 155.19 161.21 144.70 163.73 151.82 151.68</code></pre>
+<pre><code>## [1] 153.56 159.08 160.97 157.33 147.45 150.76 180.91 152.18</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 169 152 155 161 145 164 152 152</code></pre>
+<pre><code>## [1] 154 159 161 157 147 151 181 152</code></pre>
 <p>También puedes hacerlo de una forma completamente aleatoria con la
 función <code>sample()</code> definiendo el <code>rango</code> que
 contendrá tus observaciones y la cantidad de <code>muestras</code> que
 es el número de observaciones</p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)</code></pre>
 <pre class="r"><code>altura3</code></pre>
-<pre><code>## [1] 158 184 163 186 180 152 178 153</code></pre>
-<p>Para crear un vector de texto cada uno debe ir entre comillas
+<pre><code>## [1] 153 171 172 164 189 179 178 176</code></pre>
+<p>Para crear un vector de textos, cada texto debe ir entre comillas
 <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)</code></pre>
 <pre class="r"><code>nombre</code></pre>
@@ -542,12 +542,13 @@ una variable categórica.</p>
 ##  $ Sexo  : chr  &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; ...</code></pre>
 <p>Ahora guardemos nuestra tabla. Para eso guardaremos usando la función
 <code>write.csv()</code>, con esto generamos un archivo de valores
-separados por comas (<code>csv</code>) altamente reproducible.</p>
+separados por comas (<code>csv</code>).</p>
 <pre class="r"><code>write.csv(tabla, file = &quot;data/tabla1.csv&quot;)</code></pre>
 <p>También podemos utilizar paquetes para exportar nuestra base de
 datos. Para eso utilizaremos la función <code>export()</code> del
 paquete <code>rio</code>.</p>
 <pre class="r"><code>library(rio)</code></pre>
+<pre><code>## Warning: package &#39;rio&#39; was built under R version 4.2.2</code></pre>
 <pre class="r"><code>export(tabla, &quot;data/tabla1.xlsx&quot;)</code></pre>
 <p>Ahora carguemos nuestra tabla. Para eso utilizaremos la función
 <code>read.csv()</code>.</p>

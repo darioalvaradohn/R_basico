@@ -156,7 +156,7 @@ altura3 <- sample(150:190, size = 8)
 altura3
 ```
 
-Para crear un vector de texto cada uno debe ir entre comillas `" "`.
+Para crear un vector de textos, cada texto debe ir entre comillas `" "`.
 
 ```{r}
 nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier", "Andrea")
@@ -217,7 +217,6 @@ Algunas formas para explorar nuestras tablas son las siguientes:
 View(tabla)
 ```
 
-
 ```{r}
 head(tabla)
 ```
@@ -231,7 +230,7 @@ str(tabla)
 ```
 
 Ahora guardemos nuestra tabla.
-Para eso guardaremos usando la función `write.csv()`, con esto generamos un archivo de valores separados por comas (`csv`) altamente reproducible.
+Para eso guardaremos usando la función `write.csv()`, con esto generamos un archivo de valores separados por comas (`csv`).
 
 ```{r}
 write.csv(tabla, file = "data/tabla1.csv")
