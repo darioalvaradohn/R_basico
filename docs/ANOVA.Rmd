@@ -143,14 +143,13 @@ Con estos datos procedemos a graficarlo.
 
 ```{r}
 ggplot(sum, aes(species, mean)) +
-  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
   geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
+  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
 labs(title = "Diferencias entre el largo de la aleta de pingüinos por especie",
      y = "Largo de aleta (mm)",
      x = "Especie") +
-  annotate("text", x = "Adelie", y = 193, label = "c") +
-  annotate("text", x = "Chinstrap", y = 200, label = "b") +
-  annotate("text", x = "Gentoo", y = 220, label = "a") +
+  geom_text(aes(label = c("c", "b", "a")), vjust = -1.5) +
+  ylim(c(185,225)) +
   theme_classic()
 ```
 
