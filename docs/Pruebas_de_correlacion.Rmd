@@ -76,7 +76,7 @@ En este caso, el valor de `rho` indica la magnitud y dirección de la correlaci�
 
 También podemos evaluar la correlación entre más de dos variables
 
-Podemos utilizar la función `ggpairs()` del paquete `GGAlly`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
+Podemos utilizar la función `ggpairs()` del paquete `GGally`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
 
 ```{r}
 suelosb <- suelos[,6:14]

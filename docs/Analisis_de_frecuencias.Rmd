@@ -1,9 +1,11 @@
 ---
-output: html_document
+output:
+  word_document: default
+  html_document: default
 header-includes:
-  - \usepackage{float}
-  - \floatstyle{boxed}
-  - \restylefloat{figure}
+- \usepackage{float}
+- \floatstyle{boxed}
+- \restylefloat{figure}
 ---
 
 <div style="display:flex; align-items:center;">
