@@ -16,6 +16,8 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
 En esta clase implementaremos comandos básicos en R, aprenderás a crear objetos que contengan variables, tablas y también a cargar tus bases de datos para analizarlas en R.
 
 ### Contenido{.tabset .tabset-pills}

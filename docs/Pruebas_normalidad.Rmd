@@ -15,6 +15,8 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
 Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas paramétricas requieren que la varianza de los datos cumpla una **distribución normal** (supuesto de normalidad) y que sea **homogenea** o constante  (supuesto de homogeneidad/homocedasticidad de varianza).
 
 <br>

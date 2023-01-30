@@ -16,6 +16,8 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
 
