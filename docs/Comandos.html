@@ -363,14 +363,15 @@ crear objetos que contengan variables, tablas y también a cargar tus
 bases de datos para analizarlas en R.</p>
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
+<p><br></p>
 <div id="comandos-básicos" class="section level4">
 <h4>Comandos básicos</h4>
 <p>Pues usar R como una calculadora para ejecutar operaciones
-matemáticas</p>
+matemáticas:</p>
 <ul>
 <li>Sumas</li>
 </ul>
-<pre class="r"><code>2 + 4</code></pre>
+<pre class="r"><code>2 + 4 # para ejecutar un código en un script (fuera de la consola), presionamos las teclas `Ctrl + Enter`</code></pre>
 <pre><code>## [1] 6</code></pre>
 <pre class="r"><code>2 + 4 + 3</code></pre>
 <pre><code>## [1] 9</code></pre>
@@ -414,70 +415,88 @@ la raíz cuadrada.</p>
 </ul>
 <pre class="r"><code>exp(4)</code></pre>
 <pre><code>## [1] 54.59815</code></pre>
+<p><br></p>
 </div>
 <div id="creación-de-objetos" class="section level4">
 <h4>Creación de objetos</h4>
-<p>En R puedes asignar variables a un objeto para utilizarlos en el
-proceso de análisis. Para asignar una variable a un objeto utilizamos el
-comando <code>&lt;-</code> o el comando <code>=</code>.</p>
-<p><em>objeto</em> <code>&lt;-</code> <em>variable</em></p>
-<p><em>objeto</em> <code>=</code> <em>variable</em></p>
-<p><em>variable</em> <code>-&gt;</code> <em>objeto</em></p>
+<p>En R puedes asignar <strong>valores</strong> o variables a un objeto
+para utilizarlos en el proceso de análisis.</p>
+<p>Para asignar un valor o variable a un objeto utilizamos el operador
+<code>&lt;-</code>.</p>
+<p><code>objeto</code> <code>&lt;-</code> <code>variable</code></p>
 <pre class="r"><code>a &lt;- 4 + 8</code></pre>
-<p>Para ver el contenido del objeto solamente tienes que llamarlo</p>
+<p>Para ver el contenido del objeto que creamos solo tenemos que colocar
+el nombre y ejecutarlo:</p>
 <pre class="r"><code>a</code></pre>
 <pre><code>## [1] 12</code></pre>
-<p>Observa que la variable dentro del objeto es el resultado de la
-operación matemática que colocamos.</p>
+<p><strong>Observa que la variable dentro del objeto es el resultado de
+la operación matemática que colocamos.</strong></p>
+<p>Además del operador <code>&lt;-</code>, también se puede utilizar el
+igual <code>=</code> para asignar una variable a un objeto.</p>
+<p><code>objeto</code> <code>=</code> <code>variable</code></p>
+<pre class="r"><code>a = 4 + 8
+a</code></pre>
+<pre><code>## [1] 12</code></pre>
+<p>Y también se puede utilzar el operador de flecha inversa
+<code>-&gt;</code>.</p>
+<p><code>variable</code> <code>-&gt;</code> <code>objeto</code></p>
+<pre class="r"><code>4 + 8 -&gt; a
+a</code></pre>
+<pre><code>## [1] 12</code></pre>
+<p><strong>Nótese que la dirección de la flecha indica la variable que
+se asignará al objeto.</strong></p>
 <p>También puedes asignar texto a tus objetos. Para esto tienes que
 colocar el texto entre comillas <code>&quot; &quot;</code>.</p>
-<pre class="r"><code>b &lt;- &quot;Rbasico&quot;</code></pre>
-<pre class="r"><code>b</code></pre>
+<pre class="r"><code>b &lt;- &quot;Rbasico&quot;
+b</code></pre>
 <pre><code>## [1] &quot;Rbasico&quot;</code></pre>
-<p>Puedes crear vectores tanto numéricos como de texto. Para esto se
-utiliza el comando <code>c()</code> para <em>concatenar</em> lo que irá
-dentro del objeto.</p>
-<pre class="r"><code>altura &lt;- c(180, 150, 169, 161, 174, 168, 192, 174)</code></pre>
-<pre class="r"><code>altura</code></pre>
+<p>Puedes crear <strong>vectores</strong> tanto numéricos como de texto.
+Para esto se utiliza el comando <code>c()</code> para
+<em>concatenar</em> lo que irá dentro del objeto, cada valor u
+observación debe ir separada por una coma.</p>
+<pre class="r"><code>altura &lt;- c(180, 150, 169, 161, 174, 168, 192, 174)
+altura</code></pre>
 <pre><code>## [1] 180 150 169 161 174 168 192 174</code></pre>
-<p>También puedes crear una variable con datos aleatorios con la función
+<p>Podemos crear una variable con datos aleatorios con la función
 <code>rnorm()</code> definiendo el número de observaciones
 <code>n</code>, la media <code>mean</code> y la desviación estándar
 <code>sd</code></p>
-<pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)</code></pre>
-<pre class="r"><code>altura2</code></pre>
-<pre><code>## [1] 153.5553 159.0788 160.9739 157.3258 147.4518 150.7576 180.9086 152.1812</code></pre>
-<p>Con la función <code>round()</code> puedes redondear los valores para
-quitar o reducir la cantidad de decimales con el argumento
-<code>digits</code>.</p>
+<pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
+altura2</code></pre>
+<pre><code>## [1] 161.0989 167.7924 184.9793 172.9357 171.4761 155.4219 155.5740 164.4620</code></pre>
+<p>Con la función <code>round()</code> podemos redondear los valores, y
+con el argumento <code>digits =</code> indicamos la cantidad de
+decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 153.56 159.08 160.97 157.33 147.45 150.76 180.91 152.18</code></pre>
+<pre><code>## [1] 161.10 167.79 184.98 172.94 171.48 155.42 155.57 164.46</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 154 159 161 157 147 151 181 152</code></pre>
-<p>También puedes hacerlo de una forma completamente aleatoria con la
-función <code>sample()</code> definiendo el <code>rango</code> que
-contendrá tus observaciones y la cantidad de <code>muestras</code> que
-es el número de observaciones</p>
-<pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)</code></pre>
-<pre class="r"><code>altura3</code></pre>
-<pre><code>## [1] 153 171 172 164 189 179 178 176</code></pre>
-<p>Para crear un vector de textos, cada texto debe ir entre comillas
-<code>&quot; &quot;</code>.</p>
-<pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)</code></pre>
-<pre class="r"><code>nombre</code></pre>
+<pre><code>## [1] 161 168 185 173 171 155 156 164</code></pre>
+<p>También podemos generar una variable de una forma completamente
+aleatoria con la función <code>sample()</code> definiendo el
+<code>rango</code> que contendrá nuestras observaciones y la cantidad de
+<code>muestras</code> que es el número de observaciones con el argumento
+<code>size =</code></p>
+<pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
+altura3</code></pre>
+<pre><code>## [1] 172 154 186 189 151 177 175 152</code></pre>
+<p>Para crear un vector de textos, cada observación o valor debe ir
+entre comillas <code>&quot; &quot;</code>.</p>
+<pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
+nombre</code></pre>
 <pre><code>## [1] &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot;  &quot;Nancy&quot;  &quot;Pedro&quot;  &quot;Javier&quot; &quot;Andrea&quot;</code></pre>
+<p><br></p>
 </div>
 <div id="creación-de-tablas" class="section level4">
 <h4>Creación de tablas</h4>
 <p>Para crear una tabla o cuadro utilizaremos el comando
 <code>data.frame()</code>, este genera una matriz a partir de vectores
-contenidos en objetos. Para que este comando funcione, todos los objetos
-deben contener el mismo número de observaciones. En nuestro caso, la
-variable <code>altura</code> coniene ocho observaciones, y la variable
-<code>nombre</code> también contiene ocho observaciones. ¡Hagamos
-nuestra tabla!</p>
-<pre class="r"><code>tabla &lt;- data.frame(Nombre = nombre, Altura = altura)</code></pre>
-<pre class="r"><code>tabla</code></pre>
+contenidos en objetos. Para que este comando funcione, <strong>todas las
+variables deben contener el mismo número de observaciones</strong>. En
+nuestro caso, la variable <code>altura</code> contiene ocho
+observaciones, y la variable <code>nombre</code> también contiene ocho
+observaciones.</p>
+<pre class="r"><code>tabla &lt;- data.frame(Nombre = nombre, Altura = altura)
+tabla</code></pre>
 <pre><code>##   Nombre Altura
 ## 1 Carlos    180
 ## 2 Miguel    150
@@ -487,12 +506,12 @@ nuestra tabla!</p>
 ## 6  Pedro    168
 ## 7 Javier    192
 ## 8 Andrea    174</code></pre>
-<p>También puedes agregar más variables a tu tabla. Para eso creamos
-nuestra nueva variable:</p>
+<p>También podemos agregar más variables a nuestra tabla.</p>
+<p>Para eso creamos nuestra nueva variable:</p>
 <pre class="r"><code>peso &lt;- c(80, 67, 54, 62, 65, 79, 102, 65)</code></pre>
 <p>Ahora la agregamos a nuestra tabla de la siguiente manera:</p>
-<pre class="r"><code>tabla$Peso &lt;- peso</code></pre>
-<pre class="r"><code>tabla</code></pre>
+<pre class="r"><code>tabla$Peso &lt;- peso
+tabla</code></pre>
 <pre><code>##   Nombre Altura Peso
 ## 1 Carlos    180   80
 ## 2 Miguel    150   67
@@ -502,11 +521,12 @@ nuestra nueva variable:</p>
 ## 6  Pedro    168   79
 ## 7 Javier    192  102
 ## 8 Andrea    174   65</code></pre>
+<pre class="r"><code># Con el símbolo de $ podemos seleccionar una variable (columna) existente dentro de nuestra tabla o podemos asignar el nombre de una nueva variable.</code></pre>
 <p>Ya tenemos dos variables numéricas en nuestra tabla. Ahora agreguemos
 una variable categórica.</p>
 <pre class="r"><code>sexo &lt;- c(&quot;M&quot;, &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;M&quot;, &quot;F&quot;)</code></pre>
-<pre class="r"><code>tabla$Sexo &lt;- sexo</code></pre>
-<pre class="r"><code>tabla</code></pre>
+<pre class="r"><code>tabla$Sexo &lt;- sexo
+tabla</code></pre>
 <pre><code>##   Nombre Altura Peso Sexo
 ## 1 Carlos    180   80    M
 ## 2 Miguel    150   67    M
@@ -516,8 +536,14 @@ una variable categórica.</p>
 ## 6  Pedro    168   79    M
 ## 7 Javier    192  102    M
 ## 8 Andrea    174   65    F</code></pre>
-<p>Algunas formas para explorar nuestras tablas son las siguientes:</p>
-<pre class="r"><code>View(tabla)</code></pre>
+<p><br></p>
+</div>
+<div id="exploración-de-tablas" class="section level4">
+<h4>Exploración de tablas</h4>
+<p>Algunas formas para explorar nuestras tablas de datos son las
+siguientes:</p>
+<pre class="r"><code>View(tabla)
+# Abre una nueva ventana con la tabla completa</code></pre>
 <pre class="r"><code>head(tabla)</code></pre>
 <pre><code>##   Nombre Altura Peso Sexo
 ## 1 Carlos    180   80    M
@@ -526,6 +552,16 @@ una variable categórica.</p>
 ## 4  Laura    161   62    F
 ## 5  Nancy    174   65    F
 ## 6  Pedro    168   79    M</code></pre>
+<pre class="r"><code># muestra por defecto las primeras seis observaciones (filas) de nuestra tabla, podemos especificar el número de observaciones agregando el número después del nombre de la tabla separando con una coma: `head(tabla, 10)`</code></pre>
+<pre class="r"><code>tail(tabla)</code></pre>
+<pre><code>##   Nombre Altura Peso Sexo
+## 3 Carmen    169   54    F
+## 4  Laura    161   62    F
+## 5  Nancy    174   65    F
+## 6  Pedro    168   79    M
+## 7 Javier    192  102    M
+## 8 Andrea    174   65    F</code></pre>
+<pre class="r"><code># muestra por defecto las últimas seis observaciones de nuestra tabla, podemos especificar el número de observación igual que en la función `head()`</code></pre>
 <pre class="r"><code>summary(tabla)</code></pre>
 <pre><code>##     Nombre              Altura           Peso            Sexo          
 ##  Length:8           Min.   :150.0   Min.   : 54.00   Length:8          
@@ -534,26 +570,43 @@ una variable categórica.</p>
 ##                     Mean   :171.0   Mean   : 71.75                     
 ##                     3rd Qu.:175.5   3rd Qu.: 79.25                     
 ##                     Max.   :192.0   Max.   :102.00</code></pre>
+<pre class="r"><code># muestra un resumen de las variables que tenemos en nuestra tabla</code></pre>
 <pre class="r"><code>str(tabla)</code></pre>
 <pre><code>## &#39;data.frame&#39;:    8 obs. of  4 variables:
 ##  $ Nombre: chr  &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot; ...
 ##  $ Altura: num  180 150 169 161 174 168 192 174
 ##  $ Peso  : num  80 67 54 62 65 79 102 65
 ##  $ Sexo  : chr  &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; ...</code></pre>
-<p>Ahora guardemos nuestra tabla. Para eso guardaremos usando la función
-<code>write.csv()</code>, con esto generamos un archivo de valores
-separados por comas (<code>csv</code>).</p>
-<pre class="r"><code>write.csv(tabla, file = &quot;data/tabla1.csv&quot;)</code></pre>
-<p>También podemos utilizar paquetes para exportar nuestra base de
-datos. Para eso utilizaremos la función <code>export()</code> del
-paquete <code>rio</code>.</p>
-<pre class="r"><code>library(rio)</code></pre>
-<pre><code>## Warning: package &#39;rio&#39; was built under R version 4.2.2</code></pre>
-<pre class="r"><code>export(tabla, &quot;data/tabla1.xlsx&quot;)</code></pre>
+<pre class="r"><code># muestra la estructura de nuestra tabla</code></pre>
+<p><br></p>
+</div>
+<div id="exportar-e-importar-tablas" class="section level4">
+<h4>Exportar e importar tablas</h4>
+<p>Primero usaremos la función <code>write.csv()</code>, con esto
+generamos un archivo de valores separados por comas
+(<code>csv</code>).</p>
+<pre class="r"><code>write.csv(tabla, file = &quot;data/tabla1.csv&quot;)
+# colocamos el nombre de nuestra tabla de datos y con el argumento `file =` indicamos la &quot;ruta de ubicación&quot; que tendrá nuestra tabla de datos en nuestra computadora.
+
+# Si queremos guardar nuestra tabla en una carpeta fuera de la carpeta que contiene nuestro proyecto de R en el que estamos trabajando, debemos colocar la ruta completa de ubicación de esa carpeta externa.Por ejemplo: &quot;C:/Users/Nombre/Documents/CursoR/R_basico/datos/tabla.csv&quot;
+
+# Se debe colocar el formato después del nombre que queremos asignar a nuestra tabla, en este caso `.csv`</code></pre>
+<p>También podemos utilizar <strong>paquetes</strong> (complementos de
+R) para exportar nuestra base de datos. Para eso utilizaremos la función
+<code>export()</code> del paquete <code>rio</code>.</p>
+<pre class="r"><code>#install.packages(&quot;rio&quot;) # comando para instalación de paquetes
+library(rio) # comando para cargar los paquetes en un script
+
+# Cada vez que cerremos nuestro proyecto de R y volvamos a ingresar tenemos que cargar los paquetes de nuestros scripts con la función `library()`, pero no hay necesidad de volver a instalarlos.
+
+# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...`</code></pre>
+<pre class="r"><code>export(tabla, &quot;data/tabla1.xlsx&quot;)
+# aquí también debemos indicar la &quot;ruta de ubicación&quot; en donde se guardará nuestra tabla.
+# el paquete rio permite exportar e importar archivos en formato .csv, .xlsx. .txt, entre otros.</code></pre>
 <p>Ahora carguemos nuestra tabla. Para eso utilizaremos la función
 <code>read.csv()</code>.</p>
-<pre class="r"><code>tabla1 &lt;- read.csv(&quot;data/tabla1.csv&quot;)</code></pre>
-<pre class="r"><code>tabla1</code></pre>
+<pre class="r"><code>tabla1 &lt;- read.csv(&quot;data/tabla1.csv&quot;)
+tabla1</code></pre>
 <pre><code>##   X Nombre Altura Peso Sexo
 ## 1 1 Carlos    180   80    M
 ## 2 2 Miguel    150   67    M
@@ -565,7 +618,8 @@ paquete <code>rio</code>.</p>
 ## 8 8 Andrea    174   65    F</code></pre>
 <p>Y también podemos hacerlo con la función <code>import()</code> del
 paquete <code>rio</code>.</p>
-<pre class="r"><code>import(&quot;data/tabla1.xlsx&quot;)</code></pre>
+<pre class="r"><code>tabla1 &lt;- import(&quot;data/tabla1.xlsx&quot;)
+tabla1</code></pre>
 <pre><code>##   Nombre Altura Peso Sexo
 ## 1 Carlos    180   80    M
 ## 2 Miguel    150   67    M

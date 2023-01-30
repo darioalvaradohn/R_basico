@@ -15,29 +15,48 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas paramétricas requieren que la varianza de los datos cumpla una **distribución normal** y que tenga **homogeneidad** (homocedasticidad).
+Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas paramétricas requieren que la varianza de los datos cumpla una **distribución normal** (supuesto de normalidad) y que sea **homogenea** o constante  (supuesto de homogeneidad/homocedasticidad de varianza).
 
-```{r}
+<br>
+
+#### Paquetes
+
+```{r, message=FALSE, warning=FALSE}
 library(rio)
+library(car)
+library(DescTools)
+library(interpretCI)
+library(nortest)
+library(MVN)
 ```
+
+<br>
+
+#### Datos
 
 ```{r}
 datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
 
+<br>
+
 ### Contenido{.tabset .tabset-pills}
+
+<br>
 
 #### Pruebas de normalidad
 
-Para evaluar la normalidad de nuestros datos utilizaremos la prueba de Shapiro-Wilk
+##### Prueba de Shapiro-Wilk
+
+Para muestras de tamaño pequeño (50 datos o menos)
 
 ```{r}
 shapiro.test(datos$altura)
 ```
 
-Para interpretar el resultado de la prueba de Shapiro se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
-Si el valor de P es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de P es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
+Para interpretar el resultado de la prueba de Shapiro-Wilk se observa el valor de p tomando como referencia el valor de alpha que por defecto es de 0.05.
+Si el valor de p es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de p es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
 Es recomendable hacer las pruebas de normalidad para una variable separándola por cada grupo de interés.
 Utilizaremos la función `subset()` para separar nuestras variables de acuerdo con los grupos de interés.
@@ -55,29 +74,93 @@ shapiro.test(sM$altura)
 shapiro.test(sF$altura)
 ```
 
+<br>
 
-#### Prueba de homogeneidad (homocedasticidad)
+##### Prueba de Kolmogorov-Smirnov 
 
-Algunas pruebas paramétricas como el ANOVA requieren que nuestros datos cumplan el supuesto de homogeneidad de la varianza, también conocido como supuesto de homocedasticidad. Para evaluar la homogeneidad de la varianza de una variable entre diferentes grupos utilizaremos la prueba de Levene con la función `leveneTest()` del paquete `car`.
+Para tamaños de muestra mayores de 50 datos
+
+```{r, message=FALSE, warning=FALSE}
+ks.test(datos$altura, 
+        pnorm, 
+        mean(datos$altura), 
+        sd(datos$altura)) 
+# para esta prueba tenemos que especificar la media y la desviación estándar de los datos, si no lo hacemos, retornará un valor de p erroneo.
+```
+
+<br>
+
+###### Prueba de Lilliefors 
+
+Con una función del paquete `DescTools`
 
 ```{r}
-library(car)
+LillieTest(datos$altura)
+```
+
+Con una función del paquete `nortest`
+
+```{r}
+lillie.test(datos$altura)
+```
+
+<br>
+
+##### Pruebas de normalidad multivariada con el paquete `MVN`
+
+```{r}
+multivariada <- mvn(data = datos[,2:4], # seleccionamos las variables de la tabla (columnas de la 2 a la 4)
+                    mvnTest = "royston", # indicamos el método para calcular la normalidad multivariada
+                    univariateTest = "SW") # indicamos el método para calcular la normalidad univariada
+
+multivariada # para ver el resultado completo de la prueba
+
+multivariada$multivariateNormality # para ver el resultado de la normalidad multivariada 
+
+multivariada$univariateNormality # para ver el resultado de la normalidad univariada
 ```
 
 ```{r}
+multisubset <- mvn(data = datos, 
+                   subset = "sexo", # podemos indicar que divida los datos según los grupos de interés
+                   mvnTest = "royston", 
+                   univariateTest = "Lillie")
+
+multisubset
+
+multisubset$multivariateNormality
+
+multisubset$univariateNormality
+```
+
+
+
+#### Prueba de homogeneidad de varianza
+
+Algunas pruebas paramétricas como el ANOVA requieren que nuestros datos cumplan el supuesto de homogeneidad de la varianza, también conocido como **supuesto de homocedasticidad**. Este nos dice si la varianza permanece constante entre los grupos.
+
+##### Prueba de Levene
+
+Con la función `leveneTest()` del paquete `car`.
+
+```{r, message=FALSE, warning=FALSE}
 leveneTest(altura ~ sexo, data = datos)
 ```
 
-Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de P tomando como referencia el valor de alpha que por defecto es de 0.05.
-Si el valor de P es mayor que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de P es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
+Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de p tomando como referencia el valor de alpha que por defecto es de 0.05.
+Si el valor de p es mayor o igual que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de p es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
 
 También podemos utilizar la función `LeveneTest()` del paquete `DescTools`.
 
-```{r}
-library(DescTools)
+```{r, message=FALSE, warning=FALSE}
+LeveneTest(altura ~ sexo, data = datos)
 ```
 
+##### Prueba F
+
+También podemos hacer una prueba F para comparar la homogeneidad entre dos varianzas
+
 ```{r}
-LeveneTest(altura ~ sexo, data = datos)
+var.test(altura ~ sexo, data = datos)
 ```
 

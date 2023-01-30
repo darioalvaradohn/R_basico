@@ -361,34 +361,51 @@ Pruebas de normalidad y homocedasticidad
 <p>Para realizar algunos métodos estadísticos es necesario que nuestros
 datos cumplan algunos supuestos. Algunas pruebas paramétricas requieren
 que la varianza de los datos cumpla una <strong>distribución
-normal</strong> y que tenga <strong>homogeneidad</strong>
-(homocedasticidad).</p>
-<pre class="r"><code>library(rio)</code></pre>
+normal</strong> (supuesto de normalidad) y que sea
+<strong>homogenea</strong> o constante (supuesto de
+homogeneidad/homocedasticidad de varianza).</p>
+<p><br></p>
+<div id="paquetes" class="section level4">
+<h4>Paquetes</h4>
+<pre class="r"><code>library(rio)
+library(car)
+library(DescTools)
+library(interpretCI)
+library(nortest)
+library(MVN)</code></pre>
+<p><br></p>
+</div>
+<div id="datos" class="section level4">
+<h4>Datos</h4>
 <pre class="r"><code>datos &lt;- import(&quot;data/medidas_personas.csv&quot;)
 head(datos)</code></pre>
-<pre><code>##   V1 sexo altura peso edad
-## 1  1    M    170   71   47
-## 2  2    M    162   79   36
-## 3  3    M    149   86   43
-## 4  4    M    181   97   23
-## 5  5    M    156   98   29
-## 6  6    M    165  107   49</code></pre>
+<pre><code>##   sexo altura peso edad
+## 1    M    170   71   47
+## 2    M    162   79   36
+## 3    M    149   86   43
+## 4    M    181   97   23
+## 5    M    156   98   29
+## 6    M    165  107   49</code></pre>
+<p><br></p>
+</div>
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
+<p><br></p>
 <div id="pruebas-de-normalidad" class="section level4">
 <h4>Pruebas de normalidad</h4>
-<p>Para evaluar la normalidad de nuestros datos utilizaremos la prueba
-de Shapiro-Wilk</p>
+<div id="prueba-de-shapiro-wilk" class="section level5">
+<h5>Prueba de Shapiro-Wilk</h5>
+<p>Para muestras de tamaño pequeño (50 datos o menos)</p>
 <pre class="r"><code>shapiro.test(datos$altura)</code></pre>
 <pre><code>## 
 ##  Shapiro-Wilk normality test
 ## 
 ## data:  datos$altura
 ## W = 0.98371, p-value = 0.2555</code></pre>
-<p>Para interpretar el resultado de la prueba de Shapiro se observa el
-valor de P tomando como referencia el valor de alpha que por defecto es
-de 0.05. Si el valor de P es mayor que alpha (0.05), nuestros datos
-provienen de una muestra con una distribución normal. Si el valor de P
+<p>Para interpretar el resultado de la prueba de Shapiro-Wilk se observa
+el valor de p tomando como referencia el valor de alpha que por defecto
+es de 0.05. Si el valor de p es mayor que alpha (0.05), nuestros datos
+provienen de una muestra con una distribución normal. Si el valor de p
 es menor que alpha (0.05), los datos no presentan una distribución
 normal y se debería utilizar una prueba no paramétrica para analizar los
 datos.</p>
@@ -410,44 +427,183 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ## 
 ## data:  sF$altura
 ## W = 0.97515, p-value = 0.333</code></pre>
+<p><br></p>
 </div>
-<div id="prueba-de-homogeneidad-homocedasticidad" class="section level4">
-<h4>Prueba de homogeneidad (homocedasticidad)</h4>
+<div id="prueba-de-kolmogorov-smirnov" class="section level5">
+<h5>Prueba de Kolmogorov-Smirnov</h5>
+<p>Para tamaños de muestra mayores de 50 datos</p>
+<pre class="r"><code>ks.test(datos$altura, 
+        pnorm, 
+        mean(datos$altura), 
+        sd(datos$altura)) </code></pre>
+<pre><code>## 
+##  Asymptotic one-sample Kolmogorov-Smirnov test
+## 
+## data:  datos$altura
+## D = 0.048915, p-value = 0.9705
+## alternative hypothesis: two-sided</code></pre>
+<pre class="r"><code># para esta prueba tenemos que especificar la media y la desviación estándar de los datos, si no lo hacemos, retornará un valor de p erroneo.</code></pre>
+<p><br></p>
+<div id="prueba-de-lilliefors" class="section level6">
+<h6>Prueba de Lilliefors</h6>
+<p>Con una función del paquete <code>DescTools</code></p>
+<pre class="r"><code>LillieTest(datos$altura)</code></pre>
+<pre><code>## 
+##  Lilliefors (Kolmogorov-Smirnov) normality test
+## 
+## data:  datos$altura
+## D = 0.048915, p-value = 0.8053</code></pre>
+<p>Con una función del paquete <code>nortest</code></p>
+<pre class="r"><code>lillie.test(datos$altura)</code></pre>
+<pre><code>## 
+##  Lilliefors (Kolmogorov-Smirnov) normality test
+## 
+## data:  datos$altura
+## D = 0.048915, p-value = 0.8053</code></pre>
+<p><br></p>
+</div>
+</div>
+<div id="pruebas-de-normalidad-multivariada-con-el-paquete-mvn" class="section level5">
+<h5>Pruebas de normalidad multivariada con el paquete
+<code>MVN</code></h5>
+<pre class="r"><code>multivariada &lt;- mvn(data = datos[,2:4], # seleccionamos las variables de la tabla (columnas de la 2 a la 4)
+                    mvnTest = &quot;royston&quot;, # indicamos el método para calcular la normalidad multivariada
+                    univariateTest = &quot;SW&quot;) # indicamos el método para calcular la normalidad univariada
+
+multivariada # para ver el resultado completo de la prueba</code></pre>
+<pre><code>## $multivariateNormality
+##      Test        H      p value MVN
+## 1 Royston 19.84379 0.0001846612  NO
+## 
+## $univariateNormality
+##           Test  Variable Statistic   p value Normality
+## 1 Shapiro-Wilk  altura      0.9837    0.2555    YES   
+## 2 Shapiro-Wilk   peso       0.9675    0.0143    NO    
+## 3 Shapiro-Wilk   edad       0.9452    0.0004    NO    
+## 
+## $Descriptives
+##          n   Mean   Std.Dev Median Min Max   25th   75th       Skew   Kurtosis
+## altura 100 160.04 15.196969  160.0 130 192 149.00 171.00 0.04903637 -0.6792979
+## peso   100  74.44 15.445126   73.0  48 110  64.00  83.75 0.42924967 -0.4786489
+## edad   100  34.71  9.818859   34.5  18  50  26.75  43.25 0.03527471 -1.2362890</code></pre>
+<pre class="r"><code>multivariada$multivariateNormality # para ver el resultado de la normalidad multivariada </code></pre>
+<pre><code>##      Test        H      p value MVN
+## 1 Royston 19.84379 0.0001846612  NO</code></pre>
+<pre class="r"><code>multivariada$univariateNormality # para ver el resultado de la normalidad univariada</code></pre>
+<pre><code>##           Test  Variable Statistic   p value Normality
+## 1 Shapiro-Wilk  altura      0.9837    0.2555    YES   
+## 2 Shapiro-Wilk   peso       0.9675    0.0143    NO    
+## 3 Shapiro-Wilk   edad       0.9452    0.0004    NO</code></pre>
+<pre class="r"><code>multisubset &lt;- mvn(data = datos, 
+                   subset = &quot;sexo&quot;, # podemos indicar que divida los datos según los grupos de interés
+                   mvnTest = &quot;royston&quot;, 
+                   univariateTest = &quot;Lillie&quot;)
+
+multisubset</code></pre>
+<pre><code>## $multivariateNormality
+## $multivariateNormality$F
+##      Test        H      p value MVN
+## 1 Royston 16.42815 0.0009259699  NO
+## 
+## $multivariateNormality$M
+##      Test        H     p value MVN
+## 1 Royston 12.07315 0.007109405  NO
+## 
+## 
+## $univariateNormality
+## $univariateNormality$F
+##                              Test  Variable Statistic   p value Normality
+## 1 Lilliefors (Kolmogorov-Smirnov)  altura      0.1044    0.1597    YES   
+## 2 Lilliefors (Kolmogorov-Smirnov)   peso       0.1291    0.0277    NO    
+## 3 Lilliefors (Kolmogorov-Smirnov)   edad       0.0982    0.2283    YES   
+## 
+## $univariateNormality$M
+##                              Test  Variable Statistic   p value Normality
+## 1 Lilliefors (Kolmogorov-Smirnov)  altura      0.0891    0.4599    YES   
+## 2 Lilliefors (Kolmogorov-Smirnov)   peso       0.0973    0.3220    YES   
+## 3 Lilliefors (Kolmogorov-Smirnov)   edad       0.1312    0.0415    NO    
+## 
+## 
+## $Descriptives
+## $Descriptives$F
+##         n      Mean   Std.Dev Median Min Max 25th 75th        Skew   Kurtosis
+## altura 53 151.90566 12.235296    152 130 181  142  161  0.05558656 -0.8380653
+## peso   53  65.90566  9.900008     66  48  79   58   76 -0.30993175 -1.1655586
+## edad   53  32.35849  9.152751     31  19  50   24   41  0.22692139 -1.2764494
+## 
+## $Descriptives$M
+##         n      Mean   Std.Dev Median Min Max  25th  75th        Skew   Kurtosis
+## altura 47 169.21277 12.868796    171 139 192 159.5 178.0 -0.15573385 -0.6284702
+## peso   47  84.06383 14.968669     87  60 110  70.5  94.5 -0.01231122 -1.1751790
+## edad   47  37.36170  9.961721     36  18  50  30.0  47.0 -0.25079612 -1.1256052</code></pre>
+<pre class="r"><code>multisubset$multivariateNormality</code></pre>
+<pre><code>## $F
+##      Test        H      p value MVN
+## 1 Royston 16.42815 0.0009259699  NO
+## 
+## $M
+##      Test        H     p value MVN
+## 1 Royston 12.07315 0.007109405  NO</code></pre>
+<pre class="r"><code>multisubset$univariateNormality</code></pre>
+<pre><code>## $F
+##                              Test  Variable Statistic   p value Normality
+## 1 Lilliefors (Kolmogorov-Smirnov)  altura      0.1044    0.1597    YES   
+## 2 Lilliefors (Kolmogorov-Smirnov)   peso       0.1291    0.0277    NO    
+## 3 Lilliefors (Kolmogorov-Smirnov)   edad       0.0982    0.2283    YES   
+## 
+## $M
+##                              Test  Variable Statistic   p value Normality
+## 1 Lilliefors (Kolmogorov-Smirnov)  altura      0.0891    0.4599    YES   
+## 2 Lilliefors (Kolmogorov-Smirnov)   peso       0.0973    0.3220    YES   
+## 3 Lilliefors (Kolmogorov-Smirnov)   edad       0.1312    0.0415    NO</code></pre>
+</div>
+</div>
+<div id="prueba-de-homogeneidad-de-varianza" class="section level4">
+<h4>Prueba de homogeneidad de varianza</h4>
 <p>Algunas pruebas paramétricas como el ANOVA requieren que nuestros
 datos cumplan el supuesto de homogeneidad de la varianza, también
-conocido como supuesto de homocedasticidad. Para evaluar la homogeneidad
-de la varianza de una variable entre diferentes grupos utilizaremos la
-prueba de Levene con la función <code>leveneTest()</code> del paquete
+conocido como <strong>supuesto de homocedasticidad</strong>. Este nos
+dice si la varianza permanece constante entre los grupos.</p>
+<div id="prueba-de-levene" class="section level5">
+<h5>Prueba de Levene</h5>
+<p>Con la función <code>leveneTest()</code> del paquete
 <code>car</code>.</p>
-<pre class="r"><code>library(car)</code></pre>
-<pre><code>## Loading required package: carData</code></pre>
 <pre class="r"><code>leveneTest(altura ~ sexo, data = datos)</code></pre>
-<pre><code>## Warning in leveneTest.default(y = y, group = group, ...): group coerced to
-## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
 ##       Df F value Pr(&gt;F)
 ## group  1  0.0065 0.9357
 ##       98</code></pre>
 <p>Al igual que para la prueba de normalidad, en la prueba de Levene se
-observa el valor de P tomando como referencia el valor de alpha que por
-defecto es de 0.05. Si el valor de P es mayor que alpha (0.05), la
-varianza de nuestros datos es homogenea. Si el valor de P es menor que
-alpha (0.05), si hay diferencias en la varianza de nuestros datos.</p>
+observa el valor de p tomando como referencia el valor de alpha que por
+defecto es de 0.05. Si el valor de p es mayor o igual que alpha (0.05),
+la varianza de nuestros datos es homogenea. Si el valor de p es menor
+que alpha (0.05), si hay diferencias en la varianza de nuestros
+datos.</p>
 <p>También podemos utilizar la función <code>LeveneTest()</code> del
 paquete <code>DescTools</code>.</p>
-<pre class="r"><code>library(DescTools)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;DescTools&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:car&#39;:
-## 
-##     Recode</code></pre>
 <pre class="r"><code>LeveneTest(altura ~ sexo, data = datos)</code></pre>
-<pre><code>## Warning in LeveneTest.default(y = y, group = group, ...): group coerced to
-## factor.</code></pre>
 <pre><code>## Levene&#39;s Test for Homogeneity of Variance (center = median)
 ##       Df F value Pr(&gt;F)
 ## group  1  0.0065 0.9357
 ##       98</code></pre>
+</div>
+<div id="prueba-f" class="section level5">
+<h5>Prueba F</h5>
+<p>También podemos hacer una prueba F para comparar la homogeneidad
+entre dos varianzas</p>
+<pre class="r"><code>var.test(altura ~ sexo, data = datos)</code></pre>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  altura by sexo
+## F = 0.90397, num df = 52, denom df = 46, p-value = 0.7211
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##  0.5098655 1.5868021
+## sample estimates:
+## ratio of variances 
+##          0.9039681</code></pre>
+</div>
 </div>
 </div>
 

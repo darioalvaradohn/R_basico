@@ -20,15 +20,18 @@ En esta clase implementaremos comandos básicos en R, aprenderás a crear objeto
 
 ### Contenido{.tabset .tabset-pills}
 
+<br>
+
 #### Comandos básicos
 
-Pues usar R como una calculadora para ejecutar operaciones matemáticas
+Pues usar R como una calculadora para ejecutar operaciones matemáticas:
 
 - Sumas
 
 ```{r}
-2 + 4
+2 + 4 # para ejecutar un código en un script (fuera de la consola), presionamos las teclas `Ctrl + Enter`
 ```
+
 ```{r}
 2 + 4 + 3
 ```
@@ -81,61 +84,71 @@ log(4)
 exp(4)
 ```
 
+<br>
+
 #### Creación de objetos
 
-En R puedes asignar variables a un objeto para utilizarlos en el proceso de análisis.
-Para asignar una variable a un objeto utilizamos el comando `<-` o el comando `=`. 
+En R puedes asignar **valores** o variables a un objeto para utilizarlos en el proceso de análisis.
 
-_objeto_ `<-` _variable_
+Para asignar un valor o variable a un objeto utilizamos el operador `<-`. 
 
-_objeto_ `=` _variable_
-
-_variable_ `->` _objeto_
-
+`objeto` `<-` `variable`
 
 ```{r}
 a <- 4 + 8
 ```
 
-Para ver el contenido del objeto solamente tienes que llamarlo
+Para ver el contenido del objeto que creamos solo tenemos que colocar el nombre y ejecutarlo:
 
 ```{r}
 a
 ```
-Observa que la variable dentro del objeto es el resultado de la operación matemática que colocamos.
+
+**Observa que la variable dentro del objeto es el resultado de la operación matemática que colocamos.**
+
+Además del operador `<-`, también se puede utilizar el igual `=` para asignar una variable a un objeto.
+
+`objeto` `=` `variable`
+
+```{r}
+a = 4 + 8
+a
+```
+
+Y también se puede utilzar el operador de flecha inversa `->`. 
+
+`variable` `->` `objeto`
+
+```{r}
+4 + 8 -> a
+a
+```
+
+**Nótese que la dirección de la flecha indica la variable que se asignará al objeto.**
 
 También puedes asignar texto a tus objetos. Para esto tienes que colocar el texto entre comillas `" "`.
 
 ```{r}
 b <- "Rbasico"
-```
-
-```{r}
 b
 ```
 
-Puedes crear vectores tanto numéricos como de texto.
-Para esto se utiliza el comando `c()` para _concatenar_ lo que irá dentro del objeto.
+Puedes crear **vectores** tanto numéricos como de texto.
+Para esto se utiliza el comando `c()` para _concatenar_ lo que irá dentro del objeto, cada valor u observación debe ir separada por una coma.
 
 ```{r}
 altura <- c(180, 150, 169, 161, 174, 168, 192, 174)
-```
-
-```{r}
 altura
 ```
 
-También puedes crear una variable con datos aleatorios con la función `rnorm()` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
+Podemos crear una variable con datos aleatorios con la función `rnorm()` definiendo el número de observaciones `n`, la media `mean` y la desviación estándar `sd` 
 
 ```{r}
 altura2 <- rnorm(n = 8, mean = 160, sd = 11)
-```
-
-```{r}
 altura2
 ```
 
-Con la función `round()` puedes redondear los valores para quitar o reducir la cantidad de decimales con el argumento `digits`.
+Con la función `round()` podemos redondear los valores, y con el argumento `digits =` indicamos la cantidad de decimales. 
 
 ```{r}
 round(altura2, digits = 2)
@@ -145,42 +158,34 @@ round(altura2, digits = 2)
 round(altura2, digits = 0)
 ```
 
-
-También puedes hacerlo de una forma completamente aleatoria con la función `sample()` definiendo el `rango` que contendrá tus observaciones y la cantidad de `muestras` que es el número de observaciones
+También podemos generar una variable de una forma completamente aleatoria con la función `sample()` definiendo el `rango` que contendrá nuestras observaciones y la cantidad de `muestras` que es el número de observaciones con el argumento `size =`
 
 ```{r}
 altura3 <- sample(150:190, size = 8)
-```
-
-```{r}
 altura3
 ```
 
-Para crear un vector de textos, cada texto debe ir entre comillas `" "`.
+Para crear un vector de textos, cada observación o valor debe ir entre comillas `" "`.
 
 ```{r}
 nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier", "Andrea")
-```
-
-```{r}
 nombre
 ```
 
+<br>
+
 #### Creación de tablas
 
-Para crear una tabla o cuadro utilizaremos el comando `data.frame()`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, todos los objetos deben contener el mismo número de observaciones. 
-En nuestro caso, la variable `altura` coniene ocho observaciones, y la variable `nombre` también contiene ocho observaciones.
-¡Hagamos nuestra tabla!
+Para crear una tabla o cuadro utilizaremos el comando `data.frame()`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, **todas las variables deben contener el mismo número de observaciones**. 
+En nuestro caso, la variable `altura` contiene ocho observaciones, y la variable `nombre` también contiene ocho observaciones.
 
 ```{r}
 tabla <- data.frame(Nombre = nombre, Altura = altura)
-```
-
-```{r}
 tabla
 ```
 
-También puedes agregar más variables a tu tabla.
+También podemos agregar más variables a nuestra tabla.
+
 Para eso creamos nuestra nueva variable:
 
 ```{r}
@@ -191,10 +196,9 @@ Ahora la agregamos a nuestra tabla de la siguiente manera:
 
 ```{r}
 tabla$Peso <- peso
-```
-
-```{r}
 tabla
+
+# Con el símbolo de $ podemos seleccionar una variable (columna) existente dentro de nuestra tabla o podemos asignar el nombre de una nueva variable.
 ```
 
 Ya tenemos dos variables numéricas en nuestra tabla. Ahora agreguemos una variable categórica.
@@ -205,45 +209,70 @@ sexo <- c("M", "M", "F", "F", "F", "M", "M", "F")
 
 ```{r}
 tabla$Sexo <- sexo
-```
-
-```{r}
 tabla
 ```
 
-Algunas formas para explorar nuestras tablas son las siguientes:
+<br>
+
+#### Exploración de tablas
+
+Algunas formas para explorar nuestras tablas de datos son las siguientes:
 
 ```{r}
 View(tabla)
+# Abre una nueva ventana con la tabla completa
 ```
 
 ```{r}
 head(tabla)
+# muestra por defecto las primeras seis observaciones (filas) de nuestra tabla, podemos especificar el número de observaciones agregando el número después del nombre de la tabla separando con una coma: `head(tabla, 10)`
+```
+
+```{r}
+tail(tabla)
+# muestra por defecto las últimas seis observaciones de nuestra tabla, podemos especificar el número de observación igual que en la función `head()`
 ```
 
 ```{r}
 summary(tabla)
+# muestra un resumen de las variables que tenemos en nuestra tabla
 ```
 
 ```{r}
 str(tabla)
+# muestra la estructura de nuestra tabla
 ```
 
-Ahora guardemos nuestra tabla.
-Para eso guardaremos usando la función `write.csv()`, con esto generamos un archivo de valores separados por comas (`csv`).
+<br>
+
+#### Exportar e importar tablas
+
+Primero usaremos la función `write.csv()`, con esto generamos un archivo de valores separados por comas (`csv`).
 
 ```{r}
 write.csv(tabla, file = "data/tabla1.csv")
+# colocamos el nombre de nuestra tabla de datos y con el argumento `file =` indicamos la "ruta de ubicación" que tendrá nuestra tabla de datos en nuestra computadora.
+
+# Si queremos guardar nuestra tabla en una carpeta fuera de la carpeta que contiene nuestro proyecto de R en el que estamos trabajando, debemos colocar la ruta completa de ubicación de esa carpeta externa.Por ejemplo: "C:/Users/Nombre/Documents/CursoR/R_basico/datos/tabla.csv"
+
+# Se debe colocar el formato después del nombre que queremos asignar a nuestra tabla, en este caso `.csv`
 ```
 
-También podemos utilizar paquetes para exportar nuestra base de datos. Para eso utilizaremos la función `export()` del paquete `rio`.
+También podemos utilizar **paquetes** (complementos de R) para exportar nuestra base de datos. Para eso utilizaremos la función `export()` del paquete `rio`.
 
-```{r}
-library(rio)
+```{r, message=FALSE, warning=FALSE}
+#install.packages("rio") # comando para instalación de paquetes
+library(rio) # comando para cargar los paquetes en un script
+
+# Cada vez que cerremos nuestro proyecto de R y volvamos a ingresar tenemos que cargar los paquetes de nuestros scripts con la función `library()`, pero no hay necesidad de volver a instalarlos.
+
+# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...`
 ```
 
 ```{r}
 export(tabla, "data/tabla1.xlsx")
+# aquí también debemos indicar la "ruta de ubicación" en donde se guardará nuestra tabla.
+# el paquete rio permite exportar e importar archivos en formato .csv, .xlsx. .txt, entre otros.
 ```
 
 Ahora carguemos nuestra tabla.
@@ -251,15 +280,13 @@ Para eso utilizaremos la función `read.csv()`.
 
 ```{r}
 tabla1 <- read.csv("data/tabla1.csv")
-```
-
-```{r}
 tabla1
 ```
 
 Y también podemos hacerlo con la función `import()` del paquete `rio`.
 
 ```{r}
-import("data/tabla1.xlsx")
+tabla1 <- import("data/tabla1.xlsx")
+tabla1
 ```
 

@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(rio)
 ```
 
@@ -30,10 +30,15 @@ head(datos)
 
 ```{r}
 datos$sexo <- as.factor(datos$sexo)
+# Convertir las variables de clase `caracter` (texto) a clase `factor` para trabajar en R. Esto lo hacemos con la función `as.factor()` o simplemente con `factor()`.
+# La clase o tipo `factor` se usa para representar un vector como datos categóricos agrupados en diferentes niveles, en este caso, los niveles de nuestra variable sexo serian "M" (masculino) y "F" (femenino).
+
 head(datos)
 ```
 
 ### Contenido{.tabset .tabset-pills}
+
+<br>
 
 #### Medidas de tendencia central
 
@@ -70,14 +75,22 @@ median(datos$edad)
 
 - Moda
 
-Para calcular la moda utilizaremos la función `mlv()` (most likely values) del paquete `modeest`.
+Para calcular la moda utilizaremos la función `mlv()` (most likely values) del paquete `modeest` que nos devuelve los valores más frecuentes (el valor o los valores que más se repiten) en nuestro conjunto de datos.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(modeest)
 ```
 
 ```{r}
 mlv(datos$altura)
+
+# aquí aparecen dos modas, eso quiere decir que que esa variable, las observaciones que más se repiten son esos dos valores, y que se repiten la misma cantidad de veces.
+```
+
+```{r}
+table(datos$altura)
+
+# con la función `table()` podemos observar que los valores 139 y 160 se repiten 6 veces en la variable altura.
 ```
 
 ```{r}
@@ -87,6 +100,8 @@ mlv(datos$peso)
 ```{r}
 mlv(datos$edad)
 ```
+
+<br>
 
 #### Medidas de dispersión
 
@@ -120,7 +135,19 @@ var(datos$peso)
 var(datos$edad)
 ```
 
+- Covarianza
+
+Indica la variabilidad o variación conjunta de dos variables respecto a sus medias. Para calcularla colocamos las dos variables como argumentos dentro de nuestra función `var()`.
+
 ```{r}
+var(datos$altura, datos$peso)
+```
+
+<br>
+
+La función `describe()` del paquete `psych` nos muestra un resumen de nuestras variables con algunas medidas de tendencia central y medidas de dispersión.
+
+```{r, message=FALSE, warning=FALSE}
 library(psych)
 ```
 
@@ -128,97 +155,258 @@ library(psych)
 describe(datos)
 ```
 
+<br>
+
 #### Gráficos exploratorios
+
+<br>
 
 ##### Gráficos univariados
 
 ```{r}
-hist(datos$altura)
+# histograma
+hist(datos$altura) 
 ```
+
+```{r}
+# gráfico de caja
+boxplot(datos$altura) 
+```
+
+```{r}
+# gráfico de barras
+barplot(datos$altura) 
+```
+
+<br>
 
 ##### Gráficos multivariados
 
 ```{r}
-boxplot(altura ~ sexo, data = datos)
+# gráfico de cajas
+boxplot(altura ~ sexo, data = datos) 
 ```
 
 ```{r}
-plot(x = datos$peso, y = datos$altura)
+# gráfico de dispersión o scatter plot
+plot(x = datos$peso, y = datos$altura,
+     pch = 19, # `pch`, para indicar el estilo del símbolo (puede ser un valor del 1 al 25)
+     cex = 1, # `cex`, para indicar el tamaño del símbolo
+     col = "gray12", # `col`, para indicar el color del símbolo
+     title("Peso vs Altura", 
+           adj = 0.5, 
+           line = 1), # `title`, para título (también puede ser el argumento main). `adj`, para ajustar la posición horizontal del título, valores entre 0 (izquierda) y 1 (derecha). `line`, para modificar la posicion vertical del título.  
+     xlab = "Peso", # `xlab`, para el título del eje x
+     ylab = "Altura") # `ylab`, para el título del eje y) 
 ```
 
-```{r}
+<br>
+
+Exploremos una tabla de datos más grande
+
+```{r, message=FALSE, warning=FALSE}
 library(palmerpenguins)
 data("penguins")
 head(penguins)
 ```
 
-```{r}
+<br>
+
+```{r, message=FALSE, warning=FALSE}
 library(visdat)
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 vis_dat(penguins)
+# permite visulaizar todas las variables de nuestra tabla y su clase o tipo, la cantidad de observaciones y la presencia de valores NA en cada variable.
 ```
 
+<br>
+
+Para eliminar los valores NA de nuestra tabla:
+
 ```{r}
+pinguinos <- na.omit(penguins)
+
+# Evitar el uso de caracteres especiales como tildes o diéresis en las palabras. Si son dos o más palabras evitar los espacios entre cada una y usar separadores como guión bajo "_" o la primera letra cada palabra en mayúscula para no separarlas.
+```
+
+<br>
+
+```{r, message=FALSE, message=FALSE}
 library(SmartEDA)
 ```
 
-```{r}
-ExpNumViz(penguins)
+```{r, message=FALSE, warning=FALSE}
+ExpNumViz(pinguinos, Page = c(3,2))
+# permite visualizar la distribución de todas las variables numéricas de nuestra tabla de datos con gráficos de densidad. El argumento `Page =` sirve para indicar el patrón de salida de los gráficos, con `c(3,2)` estamos indicando que los gráficos se muestren en 3 filas y 2 columnas. Si no colocamos `Page =` nos mostrará los gráficos de forma individual.
 ```
 
-```{r}
-ExpCatViz(penguins)
+```{r, message=FALSE, warning=FALSE}
+ExpCatViz(pinguinos, Page = c(2,2))
+# permite visualizar la distribución de todas las variables categóricas de nuestra tabla de datos con gráficos de barra.
 ```
 
+<br>
 
 ```{r, warning=FALSE, message=FALSE}
-library(tidyverse)
+library(tidyverse) 
+# El paquete `tidyverse` es un conglomerado de paquetes que sirven para manejar, modificar y visualizar datos
 ```
 
-```{r}
-ggplot(penguins, aes(body_mass_g)) +
-  geom_histogram(fill = "dodgerblue3", bins = 10) 
+El paquete `ggplot2` dentro de `tidyverse` se especializa en la visualización de datos por medio de la gramática de gráficos (gg).
+
+Los argumentos básicos para la función `ggplot()` son `data =` (nuestra tabla de datos), `aes()` (la estética del gráfico), donde especificamos las variables que irán en cada eje (x = "variablex", y = "variabley"). 
+
+El `+` se utiliza para agregar elementos al gráfico. 
+
+Con la función `geom_ ...()` podemos agregar diferentes geometrías a nuestro gráfico (histogramas, puntos, líneas, barras, columnas, cajas, violines, entre otros). 
+
+```{r, message=FALSE, warning=FALSE}
+# histograma
+ggplot(data = pinguinos, aes(x = body_mass_g)) +
+  geom_histogram(fill = "dodgerblue3", # `fill` para rellenar
+                 col = "black", # `col` para el color del borde
+                 bins = 10) # para indicar el número de rangos de valores (secciones) en el eje x
+
+# Cada geometría puede modificarse con argumentos que se pueden consultar en la pestaña de ayuda escribiendo la geometría que se desea graficar, por ejemplo: `geom_histogram`.
 ```
 
-```{r}
-ggplot(penguins, aes(body_mass_g)) +
-  geom_density(fill = "tomato", alpha = 0.4) 
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de densidad
+ggplot(pinguinos, aes(body_mass_g)) +
+  geom_density(fill = "tomato", 
+               alpha = 0.4) # `alpha` para indicar transparencia del relleno, valores de 0 (transparente) a 1 (sin transparencia)
 ```
 
-```{r}
-ggplot(penguins, aes(y = body_mass_g)) +
-  geom_boxplot(fill = "tomato", alpha = 0.4)
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de caja
+ggplot(pinguinos, aes(y = body_mass_g)) +
+  geom_boxplot(fill = "tomato", 
+               alpha = 0.4)
 ```
 
-```{r}
-ggplot(penguins, aes(species, fill=sex))+
-  geom_bar()
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de columnas apiladas
+ggplot(pinguinos, aes(species)) + 
+  geom_bar(aes(fill = sex)) # si queremos rellenar en base a una variable categórica de nuestra tabla de datos
 ```
 
-```{r}
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_boxplot(aes(fill = species), show.legend = NULL) +
-  geom_jitter(width = 0.2, alpha = 0.3) +
-  theme_classic()
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de columnas agrupadas
+ggplot(pinguinos, aes(species)) +
+  geom_bar(aes(fill = sex), 
+           position = "dodge") # para cambiar de columnas apiladas (`position = "stack"` [por defecto]) a columnas agrupadas.
 ```
 
-```{r}
-ggplot(penguins, aes(species, body_mass_g)) +
-  geom_violin(alpha = 0.4, aes(fill = species), show.legend = NULL) +
-  geom_jitter(width = 0.2, alpha = 0.3) +
-  stat_summary(fun = "mean", geom = "point") +
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de barras apiladas
+ggplot(pinguinos, aes(species))+
+  geom_bar(aes(fill = sex)) + 
+  coord_flip() # para cambiar de columnas verticales a barras horizontales
+```
+
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de barras agrupadas
+ggplot(pinguinos, aes(species))+
+  geom_bar(aes(fill = sex),
+           position = "dodge") + 
+  coord_flip()
+```
+
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# grafico de cajas
+ggplot(pinguinos, aes(species, body_mass_g)) +
+  geom_boxplot(aes(fill = species), 
+               show.legend = NULL) + # para ocultar la leyenda
+  geom_jitter(width = 0.2, # `geom_jitter` para graficar puntos dispersos, `width` para especificar el ancho de la dispersión, valores de 0 (sin dispersión) a 1 (completamente dispersos)
+              alpha = 0.3) +
+  theme_classic() # con `theme_ ...` podemos escoger entre diferentes estilos de gráficos
+```
+
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de violín
+ggplot(pinguinos, aes(species, body_mass_g)) +
+  geom_violin(aes(fill = species), 
+              alpha = 0.4, 
+              show.legend = NULL) +
+  geom_jitter(width = 0.2, 
+              alpha = 0.3) +
+  stat_summary(fun = "mean", # para graficar un valor estadístico
+               geom = "point", # para indicar el símbolo
+               color = "red", # para indicar el color del símbolo
+               size = 2) + # para indicar el tamaño del símbolo
   theme_bw()
 ```
 
-```{r}
-ggsave("Imagenes/estdesc.jpg")
+<br>
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de violín
+ggplot(pinguinos, aes(species, body_mass_g)) +
+  geom_violin(fill = "gray", 
+              alpha = 0.4, 
+              show.legend = NULL) +
+  geom_jitter(aes(color = sex),
+              width = 0.2, 
+              alpha = 0.7) +
+  labs(title = "Masa corporal por Especies", 
+       x = "Especie",
+       y = "Masa corporal (g)",
+       color = "Sexo") + # `labs` para especificar el título del gráfico, de los ejes y la leyenda que estamos utilizando
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5, # `theme` para modificar texto en el gráfico, con `plot.title = element_text` modificamos el texto del título del gráfico, con `hjust` justificamos horizontalmente, valores de 0 (izquierda) a 1 (derecha) 
+                                  face = 2)) # `face =` para modificar el estilo del texto (normal, negrita, cursiva, negrita + cursiva)
 ```
 
+<br>
+
+##### Exportar gráficos
+
+Para guardar el último gráfico desplegado usamos la función `ggsave()` y no se necesita asignar el gráfico a un objeto previamente, solo debemos indicar la "ruta de ubicación" de la misma manera que lo hicimos cuando guardamos las tablas:
+
 ```{r}
-ggplot(penguins, aes(body_mass_g, flipper_length_mm)) +
+ggsave("Imagenes/masaXespecie_violin.jpg")
+```
+
+<br>
+
+También podemos asignar nuestro gráfico a un objeto y especificarlo en la función `ggsave()`.
+
+```{r, message=FALSE, warning=FALSE}
+# gráfico de dispersión (scatter plot)
+dispersion <- ggplot(pinguinos, aes(body_mass_g, flipper_length_mm)) +
   geom_point() +
-  stat_smooth(method = "lm")
+  labs(title = "Relación entre la masa corporal y la longitud de aleta",
+       subtitle = "Pingüinos del Archipielado de Palmer",
+       x = "Masa corporal (g)",
+       y = "Longitud de aleta (mm)") +
+  theme_classic()
+dispersion
 ```
 
+```{r}
+ggsave(plot = dispersion,
+       "Imagenes/masaXaleta_dispersion.jpg",
+       dpi = 450) # para modificar la calidad de salida en puntos por pulgada (300 dpi por defecto)
+
+# también podemos modificar el ancho (`width`), la altura (`height`), las unidades (`units`), la escala (`scale`), entre otros.
+```
+
+<br>
