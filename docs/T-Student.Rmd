@@ -15,27 +15,46 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula (H0) de que no hay efecto o diferencia entre dos grupos (`grupo1` = `grupo2`). El valor de P obtenido refleja la probabilidad de rechazar la H0, pero no prueba que la hipótesis alternativa, de que si hay efecto o diferencia (`grupo1` ≠ `grupo2`), sea verdadera. 
+<br>
 
-### Contenido{.tabset .tabset-pills}
+Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula (H0) de que no hay efecto o diferencia entre dos grupos (`grupo1` = `grupo2`). El valor de p obtenido refleja la probabilidad de rechazar la H0, pero no prueba que la hipótesis alternativa, de que si hay efecto o diferencia (`grupo1` ≠ `grupo2`), sea verdadera. 
 
-#### Prueba de T-Student (paramétrica)
+<br>
 
-La prueba de **T-Student** sirve para comprobar si hay diferencias entre dos grupos. Es una **prueba paramétrica**, por lo que los datos deben cumplir con el supuesto de normalidad de la varianza.
+#### Paquetes 
 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
+library(interpretCI)
 ```
+
+<br>
+
+#### Datos
 
 ```{r}
 datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
 
+<br>
+
+### Contenido{.tabset .tabset-pills}
+
+<br>
+
+#### Prueba de T-Student
+
+La prueba de **T-Student** sirve para comprobar si hay diferencias entre **dos grupos**. Es una **prueba paramétrica**, por lo que los datos deben cumplir con el supuesto de normalidad de la varianza.
+
+Primero hacemos los subgrupos de datos:
+
 ```{r}
 sM <- subset(datos, sexo == "M")
 sF <- subset(datos, sexo == "F")
 ```
+
+Evaluamos la normalidad de los datos:
 
 ```{r}
 shapiro.test(sM$altura)
@@ -45,15 +64,25 @@ shapiro.test(sM$altura)
 shapiro.test(sF$altura)
 ```
 
+Realizamos la prueta de T-Student
+
 ```{r}
 t.test(altura ~ sexo, data = datos)
+# Se coloca primero la variable respuesta (dependiente) y después de `~` colocamos la variable predictora (independiente), que debe ser categórica.
 ```
 
-El valor de P no tiene unidades y depende del tamaño de la muestra, para obtener un resultado estadísticamente significativo se debe aumentar el tamaño de la muestra.
-La variabilidad de los datos también influye en el valor de P, a menor variabilidad en los datos, menor el valor de P, a mayor variabilidad en los datos, mayor el valor de P.
-El valor de P es condiconal a que la hipotesis nula es verdadera.
+Si el valor de p < 0.05 = Si hay diferencias estadísticamente significativas entre los grupos.
+Si el valor de p >= 0.05 = No hay diferencias estadísticamente significativas entre los grupos.
 
-#### Prueba de Wilcoxon (Mann-Whitney) (no paramétrica)
+El valor de p no tiene unidades y depende del tamaño de la muestra, para obtener un resultado estadísticamente significativo se debe aumentar el tamaño de la muestra.
+
+La variabilidad de los datos también influye en el valor de p, a menor variabilidad en los datos, menor el valor de p, a mayor variabilidad en los datos, mayor el valor de p.
+
+El valor de p es condiconal a que la hipotesis nula es verdadera.
+
+<br>
+
+#### Prueba de Wilcoxon (Mann-Whitney)
 
 Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**, también conocida como **prueba de Mann-Whitney**. Esta tiene el mismo principio pero no requiere que los datos cumplan el supuesto de normalidad.
 
@@ -65,21 +94,27 @@ shapiro.test(datos$peso)
 wilcox.test(peso ~ sexo, data = datos)
 ```
 
-#### Alternativa con estimación de parámetros
+Si el valor de p < 0.05 = Si hay diferencias estadísticamente significativas entre los grupos.
+Si el valor de p >= 0.05 = No hay diferencias estadísticamente significativas entre los grupos.
+
+<br>
+
+#### Estimación de parámetros
 
 Otra forma de analizar si hay diferencias entre dos grupos sin tener que recurrir a la estadística no paramétrica o pruebas de hipótesis, es mediante la **estimación de parámetros**. Para esto se genera un **estimado de punto** y un **intervalo de confianza** (tamaño del efecto) en las unidades de la variable.
 
 Podemos estimarlo con la función `meanCI()` del paquete `interpretCI`:
 
 ```{r}
-library(interpretCI)
-```
-
-```{r}
 meanCI(datos, sexo, altura)
 ```
+
+Se puede decir con un 95% de confianza que la altura de las personas de sexo masculino es 17.31 cm mayor que la de las personas de sexo femenino (IC95% = 12.31, 22.31 cm; p = 6.622e-10).
 
 ```{r}
 meanCI(datos, sexo, peso)
 ```
 
+Se puede decir con un 95% de confianza que el peso de las personas de sexo masculino es 18.16 kg mayor que el de las personas de sexo femenino (IC95% = 13.04, 23.28 cm; p = 6.01e-10).
+
+<br>
