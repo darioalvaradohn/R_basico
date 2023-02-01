@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-Las pruebas de correlación sirven para determinar si dos variables están relacionadas o no.
+Las pruebas de correlación sirven para determinar la tendencia o el comportamiento que hay entre dos variables cuando están juntas.
 
 <br>
 
@@ -89,10 +89,13 @@ El valor de p indica la significancia estadística de la correlación entre las 
 Si el valor de p < 0.05 = La correlación entre las variables es estadísticamente significativa.
 Si el valor de p >= 0.05 = La correlación entre las variables NO es estadísticamente significativa.
 
-El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa. En este caso, las variables de K y Mg están negativamente correlacionadas (cor = -0.36). Los valores de `cor` pueden ir de -1 a 1, entre más cercano a -1 o 1 sea el valor de `cor`, más fuerte es la correlación entre las variables, entre más cercano a 0 (positiva o negativamente), la correlación es más débil. **Si la relación de una variable con la otra no es lineal, la correlación será baja.**
+El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa. En este caso, las variables de K y Mg están negativamente correlacionadas (cor = -0.36). Los valores de `cor` pueden ir de -1 a 1, entre más cercano a -1 o 1 sea el valor de `cor`, más fuerte es la correlación entre las variables, entre más cercano a 0 (positiva o negativamente), la correlación es más débil. 
 
 El intervalo de confianza al 95% nos indica que la verdadera correlación entre las variables podría estar entre -0.58 y -0.08.
 
+La correlación de Pearson es una medida de la dependencia lineal entre las dos variables. **Si la relación de una variable con la otra no es lineal, la correlación será baja.**
+
+<br>
 
 #### Prueba de correlación de Spearman 
 
@@ -131,27 +134,45 @@ head(suelosb)
 
 ```{r, message=FALSE}
 ggpairs(suelosb)
+
+# El resultado nos muestra una matriz diagonal. La diagonal muestra gráficos de densidad con la distribución de cada variable (individualmente), bajo la diagonal se muestran gráficos de dispersión de la relación entre todas las variables (una contra otra), y sobre la diagonal se muestran los valores de correlación entre las variables y la significancia estadísitica de la correlación (en simbología).
 ```
+
+Para observar más detalladamente podemos seleccionar solo algunas variables de interés:
 
 ```{r, message=FALSE, warning=FALSE}
 ggpairs(suelosb, c("pH", "N", "P", "K"))
 ```
 
-
-También podemos evaluar la correlación entre las variables con la función `correlation()` del paquete `correlation`
+Este resultado es compatible con `ggplot2` y podemos guardarlo como imagen:
 
 ```{r}
-c <- correlation(suelos)
-c
+ggsave("Imagenes/correlacion.jpg")
 ```
 
-Aquí, `r` = correlación de Pearson.
-si el IC95 no contiene (traslapa) el 0, la correlación es significativa
+<br>
+
+También podemos evaluar la correlación entre las variables con la función `correlation()` del paquete `correlation`. Para esta función no es necesario seleccionar las variables numéricas de nuestra base de datos.
+
+```{r}
+c <- correlation(suelos)  
+c
+
+# Aquí, `r` = correlación de Pearson.
+# Si el IC95 no contiene (traslapa) el 0, la correlación es significativa
+```
+
+Podemos exportar este resultado como una tabla de la siguiente manera:
+
+```{r}
+cor <- data.frame(correlation(suelos))
+export(cor,"Resultados/correlacionsuelos.xlsx")
+```
 
 También podemos graficarlo. Para esto generamos un resumen de las correlaciones entre las variables:
 
 ```{r}
-sc <- summary(c)
+sc <- summary(c) # para generar una matriz de correlación
 sc
 ```
 
@@ -159,17 +180,34 @@ Y graficamos con la función `plot()` del paquete `see`.
 
 ```{r}
 plot(sc)
+
+# El resultado nos muestra una matriz de correlación de una forma más gráfica, los colores indican la dirección y la magnitud de la correlación.
 ```
 
 ```{r}
 ggsave("Imagenes/corr.jpg")
 ```
 
-```{r}
-c %>%
-  as.table()%>%
-  plot(type = "tile", show_values= TRUE, show_p= TRUE)
+También podemos generar esa matriz gráfica de correlación de la siguiente manera:
+
+```{r, message=FALSE, warning=FALSE}
+c <- as.table(c) # para hacer la matriz de correlación 
+c
 ```
+
+```{r}
+plot(c, type = "tile", show_values= TRUE, show_p= TRUE)
+```
+
+También podemos especificar el método que se utilice para realizar la correlación con el argumento `method =`.
+
+```{r}
+cor_spearman <- correlation(suelos, method = "spearman")
+cor_spearman
+```
+
+
+<br>
 
 Otra forma de evaluar la correlación entre variables es con la función `inspect_cor()` del paquete `inspectdf`
 
@@ -181,14 +219,21 @@ ic
 Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot()` del paquete `inspectdf`.
 
 ```{r}
-show_plot(ic)
+cor_suelos <- show_plot(ic)
+cor_suelos
+# Como se puede observar, todas las correlaciones de esta base de datos son significativas, ya que ningún intervalo de confianza traslapa con el 0.
 ```
 
-Como se puede observar, todas las correlaciones de esta base de datos son significativas, ya que ningún intervalo de confianza traslapa con el 0.
+```{r, message=FALSE, warning=FALSE}
+ggsave("Imagenes/cor_suelos.jpg")
+```
 
 Un ejemplo de correlaciones no significativas:
 
 ```{r}
-inspect_cor(mtcars) |>
-  show_plot()
+cor_mtcars <- inspect_cor(mtcars) # "mtcars" es una base de datos del paquete base de R que contiene datos de pruebas en carretera de diferentes motores de automóviles.
+
+show_plot(cor_mtcars)
 ```
+
+<br>

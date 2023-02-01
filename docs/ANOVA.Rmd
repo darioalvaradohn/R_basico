@@ -15,7 +15,13 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (o el promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
+<br>
+
+Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
+
+<br>
+
+#### Paquetes
 
 ```{r, warning=FALSE, message=FALSE}
 library(car)
@@ -25,28 +31,40 @@ library(palmerpenguins)
 library(FSA)
 ```
 
+<br>
+
+#### Datos
+
 ```{r}
 data("penguins")
 head(penguins)
 ```
 
+<br>
+
 ### Contenido{.tabset .tabset-pills}
 
-#### ANOVA (paramétrica)
+<br>
+
+#### ANOVA
+
+ANOVA (Analysis of variance) = ANDEVA (Análisis de varianza)
 
 A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre tres o más grupos.
-Podemos realizar un ANOVA con la función `aov()`.
-Aquí el orden de las variables si importa, colocamos primero nuestra **variable respuesta** (variable dependiente) y después nuestra **variable predictora** (variable independiente). La variable predictora debe ser categórica. 
-Para realizar un ANOVA nuestros datos deben cumplir los supuestos de normalidad y homogeneidad de la varianza.
 
+Podemos realizar un ANOVA con la función `aov()`.
+
+Para realizar un ANOVA nuestros datos deben cumplir los supuestos de normalidad y homogeneidad de la varianza ya que esta es una prueba paramétrica.
 
 ```{r}
+# separamos por grupos de interés para evaluar la normalidad
 sa <- subset(penguins, species == "Adelie")
 sc <- subset(penguins, species == "Chinstrap")
 sg <- subset(penguins, species == "Gentoo")
 ```
 
 ```{r}
+# evaluamos la normalidad de los datos
 shapiro.test(sa$flipper_length_mm)
 ```
 
@@ -59,97 +77,207 @@ shapiro.test(sg$flipper_length_mm)
 ```
 
 ```{r}
+# evaluamos la homogeneidad de la varianza
 leveneTest(flipper_length_mm ~ species, data = penguins)
 ```
 
+<br>
+
+##### ANOVA de una vía
+
+También conocido como ANOVA de un factor o unidireccional, sirve para estudiar la relación entre una variable respuesta (dendiente) cuantitativa y una variable predictora (independientes) categórica (cualitativa) con varios niveles (grupos).
 
 ```{r}
-p <- aov(flipper_length_mm ~ species, data = penguins)
+anova <- aov(flipper_length_mm ~ species, data = penguins)
+
+# Aquí el orden de las variables si importa, colocamos primero nuestra variable respuesta y después nuestra variable predictora. 
+# El ANOVA solo permite variables predictoras categóricas.
 ```
 
 ```{r}
-summary(p)
+summary(anova)
 ```
 
-El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+El valor de p muestra la significancia estadística de la comparación entre los grupos. 
+
+Si el valor de p < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. 
+Si el valor de p ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+
+<br>
+
+##### ANOVA de dos vías
+
+El análisis de varianza de dos vías, también conocido como plan factorial con dos factores, sirve para estudiar la relación entre una variable respuesta cuantitativa y dos variables predictoras categóricas, cada uno con varios niveles.
+
+```{r}
+anova2vias <- aov(flipper_length_mm ~ species + island, data = penguins) # para la segunda variable predictora colocamos un `+`.
+
+summary(anova2vias)
+```
+
+<br>
 
 #### Pruebas de contraste
 
+<br>
+
 ##### Prueba post hoc de Tukey
 
-El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. Estas pruebas también se conocen como pruebas **post hoc** y una de las más utilizadas es la **prueba de Tukey**. Esto lo podemos hacer con la función `TukeyHSD()` y especificando la variable que contiene los diferentes grupos.
+El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. 
+Estas pruebas también se conocen como pruebas **post hoc**, y una de las más utilizadas es la **prueba de Tukey**. 
+
+Esto lo podemos hacer con la función `TukeyHSD()` especificando la variable que contiene los diferentes grupos.
 
 ```{r}
-pt <- TukeyHSD(p, "species")
-pt
+contraste <- TukeyHSD(anova, "species")
+contraste
 ```
+
+<br>
 
 También se puede realizar este contraste con la función `HSD.test()` del paquete `agricolae`.
 
 ```{r}
-pc <- HSD.test(p, "species")
-pc
+contraste2 <- HSD.test(anova, "species")
+contraste2
+
+# Con esta función el resultado nos muestra los grupos de significancia estadística de acuerdo a las diferencias que hay entre los niveles de la variable predictora. Si dos niveles tienen letras iguales, la diferencia de la variable respuesta entre esos dos niveles no es estadísticamente significativa, pero si tienen letras diferentes la diferencia si es estadísticamente significativa.  
 ```
+
+<br>
 
 ##### Prueba post hoc de Duncan
 
 Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`.
 
 ```{r}
-pd <- duncan.test(p, "species")
-pd
+contraste3 <- duncan.test(anova, "species")
+contraste3
 ```
+
+<br>
+
+Para el contraste del anova de dos vias podemos utilizar cualquier opción de las anteriores, pero especificamos las dos variables predictoras
+
+```{r}
+contraste2vias <- HSD.test(anova2vias, c("species", "island")) # colocamos las dos variables predictoras concatenadas con `c()`.
+
+contraste2vias
+```
+
+<br>
 
 #### Gráficos
 
-Podemos representarlo gráficamente con la función `plot()`.
-
-Gráfico de la función `TukeyHSD()`.
+Podemos representar gráficamente las pruebas de contraste con la función `plot()`.
 
 ```{r}
-plot(pt)
+# Gráfico de la función `TukeyHSD()`
+plot(contraste)
 ```
 
-Gráfico de la función `HSD.test()`.
+<br>
 
 ```{r}
-plot(pc)
+# Gráfico de la función `HSD.test()`.
+plot(contraste2)
 ```
 
-Gráfico de la función `duncan.test()`
+<br>
 
 ```{r}
-plot(pd)
+# Gráfico de la función `duncan.test()`
+plot(contraste3)
 ```
+
+<br>
+
+```{r}
+plot(contraste2vias)
+```
+
+
+<br>
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
-Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos por especie con la función `Summarize()` del paquete `FSA`.
+
+Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos (variable respuesta) por especie (variable predictora) con la función `Summarize()` del paquete `FSA`.
 
 ```{r}
 sum <- Summarize(flipper_length_mm ~ species, data = penguins)
 sum
 ```
 
-Después agregamos una columna con el error estándar (medida de precisión del estimado) y una columna para el intervalo de confianza al 95% calculad a partir del error estándar.
+Después agregamos una columna con el error estándar (estadístico que mide la precisión de la estimación, es parte de la estadística inferencial y no de la estadística descriptiva).
+
+La fórmula para calcular el error estándar es: desviación estándar/raíz cuadrada de n. En este caso, n = número de observaciones para cada grupo de la variable predictora (especie).
 
 ```{r}
 sum$SE <- sum$sd / sqrt(sum$n)
-sum$liIC95 <- sum$mean - sum$SE * 1.96
-sum$lsIC95 <- sum$mean + sum$SE * 1.96
 sum
 ```
 
-Con estos datos procedemos a graficarlo.
+Con el error estándar podemos calcular el intervalo de confianza al 95%.
+
+El IC95% se calcula multiplicando el error estándar por el valor Z para ese nivel de confianza.
+
+- Z = 1.96, para IC95%
+- Z = 1.645 para IC90%
+- Z = 2.33 para IC98%
+- Z = 2.757 para IC99%
 
 ```{r}
+sum$IC95 <- sum$SE * 1.96
+sum$liIC95 <- sum$mean - sum$SE * 1.96 # límite inferior del IC95%
+sum$lsIC95 <- sum$mean + sum$SE * 1.96 # límite superior del IC95%
+```
+
+```{r}
+sum
+```
+
+<br>
+
+Con estos datos procedemos a graficar.
+
+```{r}
+# Gráfico de columnas con barras de error (con el IC95%)
 ggplot(sum, aes(species, mean)) +
-  geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
-  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
-labs(title = "Diferencias entre el largo de la aleta de pingüinos por especie",
-     y = "Largo de aleta (mm)",
+  geom_col(width = 0.6, 
+           color = "black", 
+           fill = c("gray", "lightblue", "darkslategray")) +
+  geom_errorbar(aes(ymin = liIC95, ymax = lsIC95), # indicamos el límite inferior y superior que tendran nuestras barras de error
+                width = 0.4) + 
+  labs(title = "Longitud de aleta (mm) por especie",
+       y = "Longitud de aleta (mm)", 
+       x = "Especie") +
+  geom_text(aes(label = c("c", "b", "a")), # agregamos los grupos de nuestro resultado de la prueba de contraste 
+            vjust = -1.5) + # modificamos la posición de las etiquetas verticalmente
+  ylim(c(0,235)) +
+  theme(plot.title = element_text(hjust = 0.5)) + # centramos nuestro título del gráfico
+  theme_classic()
+```
+
+<br>
+
+Una mejor manera de graficar este tipo de resultados es mediante gráficos de punto con barras de error
+
+```{r}
+# Gráfico de punto con barras de error
+ggplot(sum, aes(species, mean)) +
+  geom_errorbar(width = 0.2, 
+                aes(ymin = liIC95, 
+                    ymax = lsIC95)) +
+  geom_point(shape = 19, 
+             size = 3, 
+             color = c("gray", "lightblue", "darkslategray")) +
+labs(title = "Longitud de aleta (mm) por especie",
+     y = "Longitud de aleta (mm)",
      x = "Especie") +
-  geom_text(aes(label = c("c", "b", "a")), vjust = -1.5) +
+  geom_text(aes(label = c("c", "b", "a")), 
+            vjust = -1.5) +
   ylim(c(185,225)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
   theme_classic()
 ```
 
@@ -157,3 +285,46 @@ labs(title = "Diferencias entre el largo de la aleta de pingüinos por especie",
 ggsave("Imagenes/anova.jpg")
 ```
 
+<br>
+
+Para el contraste del ANOVA de dos vías hacemos lo siguiente:
+
+```{r}
+sum2vias <- Summarize(flipper_length_mm ~ species + island, data = penguins) # agregamos la segunda variable predictora (island) a nuestro resumen de datos
+sum2vias
+```
+
+```{r}
+sum2vias$SE <- sum2vias$sd / sqrt(sum2vias$n)
+sum2vias$IC95 <- sum2vias$SE * 1.96
+sum2vias$liIC95 <- sum2vias$mean - sum2vias$SE * 1.96 
+sum2vias$lsIC95 <- sum2vias$mean + sum2vias$SE * 1.96 
+```
+
+```{r}
+sum2vias
+```
+
+```{r}
+# Gráfico de punto con barras de error
+ggplot(sum2vias, aes(species, mean)) + 
+  geom_errorbar(width = 0.2, 
+                aes(color = island, # indicamos que el color de las barras de error sea en base a la isla (segunda variable predictora)
+                    ymin = liIC95, 
+                    ymax = lsIC95)) +
+  geom_point(shape = 19, 
+             size = 2,
+             aes(color = island)) + # indicamos que el color de los puntos sea en base a la isla
+labs(title = "Longitud de aleta (mm) por especie e isla",
+     y = "Longitud de aleta (mm)",
+     x = "Especie",
+     color = "Isla") +
+  scale_color_manual(values = c("gray", "lightblue", "darkslategray")) + # para especificar los colores de forma manual
+  geom_text(aes(label = c("", "a", "", "b", "c")), 
+            vjust = -1.5) +
+  ylim(c(185,230)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_classic()
+```
+
+<br>
