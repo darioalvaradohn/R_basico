@@ -79,7 +79,7 @@ Esta función nos brinda más información que la anterior, incluso realiza la p
 
 Para realizar la prueba de contraste después de realizar la prueba de Kruskal-Wallis con la función `kruskal.test()` utilizaremos la prueba de Dunn con la función `dunnTest()` del paquete `FSA`.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 dunnTest(body_mass_g ~ island, data = penguins)
 ```
 

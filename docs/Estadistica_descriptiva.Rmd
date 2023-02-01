@@ -383,7 +383,7 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
 
 Para guardar el último gráfico desplegado usamos la función `ggsave()` y no se necesita asignar el gráfico a un objeto previamente, solo debemos indicar la "ruta de ubicación" de la misma manera que lo hicimos cuando guardamos las tablas:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/masaXespecie_violin.jpg")
 ```
 
@@ -403,7 +403,7 @@ dispersion <- ggplot(pinguinos, aes(body_mass_g, flipper_length_mm)) +
 dispersion
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave(plot = dispersion,
        "Imagenes/masaXaleta_dispersion.jpg",
        dpi = 450) # para modificar la calidad de salida en puntos por pulgada (300 dpi por defecto)

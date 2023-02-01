@@ -146,7 +146,7 @@ ggpairs(suelosb, c("pH", "N", "P", "K"))
 
 Este resultado es compatible con `ggplot2` y podemos guardarlo como imagen:
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/correlacion.jpg")
 ```
 
@@ -184,7 +184,7 @@ plot(sc)
 # El resultado nos muestra una matriz de correlación de una forma más gráfica, los colores indican la dirección y la magnitud de la correlación.
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/corr.jpg")
 ```
 

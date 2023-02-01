@@ -159,7 +159,7 @@ contraste3
 
 <br>
 
-Para el contraste del anova de dos vias podemos utilizar cualquier opción de las anteriores, pero especificamos las dos variables predictoras
+Para el contraste del anova de dos vías podemos utilizar cualquier opción de las anteriores, pero especificamos las dos variables predictoras
 
 ```{r}
 contraste2vias <- HSD.test(anova2vias, c("species", "island")) # colocamos las dos variables predictoras concatenadas con `c()`.
@@ -195,6 +195,7 @@ plot(contraste3)
 <br>
 
 ```{r}
+# Gráfico para el contraste de 2 vías`
 plot(contraste2vias)
 ```
 
@@ -283,7 +284,7 @@ labs(title = "Longitud de aleta (mm) por especie",
   theme_classic()
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/anova.jpg")
 ```
 
