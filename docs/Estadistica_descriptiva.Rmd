@@ -21,9 +21,23 @@ knitr::opts_chunk$set(echo = TRUE)
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
 
+<br>
+
+#### Paquetes
+
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
+library(modeest)
+library(psych)
+library(palmerpenguins)
+library(visdat)
+library(SmartEDA)
+library(tidyverse) # El paquete `tidyverse` es un conglomerado de paquetes que sirven para manejar, modificar y visualizar datos
 ```
+
+<br>
+
+#### Datos
 
 ```{r}
 datos <- import("data/medidas_personas.csv")
@@ -37,6 +51,8 @@ datos$sexo <- as.factor(datos$sexo)
 
 head(datos)
 ```
+
+<br>
 
 ### Contenido{.tabset .tabset-pills}
 
@@ -78,10 +94,6 @@ median(datos$edad)
 - Moda
 
 Para calcular la moda utilizaremos la función `mlv()` (most likely values) del paquete `modeest` que nos devuelve los valores más frecuentes (el valor o los valores que más se repiten) en nuestro conjunto de datos.
-
-```{r, message=FALSE, warning=FALSE}
-library(modeest)
-```
 
 ```{r}
 mlv(datos$altura)
@@ -149,10 +161,6 @@ var(datos$altura, datos$peso)
 
 La función `describe()` del paquete `psych` nos muestra un resumen de nuestras variables con algunas medidas de tendencia central y medidas de dispersión.
 
-```{r, message=FALSE, warning=FALSE}
-library(psych)
-```
-
 ```{r}
 describe(datos)
 ```
@@ -204,19 +212,20 @@ plot(x = datos$peso, y = datos$altura,
 
 <br>
 
-Exploremos una tabla de datos más grande
+Exploremos una tabla de datos más grande. La base de datos "penguins" del paquete `palmerpenguins` presenta medidas morfométricas de tres especies de pingüinos del Archipielago de Palmer en tres islas diferentes. 
+
+_Nota: Para consultar la información de bases de datos incluidas en paquetes de R podemos colocar el nombre de la base de datos en la pestaña de ayuda del panel inferior derecho o escribir "??penguins" en el script o directamente en la consola.
 
 ```{r, message=FALSE, warning=FALSE}
-library(palmerpenguins)
-data("penguins")
+??penguins
+```
+
+```{r, message=FALSE, warning=FALSE}
+data("penguins") # para cargar bases de datos incorporadas en paquetes de R, después de cargr el paquete solo debemos escribir `data()` y el nombre de la tabla de datos.
 head(penguins)
 ```
 
 <br>
-
-```{r, message=FALSE, warning=FALSE}
-library(visdat)
-```
 
 ```{r, message=FALSE, warning=FALSE}
 vis_dat(penguins)
@@ -235,10 +244,6 @@ pinguinos <- na.omit(penguins)
 
 <br>
 
-```{r, message=FALSE, message=FALSE}
-library(SmartEDA)
-```
-
 ```{r, message=FALSE, warning=FALSE}
 ExpNumViz(pinguinos, Page = c(3,2))
 # permite visualizar la distribución de todas las variables numéricas de nuestra tabla de datos con gráficos de densidad. El argumento `Page =` sirve para indicar el patrón de salida de los gráficos, con `c(3,2)` estamos indicando que los gráficos se muestren en 3 filas y 2 columnas. Si no colocamos `Page =` nos mostrará los gráficos de forma individual.
@@ -250,11 +255,6 @@ ExpCatViz(pinguinos, Page = c(2,2))
 ```
 
 <br>
-
-```{r, warning=FALSE, message=FALSE}
-library(tidyverse) 
-# El paquete `tidyverse` es un conglomerado de paquetes que sirven para manejar, modificar y visualizar datos
-```
 
 El paquete `ggplot2` dentro de `tidyverse` se especializa en la visualización de datos por medio de la gramática de gráficos (gg).
 
