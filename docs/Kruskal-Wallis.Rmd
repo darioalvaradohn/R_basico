@@ -17,7 +17,15 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
+#### Parte 2
+
 Cuando los datos no cumplen con los supuestos de normalidad y homogeneidad de la varianza se pueden utilizar métodos no paramétricos para realizar la comparación entre grupos.
+
+<br>
+
+#### Paquetes
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -26,12 +34,20 @@ library(agricolae)
 library(FSA)
 ```
 
+<br>
+
+#### Datos
+
 ```{r}
 data("penguins")
 head(penguins)
 ```
 
+<br>
+
 ### Contenido{.tabset .tabset-pills}
+
+<br>
 
 #### Kruskal-Wallis
 
@@ -44,7 +60,9 @@ Podemos ejecutar la prueba de Kruskal-Wallis con la función `kruskal.test()`.
 kruskal.test(body_mass_g ~ island, data = penguins)
 ```
 
-El valor de P muestra la significancia estadística de la comparación entre los grupos. Si el valor de P < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de P ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+El valor de p muestra la significancia estadística de la comparación entre los grupos. 
+
+Si el valor de p < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. Si el valor de p ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
 
 También podemos hacerlo con la función `kruskal()` del paquete `agricolae`
 
@@ -53,7 +71,9 @@ k <- kruskal(penguins$body_mass_g, penguins$island)
 k
 ```
 
-Esta función nos brinda más información que la anterior, incluso realiza la prueba de contraste entre los grupos.
+Esta función nos brinda más información que la anterior, incluso realiza la prueba de contraste entre los grupos. El formato del resultado es el mismo que muestra la función `HSD.test()` o la función `duncan.test()` para un ANOVA.
+
+<br>
 
 #### Pruebas de contraste
 
@@ -62,6 +82,8 @@ Para realizar la prueba de contraste después de realizar la prueba de Kruskal-W
 ```{r}
 dunnTest(body_mass_g ~ island, data = penguins)
 ```
+
+<br>
 
 #### Gráficos
 
@@ -73,7 +95,10 @@ Gráfico de la función `kruskal()`.
 plot(k)
 ```
 
+<br>
+
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
+
 Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por isla con la función `Summarize()` del paquete `FSA`.
 
 ```{r}
@@ -81,7 +106,7 @@ sumbm <- Summarize(body_mass_g ~ island, data = penguins)
 sumbm
 ```
 
-Después agregamos una columna con el error estándar (medida de precisión del estimado) y una columna para el intervalo de confianza al 95% calculad a partir del error estándar.
+Después agregamos una columna con el error estándar  y una columna para el intervalo de confianza al 95%.
 
 ```{r}
 sumbm$SE <- sumbm$sd / sqrt(sumbm$n)
@@ -90,19 +115,81 @@ sumbm$lsIC95 <- sumbm$mean + sumbm$SE * 1.96
 sumbm
 ```
 
-Con estos datos procedemos a graficarlo.
+Con estos datos procedemos a graficar.
 
 ```{r}
 ggplot(sumbm, aes(island, mean)) +
-  geom_errorbar(width = 0.2, aes(ymin = liIC95, ymax = lsIC95)) +
-  geom_point(shape = 19, size = 3, color = c("red", "gray", "blue")) +
+  geom_errorbar(width = 0.2, 
+                aes(ymin = liIC95, 
+                    ymax = lsIC95)) +
+  geom_point(shape = 19, 
+             size = 3, 
+             color = c("gray", "lightblue", "darkslategray")) +
 labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
      y = "Masa corporal (g)",
      x = "Isla") +
-  geom_text(aes(label = c("a", "b", "b")), vjust = -2.5) +
+  geom_text(aes(label = c("a", "b", "b")), 
+            vjust = -2.5) +
   theme_classic()
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/kruskal.jpg")
 ```
+
+<br>
+
+#### Modelos lineales
+
+Los modelos lineales generales se basan en una regresión lineal simple y se utilizan cuando nuestra variable predictora (independiente) es numérica (también se pueden utilizar para variables predictoras categóricas).
+
+Para facilitar la interpretación del resultado del modelo vamos a convertir nuestra variable de masa corporal de gramos a kilogramos. _Esto no afecta los datos, solamente lo interpretamos con otra unidad._
+
+```{r}
+pin <- penguins
+pin$masakg <- penguins$body_mass_g / 1000
+head(pin)
+```
+
+El modelo lineal se ejecuta con la función `lm()`.
+
+También debemos tener cuidado con el orden de nuestra variable respuesta y nuestra variable predictora.
+
+```{r}
+modelo <- lm(flipper_length_mm ~ masakg, data = pin)
+```
+
+```{r}
+summary(modelo)
+```
+
+El summary del modelo nos brinda la siguiente información:
+
+- La distribución de los residuales del modelo. 
+- El intercepto: el valor que tendría nuestra variable respuesta en el eje y cuando nuestra variable predictora es 0 en el eje x. 
+- El estimado bajo el intercepto es el resultado que interpretamos para este modelo. En este caso, la interpretación es: Por cada unidad (kilogramo) que aumenta mi variable predictora (masa corporal en kg), la variable respuesta (tamaño de aleta) aumenta 15.28 unidades (milímetros).
+
+Si el efecto fuese inversamente proporcional (si al aumentar la masa corporal, el tamaño de aleta disminuye), el valor del estimado sería negativo. 
+
+Este resultado se basa en nuestro conjunto de datos y puede diferir si alguien tiene datos diferentes a los nuestros. 
+
+- El summary también nos muestra el valor del error estándar de esa estimación.
+- El estadístico T 
+- El valor de p que nos indica si el efecto de nuestra variable predictora sobre nuestra variable respuesta es estadísticamente significativo o no. p < 0.05 = estadísticamente significativo; p >= 0.05 = No estadísticamete significativo. 
+- En la parte inferior del summary también nos aparece un valor de R cuadrado ajustado que indica cuánto explica nuestro modelo la variación en nuestros datos, en este caso, es un 0.758 que pasado a porcentaje sería 75.8%, y la interpretación es: la variable predictora (masa corporal) explica el 75.8% de la varianza de la variable respuesta (tamaño de aleta).
+
+<br>
+
+También podemos generar modelos lineales con variables predictoras categóricas
+
+```{r}
+modelocat <- lm(flipper_length_mm ~ species, data = penguins)
+summary(modelocat)
+```
+
+En este caso, la interpretación de los estimados es un poco diferente. 
+
+- El intercepto es la media de la variable respuesta (tamaño de aleta en mm) para el primer nivel de la variable predictora (especie Adelie) 
+- Los siguientes estimados son la diferencia que hay entre el resto de niveles de la variable predictora comparados contra el primer nivel, en este caso, el estimado para "speciesChinstrap" indica que el tamaño de aleta de la especie Chinstrap es 5.87 mm mayor que el tamaño de aleta de la especie Adelie (primer nivel de la variable predictora); el estimado para "speciesGentoo" indica que el tamaño de aleta de la especie Gentoo es 27.23 mm mayor que el tamaño de aleta de la especie Adelie. Si una de las especies tuviese un tamaño de aleta inferior al de la especie del primer nivel, el valor del estimado sería negativo. 
+
+El resto de los elementos en el summary se interpreta de la misma forma que en el modelo anterior.

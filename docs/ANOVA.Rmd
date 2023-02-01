@@ -17,6 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
+#### Parte 1
+
 Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
 
 <br>
