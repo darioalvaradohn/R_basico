@@ -15,7 +15,13 @@ header-includes:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<br>
+
 Las pruebas de correlación sirven para determinar si dos variables están relacionadas o no.
+
+<br>
+
+#### Paquetes
 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
@@ -26,17 +32,44 @@ library(see)
 library(inspectdf)
 ```
 
+<br>
+
+#### Datos
+
 ```{r}
 suelos <- import("data/suelos.xlsx")
 head(suelos)
 ```
 
+<br>
+
+Podemos explorar gráficamente si dos variables de nuestra tabla de datos están relacionadas o no.
+
+```{r}
+ggplot(suelos, aes(K, Mg)) +
+  geom_point()
+
+# con un gráfico de dispersión podemos ver si existe un patrón entre las dos variables, por ejemplo, en este gráfico se puede apreciar que no hay un patrón de relación específico entre el potasio (K) y el magnesio (Mg) según los datos de la tabla `suelos`.
+```
+
+```{r}
+ggplot(suelos, aes(Na, Conduc)) +
+  geom_point()
+# En este gráfico se puede apreciar un patrón claro de la relación entre las variables, a mayores concentraciones de sodio (Na) hay mayor conductividad (Conduc) según los datos de la tabla `suelos`.
+```
+
+Pero si queremos obtener un valor numérico de esa relación debemos utilizar pruebas de correlación.
+
+<br>
+
 ### Contenido{.tabset .tabset-pills}
 
-#### Prueba de correlación de Pearson (paramétrica)
+<br>
 
-Un método paramétrico para determinar la correlación entre dos variables es la **prueba de correlación de Pearson**.
-Para utilizar la correlación de Pearson nuestros datos deben provenir de una muestra con distribución normal.
+#### Prueba de correlación de Pearson 
+
+Es un método paramétrico para determinar la correlación entre dos variables.
+Para utilizar la correlación de Pearson, nuestros datos deben cumplir el supuesto de normalidad.
 
 ```{r}
 shapiro.test(suelos$K)
@@ -47,30 +80,43 @@ shapiro.test(suelos$Mg)
 ```
 
 Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test()`.
-Aquí no importa el orden de las variables.
 
 ```{r}
-cor.test(suelos$K, suelos$Mg)
+cor.test(suelos$K, suelos$Mg) # Aquí no importa el orden en el que coloquemos las variables.
 ```
 
-El `valor de P` indica la significancia estadística de la correlación entre las dos variables.
-El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa.
+El valor de p indica la significancia estadística de la correlación entre las dos variables.
+Si el valor de p < 0.05 = La correlación entre las variables es estadísticamente significativa.
+Si el valor de p >= 0.05 = La correlación entre las variables NO es estadísticamente significativa.
 
-#### Prueba de correlación de Spearman (no paramétrica)
+El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa. En este caso, las variables de K y Mg están negativamente correlacionadas (cor = -0.36). Los valores de `cor` pueden ir de -1 a 1, entre más cercano a -1 o 1 sea el valor de `cor`, más fuerte es la correlación entre las variables, entre más cercano a 0 (positiva o negativamente), la correlación es más débil. **Si la relación de una variable con la otra no es lineal, la correlación será baja.**
 
-Si una de las variables no cumple con el supuesto de distribución normal se puede utilizar una prueba no paramétrica, la **prueba de correlación de Spearman**.
+El intervalo de confianza al 95% nos indica que la verdadera correlación entre las variables podría estar entre -0.58 y -0.08.
+
+
+#### Prueba de correlación de Spearman 
+
+Si una de las variables no cumple con el supuesto de normalidad, se puede utilizar una prueba no paramétrica, la **prueba de correlación de Spearman**.
 
 ```{r}
-shapiro.test(suelos$pH)
+shapiro.test(suelos$Na)
 ```
-
-Para esto se utiliza la misma función `cor.test()` pero se especifica el `method = "spearman"`.
 
 ```{r}
-cor.test(suelos$pH, suelos$K, method = "spearman")
+shapiro.test(suelos$Conduc)
 ```
 
-En este caso, el valor de `rho` indica la magnitud y dirección de la correlación.
+Para la prueba de Spearman se utiliza la misma función `cor.test()`, pero se especifica el `method = "spearman"`.
+
+```{r, message=FALSE, warning=FALSE}
+cor.test(suelos$Na, suelos$Conduc, method = "spearman")
+```
+
+En este caso, el valor de `rho` indica la magnitud y dirección de la correlación (equivalente al valor de `cor` en la prueba de Pearson). En este ejemplo hay una correlación positiva muy fuerte entre las variables Na y Conduc (0.96).
+
+La prueba de Spearman es menos robusta que la de Pearson porque no es específica para un tipo de distribución de los datos. También podemos aplicar la prueba de Pearson si los datos no cumplen el supuesto de normalidad, aunque esta pierde un poco de robustez.
+
+<br>
 
 #### Correlación entre múltiples variables
 
@@ -79,15 +125,13 @@ También podemos evaluar la correlación entre más de dos variables
 Podemos utilizar la función `ggpairs()` del paquete `GGally`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
 
 ```{r}
-suelosb <- suelos[,6:14]
+suelosb <- suelos[,6:14] # seleccionamos de la columna 6 a la 14 que son las que contienen las variables numéricas que queremos evaluar
 head(suelosb)
 ```
 
 ```{r, message=FALSE}
 ggpairs(suelosb)
 ```
-
-Si la relación de una variable con la otra no es lineal, la correlación será baja.
 
 ```{r, message=FALSE, warning=FALSE}
 ggpairs(suelosb, c("pH", "N", "P", "K"))
