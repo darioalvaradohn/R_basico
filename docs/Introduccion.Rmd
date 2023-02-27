@@ -21,7 +21,7 @@ Este es un curso introductorio al análisis estadístico en R brindado por perso
 En los siguientes enlaces puedes decargar los instaladores de R base y de R Studio.
 
 
-Descargar R base: [R base](https://cran.r-project.org/bin/windows/base/)
+Descargar R base: [R base](https://cran.rstudio.com/)
 
 Descargar R Studio: [R Studio](https://posit.co/download/rstudio-desktop/)
 
