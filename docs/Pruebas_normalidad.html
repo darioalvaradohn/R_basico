@@ -428,6 +428,17 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ## 
 ## data:  sF$altura
 ## W = 0.97515, p-value = 0.333</code></pre>
+<p>O podemos hacer los subgrupos con la función <code>split()</code>.
+Esta función generará un dataset para cada nivel (grupo) de la variable
+categórica.</p>
+<pre class="r"><code>subgrupos &lt;- split(datos, datos$sexo)</code></pre>
+<pre class="r"><code>shapiro.test(subgrupos$M$altura)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  subgrupos$M$altura
+## W = 0.97863, p-value = 0.5368</code></pre>
+<p>Pruebas de normalidad para la variable:</p>
 <p><br></p>
 </div>
 <div id="prueba-de-kolmogorov-smirnov" class="section level5">

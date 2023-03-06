@@ -76,6 +76,19 @@ shapiro.test(sM$altura)
 shapiro.test(sF$altura)
 ```
 
+O podemos hacer los subgrupos con la función `split()`. Esta función generará un dataset para cada nivel (grupo) de la variable categórica.
+
+```{r}
+subgrupos <- split(datos, datos$sexo)
+```
+
+```{r}
+shapiro.test(subgrupos$M$altura)
+```
+
+
+Pruebas de normalidad para la variable:
+
 <br>
 
 ##### Prueba de Kolmogorov-Smirnov 
