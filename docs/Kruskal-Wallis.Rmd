@@ -129,7 +129,8 @@ labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
      y = "Masa corporal (g)",
      x = "Isla") +
   geom_text(aes(label = c("a", "b", "b")), 
-            vjust = -2.5) +
+            vjust = -3.5) +
+  ylim(c(3500, 5000)) +
   theme_classic()
 ```
 
