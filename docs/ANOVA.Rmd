@@ -204,20 +204,12 @@ plot(contraste2vias)
 
 Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
 
-Preparamos un resumen de nuestros datos de longitud de aleta de los pingüinos (variable respuesta) por especie (variable predictora) con la función `Summarize()` del paquete `FSA`.
+Extraemos las medias de la salida de la prueba de contraste de la función `HSD.test` y lo convertimos en un dataframe: 
 
 ```{r}
-sum <- Summarize(flipper_length_mm ~ species, data = penguins)
-sum
-```
-
-Después agregamos una columna con el error estándar (estadístico que mide la precisión de la estimación, es parte de la estadística inferencial y no de la estadística descriptiva).
-
-La fórmula para calcular el error estándar es: desviación estándar/raíz cuadrada de n. En este caso, n = número de observaciones para cada grupo de la variable predictora (especie).
-
-```{r}
-sum$SE <- sum$sd / sqrt(sum$n)
-sum
+medias <- data.frame(contraste2$means)
+medias
+# El error estándar es el error que calcula la prueba para cada grupo e indica la precisión de la estimación (estadística inferencial)
 ```
 
 Con el error estándar podemos calcular el intervalo de confianza al 95%.
@@ -230,13 +222,13 @@ El IC95% se calcula multiplicando el error estándar por el valor Z para ese niv
 - Z = 2.757 para IC99%
 
 ```{r}
-sum$IC95 <- sum$SE * 1.96
-sum$liIC95 <- sum$mean - sum$SE * 1.96 # límite inferior del IC95%
-sum$lsIC95 <- sum$mean + sum$SE * 1.96 # límite superior del IC95%
+medias$IC95 <- medias$se * 1.96
+medias$liIC95 <- medias$flipper_length_mm - medias$ IC95# límite inferior del IC95%
+medias$lsIC95 <- medias$flipper_length_mm + medias$IC95 # límite superior del IC95%
 ```
 
 ```{r}
-sum
+medias
 ```
 
 <br>
@@ -245,7 +237,7 @@ Con estos datos procedemos a graficar.
 
 ```{r}
 # Gráfico de columnas con barras de error (con el IC95%)
-ggplot(sum, aes(species, mean)) +
+ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
   geom_col(width = 0.6, 
            color = "black", 
            fill = c("gray", "lightblue", "darkslategray")) +
@@ -267,7 +259,7 @@ Una mejor manera de graficar este tipo de resultados es mediante gráficos de pu
 
 ```{r}
 # Gráfico de punto con barras de error
-ggplot(sum, aes(species, mean)) +
+ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
   geom_errorbar(width = 0.2, 
                 aes(ymin = liIC95, 
                     ymax = lsIC95)) +
@@ -290,7 +282,48 @@ ggsave("Imagenes/anova.jpg")
 
 <br>
 
-Para el contraste del ANOVA de dos vías hacemos lo siguiente:
+Para el contraste del ANOVA de dos vías hacemos lo mismo:
+
+```{r}
+medias2vias <- data.frame(contraste2vias$means)
+medias2vias
+```
+
+```{r}
+medias2vias$IC95 <- medias2vias$se * 1.96
+medias2vias$liIC95 <- medias2vias$flipper_length_mm - medias2vias$ IC95# límite inferior del IC95%
+medias2vias$lsIC95 <- medias2vias$flipper_length_mm + medias2vias$IC95 # límite superior del IC95%
+```
+
+```{r}
+medias2vias
+```
+
+```{r}
+medias2vias$grupo <- c("c", "c", "c", "b", "a")
+```
+
+```{r}
+ggplot(medias2vias, aes(row.names(medias2vias), flipper_length_mm)) +
+  geom_errorbar(width = 0.2, 
+                aes(ymin = liIC95, 
+                    ymax = lsIC95)) +
+  geom_point(shape = 19, 
+             size = 3) +
+labs(title = "Longitud de aleta (mm) por especie e isla",
+     y = "Longitud de aleta (mm)",
+     x = "Especie x isla") +
+  geom_text(aes(label = grupo), 
+            vjust = -2) +
+  ylim(c(185,225)) +
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+Para que los valores de la especie Adelie aparezcan juntos en el gráfico podemos hacer lo siguiente:
+
+Hacemos un resumen de las medias por especie por isla con la función `Summarize()` del paquete `FSA`:
 
 ```{r}
 sum2vias <- Summarize(flipper_length_mm ~ species + island, data = penguins) # agregamos la segunda variable predictora (island) a nuestro resumen de datos
@@ -298,14 +331,25 @@ sum2vias
 ```
 
 ```{r}
-sum2vias$SE <- sum2vias$sd / sqrt(sum2vias$n)
+sum2vias <- arrange(sum2vias, species)
+sum2vias
+```
+
+Agregaos columnas con el error estándar (de la prueba de contraste) y los intervalos de confianza al 95%:
+
+```{r}
+sum2vias$SE <- medias2vias$se
 sum2vias$IC95 <- sum2vias$SE * 1.96
-sum2vias$liIC95 <- sum2vias$mean - sum2vias$SE * 1.96 
-sum2vias$lsIC95 <- sum2vias$mean + sum2vias$SE * 1.96 
+sum2vias$liIC95 <- sum2vias$mean - sum2vias$IC95 
+sum2vias$lsIC95 <- sum2vias$mean + sum2vias$IC95 
 ```
 
 ```{r}
 sum2vias
+```
+
+```{r}
+sum2vias$grupo <- c("", "", "c", "b", "a")
 ```
 
 ```{r}
@@ -323,11 +367,11 @@ labs(title = "Longitud de aleta (mm) por especie e isla",
      x = "Especie",
      color = "Isla") +
   scale_color_manual(values = c("gray", "lightblue", "darkslategray")) + # para especificar los colores de forma manual
-  geom_text(aes(label = c("", "a", "", "b", "c")), 
+  geom_text(aes(label = grupo), 
             vjust = -1.5) +
   ylim(c(185,230)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme_classic()
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 <br>
