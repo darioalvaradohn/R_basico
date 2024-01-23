@@ -346,7 +346,7 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
 # gráfico de violín
 ggplot(pinguinos, aes(species, body_mass_g)) +
   geom_violin(aes(fill = species), 
-              alpha = 0.4, 
+              alpha = 0.6, 
               show.legend = NULL) +
   geom_jitter(width = 0.2, 
               alpha = 0.3) +
@@ -354,6 +354,8 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
                geom = "point", # para indicar el símbolo
                color = "red", # para indicar el color del símbolo
                size = 2) + # para indicar el tamaño del símbolo
+  labs(x = "Especie",
+       y = "Masa corporal (g)") +
   theme_bw()
 ```
 
