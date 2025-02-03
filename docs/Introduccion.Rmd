@@ -14,7 +14,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-Este es un curso introductorio al análisis estadístico en R brindado por personal de `HN Biology Investigation` en el que aprenderás a usar la interfaz de R Studio desde cero para analizar tus datos apropiadamente.
+Este es un curso introductorio al análisis estadístico en R brindado por instructores de `HN Biology Investigation` en el que aprenderás a usar la interfaz de R Studio desde cero para analizar tus datos apropiadamente.
+
+<br>
+
+**R** es un <ins>lenguaje de programación</ins> y un <ins>entorno de software</ins> diseñado principalmente para análisis estadístico, minería de datos y gráficos. Es ampliamente utilizado en ciencia de datos, bioinformática y aprendizaje automático.
+
+<br>
+
+**RStudio** es un <ins>Entorno de Desarrollo Integrado (IDE)</ins> para R que facilita la escritura, ejecución y depuración de código. No es un lenguaje, sino una interfaz que mejora la experiencia de trabajar con R.
 
 <br>
 
