@@ -24,9 +24,36 @@ En esta clase implementaremos comandos básicos en R, aprenderás a crear objeto
 
 <br>
 
+#### Tipos de datos en R
+
+**R** trabaja con diferentes tipos de datos:
+
+1. Numéricos:
+
+```{r}
+10
+500
+```
+
+2. Texto (string):
+
+```{r}
+"Hola"
+"Análisis estadístico"
+```
+
+
+3. Lógicos (booleano):
+
+```{r}
+TRUE
+FALSE
+```
+
+
 #### Comandos básicos
 
-Pues usar R como una calculadora para ejecutar operaciones matemáticas:
+R puede utilizarse como una calculadora para ejecutar operaciones matemáticas:
 
 - Sumas
 
@@ -94,13 +121,14 @@ En R puedes asignar **valores** o variables a un objeto para utilizarlos en el p
 
 Para asignar un valor o variable a un objeto utilizamos el operador `<-`. 
 
-`objeto` `<-` `variable`
+"objeto" `<-` "valor"
+"objeto" `<-` "variable"
 
 ```{r}
 a <- 4 + 8
 ```
 
-Para ver el contenido del objeto que creamos solo tenemos que colocar el nombre y ejecutarlo:
+Para ver el contenido del objeto que creamos solo tenemos que colocar el nombre del objeto y ejecutarlo:
 
 ```{r}
 a
@@ -110,7 +138,7 @@ a
 
 Además del operador `<-`, también se puede utilizar el igual `=` para asignar una variable a un objeto.
 
-`objeto` `=` `variable`
+"objeto" `=` "variable"
 
 ```{r}
 a = 4 + 8
@@ -119,7 +147,7 @@ a
 
 Y también se puede utilzar el operador de flecha inversa `->`. 
 
-`variable` `->` `objeto`
+"variable" `->` "objeto"
 
 ```{r}
 4 + 8 -> a
