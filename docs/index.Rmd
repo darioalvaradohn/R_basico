@@ -1,5 +1,6 @@
 ---
 title: "Curso de Análisis Estadístico en R Nivel Básico"
+author: "MSc. Darío Alvarado"
 output:
   html_document: default
   pdf_document: default
@@ -60,5 +61,5 @@ Whatsapp: [+50499549551](https://wa.me/message/TPZWCKRLQDVQF1)
 <br>
 
 <div style="display:flex; align-items:center;">
-  <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;">
+  <img src="Imagenes/HNBI_LOGO2.jpeg" alt="Texto alternativo de la imagen" style="width:1000px;height:300px">
 </div>
