@@ -18,7 +18,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-En esta clase implementaremos comandos básicos en R, aprenderás a crear objetos que contengan variables, tablas y también a cargar tus bases de datos para analizarlas en R.
+En esta clase utilizaremos scripts en R e implementaremos comandos básicos, aprenderás a crear objetos que contengan variables, tablas y también a cargar bases de datos desde tus carpetas de documentos para analizarlas en R.
+
+Un **script** en R es un archivo de texto plano que contiene una secuencia de instrucciones o código R para ser ejecutado de manera ordenada. Se usa para automatizar análisis, guardar código reutilizable y evitar escribir comandos repetidamente en la consola.
+
+Para <ins>crear</ins> un script en RStudio ir a **File → New File → R Script** o puedes utilizar el atajo de teclado `Ctrl + Shift + N`.
+
+Para <ins>ejecutar</ins> una línea de código o una selección presionamos `Ctrl + Enter`.
+
+Para ejecutar todo el script podemos dar clic en **Source** o utilizar el atajo de teclado `Ctrl + Shift + S`.
+
+Para <ins>guardar</ins> el script podemos hacer clic en el ícono de disquete de la parte superior de la ventana de script o presionamos `Ctrl + S`.
 
 ### Contenido{.tabset .tabset-pills}
 
@@ -26,7 +36,7 @@ En esta clase implementaremos comandos básicos en R, aprenderás a crear objeto
 
 #### Tipos de datos en R
 
-**R** trabaja con diferentes tipos de datos:
+R trabaja con diferentes tipos de datos:
 
 1. Numéricos:
 
@@ -59,7 +69,6 @@ R puede utilizarse como una calculadora para ejecutar operaciones matemáticas:
 
 ```{r}
 2 + 4 
-# para ejecutar un código en un script presionamos las teclas `Ctrl + Enter`
 ```
 
 ```{r}
@@ -104,11 +113,18 @@ sqrt(49)
 
 - Logaritmo
 
+Utilizamos la función `log()` y podemos especificar la base con el argumento `base =` dentro de la función:
+
 ```{r}
-log(4)
+log(1000) # logaritmo natural/neperiano Ln (por defecto)
+log(4, base = exp(1)) # logaritmo natural/neperiano Ln (base e = 2.718...)
+log(1000, base = 10) # logaritmo decimal (base 10)
+log(1000, base = 2) # logaritmo binario (base 2)
 ```
 
 - Exponenciales
+
+Utilizamos la función `exp()`:
 
 ```{r}
 exp(1.386294)
@@ -124,12 +140,11 @@ exp(1.386294)
 
 #### Creación de objetos
 
-En R puedes asignar **valores** o variables a un objeto para utilizarlos en el proceso de análisis.
+En R puedes asignar <ins>valores</ins> o <ins>variables</ins> a un **objeto** para utilizarlos en el proceso de análisis.
 
 Para asignar un valor o variable a un objeto utilizamos el operador `<-`. 
 
-"objeto" `<-` "valor"
-"objeto" `<-` "variable"
+"objeto" `<-` "valor/variable"
 
 ```{r}
 a <- 4 + 8
@@ -141,7 +156,7 @@ Para ver el contenido del objeto que creamos solo tenemos que colocar el nombre 
 a
 ```
 
-**Observa que la variable dentro del objeto es el resultado de la operación matemática que colocamos.**
+Observa que la variable dentro del objeto es el resultado de la operación matemática que colocamos.
 
 Además del operador `<-`, también se puede utilizar el igual `=` para asignar una variable a un objeto.
 
@@ -161,7 +176,7 @@ Y también se puede utilzar el operador de flecha inversa `->`.
 a
 ```
 
-**Nótese que la dirección de la flecha indica la variable que se asignará al objeto.**
+La dirección de la flecha indica la variable que se asignará al objeto.
 
 También puedes asignar texto a tus objetos. Para esto tienes que colocar el texto entre comillas `" "`.
 
@@ -171,7 +186,7 @@ b
 ```
 
 Puedes crear **vectores** tanto numéricos como de texto.
-Para esto se utiliza el comando `c()` para _concatenar_ lo que irá dentro del objeto, cada valor u observación debe ir separada por una coma.
+Para esto se utiliza el comando `c()` para <ins>concatenar</ins> lo que irá dentro del objeto, cada valor u observación debe ir separada por una coma.
 
 ```{r}
 altura <- c(180, 150, 169, 161, 174, 168, 192, 174)
@@ -214,7 +229,7 @@ nombre
 
 #### Creación de tablas
 
-Para crear una tabla o cuadro utilizaremos el comando `data.frame()`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, **todas las variables deben contener el mismo número de observaciones**. 
+Para crear una **tabla** o **cuadro** utilizaremos el comando `data.frame()`, este genera una matriz a partir de vectores contenidos en objetos. Para que este comando funcione, **todas las variables deben contener el mismo número de observaciones**. 
 En nuestro caso, la variable `altura` contiene ocho observaciones, y la variable `nombre` también contiene ocho observaciones.
 
 ```{r}
@@ -296,7 +311,7 @@ write.csv(tabla, file = "data/tabla1.csv")
 # Se debe colocar el formato después del nombre que queremos asignar a nuestra tabla, en este caso `.csv`
 ```
 
-En **R** también podemos utilizar **paquetes**, que son complementos o extensiones que cuentan con funciones, datos y documentación diseñados para ampliar las capacidades del lenguaje.
+En R también podemos utilizar **paquetes**, que son complementos o extensiones que cuentan con funciones, datos y documentación diseñados para ampliar las capacidades del lenguaje.
 Por ejemplo, podemos utilizar la función `export()` del paquete `rio` para exportar una base de datos en un formato determinado:
 
 ```{r, message=FALSE, warning=FALSE}
