@@ -58,7 +58,8 @@ R puede utilizarse como una calculadora para ejecutar operaciones matemáticas:
 - Sumas
 
 ```{r}
-2 + 4 # para ejecutar un código en un script (fuera de la consola), presionamos las teclas `Ctrl + Enter`
+2 + 4 
+# para ejecutar un código en un script presionamos las teclas `Ctrl + Enter`
 ```
 
 ```{r}
@@ -110,8 +111,14 @@ log(4)
 - Exponenciales
 
 ```{r}
-exp(4)
+exp(1.386294)
 ```
+- Elevar por un exponente
+
+```{r}
+5^2
+```
+
 
 <br>
 
@@ -202,6 +209,7 @@ nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier", "
 nombre
 ```
 
+
 <br>
 
 #### Creación de tablas
@@ -288,7 +296,8 @@ write.csv(tabla, file = "data/tabla1.csv")
 # Se debe colocar el formato después del nombre que queremos asignar a nuestra tabla, en este caso `.csv`
 ```
 
-También podemos utilizar **paquetes** (complementos de R) para exportar nuestra base de datos. Para eso utilizaremos la función `export()` del paquete `rio`.
+En **R** también podemos utilizar **paquetes**, que son complementos o extensiones que cuentan con funciones, datos y documentación diseñados para ampliar las capacidades del lenguaje.
+Por ejemplo, podemos utilizar la función `export()` del paquete `rio` para exportar una base de datos en un formato determinado:
 
 ```{r, message=FALSE, warning=FALSE}
 #install.packages("rio") # comando para instalación de paquetes
@@ -296,7 +305,7 @@ library(rio) # comando para cargar los paquetes en un script
 
 # Cada vez que cerremos nuestro proyecto de R y volvamos a ingresar tenemos que cargar los paquetes de nuestros scripts con la función `library()`, pero no hay necesidad de volver a instalarlos.
 
-# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...`
+# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...` 
 ```
 
 ```{r}

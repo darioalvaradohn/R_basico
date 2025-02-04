@@ -397,8 +397,9 @@ matemáticas:</p>
 <ul>
 <li>Sumas</li>
 </ul>
-<pre class="r"><code>2 + 4 # para ejecutar un código en un script (fuera de la consola), presionamos las teclas `Ctrl + Enter`</code></pre>
+<pre class="r"><code>2 + 4 </code></pre>
 <pre><code>## [1] 6</code></pre>
+<pre class="r"><code># para ejecutar un código en un script presionamos las teclas `Ctrl + Enter`</code></pre>
 <pre class="r"><code>2 + 4 + 3</code></pre>
 <pre><code>## [1] 9</code></pre>
 <ul>
@@ -439,8 +440,13 @@ la raíz cuadrada.</p>
 <ul>
 <li>Exponenciales</li>
 </ul>
-<pre class="r"><code>exp(4)</code></pre>
-<pre><code>## [1] 54.59815</code></pre>
+<pre class="r"><code>exp(1.386294)</code></pre>
+<pre><code>## [1] 3.999999</code></pre>
+<ul>
+<li>Elevar por un exponente</li>
+</ul>
+<pre class="r"><code>5^2</code></pre>
+<pre><code>## [1] 25</code></pre>
 <p><br></p>
 </div>
 <div id="creación-de-objetos" class="section level4">
@@ -490,14 +496,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 150.9130 171.4696 162.4678 184.8066 153.7816 154.0137 166.0670 171.9994</code></pre>
+<pre><code>## [1] 140.4202 164.8844 166.1108 162.0659 127.3345 174.9765 148.5125 169.2356</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 150.91 171.47 162.47 184.81 153.78 154.01 166.07 172.00</code></pre>
+<pre><code>## [1] 140.42 164.88 166.11 162.07 127.33 174.98 148.51 169.24</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 151 171 162 185 154 154 166 172</code></pre>
+<pre><code>## [1] 140 165 166 162 127 175 149 169</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -505,7 +511,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 188 189 178 160 162 186 173 175</code></pre>
+<pre><code>## [1] 160 158 179 169 157 189 177 161</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
@@ -618,15 +624,18 @@ generamos un archivo de valores separados por comas
 # Si queremos guardar nuestra tabla en una carpeta fuera de la carpeta que contiene nuestro proyecto de R en el que estamos trabajando, debemos colocar la ruta completa de ubicación de esa carpeta externa.Por ejemplo: &quot;C:/Users/Nombre/Documents/CursoR/R_basico/datos/tabla.csv&quot;
 
 # Se debe colocar el formato después del nombre que queremos asignar a nuestra tabla, en este caso `.csv`</code></pre>
-<p>También podemos utilizar <strong>paquetes</strong> (complementos de
-R) para exportar nuestra base de datos. Para eso utilizaremos la función
-<code>export()</code> del paquete <code>rio</code>.</p>
+<p>En <strong>R</strong> también podemos utilizar
+<strong>paquetes</strong>, que son complementos o extensiones que
+cuentan con funciones, datos y documentación diseñados para ampliar las
+capacidades del lenguaje. Por ejemplo, podemos utilizar la función
+<code>export()</code> del paquete <code>rio</code> para exportar una
+base de datos en un formato determinado:</p>
 <pre class="r"><code>#install.packages(&quot;rio&quot;) # comando para instalación de paquetes
 library(rio) # comando para cargar los paquetes en un script
 
 # Cada vez que cerremos nuestro proyecto de R y volvamos a ingresar tenemos que cargar los paquetes de nuestros scripts con la función `library()`, pero no hay necesidad de volver a instalarlos.
 
-# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...`</code></pre>
+# Es recomendable revisar periódicamente si los paquetes que tenemos instalados requieren actualización. Podemos revisarlo en la pestaña `Tools` de la barra de herramientas y dando click en la segunda opción `Check for Package Updates...` </code></pre>
 <pre class="r"><code>export(tabla, &quot;data/tabla1.xlsx&quot;)
 # aquí también debemos indicar la &quot;ruta de ubicación&quot; en donde se guardará nuestra tabla.
 # el paquete rio permite exportar e importar archivos en formato .csv, .xlsx. .txt, entre otros.</code></pre>
