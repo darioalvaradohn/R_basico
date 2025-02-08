@@ -13,6 +13,13 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -36,13 +43,29 @@ library(vcd)
 
 #### Chi-cuadrado
 
-Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi-cuadrado** para ver si un grupo es mayor que el otro.
+El **Chi-cuadrado** (\( X^2 \)) es una prueba estadística utilizada para analizar si existe una relación entre dos variables categóricas (<ins>pruebas de independencia</ins>) o si una distribución observada se ajusta a una distribución esperada (<ins>pruebas de bondad de ajuste</ins>).
 
-Supongamos que realizamos una encuesta y le consultamos a 100 personas si prefieren comer tortillas o pan. 
+<br>
+
+La fórmula del Chi-cuadrado es la siguiente:
+
+$$
+X^2 = \Sigma \frac{(O_i-E_i)^2}{E_i}
+$$
+
+Donde:
+
+- \(O_i\) = valores observados en la categoría \(i\)
+
+- \(E_i\) = valores esperados en la categoría \(i\)
+
+Cuando hay dos frecuencias en un grupo de datos comunmente se hace un **Chi-cuadrado** para ver si la diferencia entre los grupos es significativa.
+
+Supongamos que realizamos una encuesta y le consultamos a 100 personas si fuman o no fuman. 
 
 ```{r}
-x <- c(tortillas = 54, pan = 46)
-# tenemos que 54 personas de 100 (54%) prefieren comer tortillas y 46 (46%) prefieren comer pan.
+x <- c("fumadores" = 54, "no fumadores" = 46) # tenemos que 54 personas de 100 (54%) son fumadores y 46 (46%) son no fumadores.
+x
 ```
 
 La función para ejecutar la prueba de Chi-cuadrado es `chisq.test()`.
@@ -53,64 +76,44 @@ chisq.test(x)
 
 Se interpreta el valor de p tomando como referencia el valor de alpha que por defecto es de 0.05. 
 
-Si p < 0.05 = si hay diferencias estadísticamente significativas entre los dos grupos. 
-Si p ≥ 0.05 = los grupos no presentan diferencias estadísticamente significativas.
+- Si **p < 0.05** = si hay diferencias estadísticamente significativas entre los dos grupos. 
+
+- Si **p ≥ 0.05** = los grupos no presentan diferencias estadísticamente significativas.
 
 <br>
 
-Al aumentar el tamaño de la muestra se consigue la significancia del valor de p.
+Esta prueba es dependiente del tamaño de la muestra, por lo que al aumentar el tamaño de la muestra se consigue la significancia del valor de p.
 
 ```{r}
-x <- c(tortillas = 378, pan = 322)
-# aquí tenemos que 378 personas de 700 (54%) prefieren comer tortillas y 322 (46%) prefieren comer pan.
+x <- c("fumadores" = 540, "no fumadores" = 460) # aquí tenemos que 540 personas de 1000 (54%) que son fumadoras y 460 (46%) que son no fumadoras.
 ```
 
 ```{r}
 chisq.test(x)
-
-# Ahora el resultado si es estadísticamente significativo, tenemos la misma proporción (54% contra 46%), pero pasamos de encuestar 100 personas a 700 personas.
 ```
 
-<br>
+Ahora el resultado si es estadísticamente significativo, tenemos la misma proporción (54% contra 46%), pero pasamos de encuestar 100 personas a 1000 personas.
 
-La fórmula del Chi-cuadrado es la siguiente:
-
-$$
-X^2 = \Sigma \frac{(O-E)^2}E
-$$
-
-Donde:
-
-  O = valores observados
-
-  E = valores esperados
-  
 <br>
 
 Podemos verificar los valores esperados y los valores observados de la siguiente manera:
   
 ```{r}
-chi <- chisq.test(x)
+chi <- chisq.test(x) # creamos un objeto con nuestra prueba de chi-cuadrado
 ```
 
 ```{r}
-chi$expected
-
-# por defecto los valores esperados son del 50% para cada proporción (cuando solo tenemos dos opciones), H0 = no hay diferencias entre las proporciones.
+chi$expected # por defecto los valores esperados son del 50% para cada proporción (cuando solo tenemos dos opciones), H0 = no hay diferencias entre las proporciones.
 ```
 
 ```{r}
-chi$observed
-
-# son los valores reales que obtuvimos mediante la encuesta
+chi$observed # son los valores reales que obtuvimos mediante la encuesta
 ```
 
 También podemos ver el estadístico de Chi-cuadrado que aparece en el resultado de la prueba:
 
 ```{r}
-chi$statistic
-
-# El valor crítico de Chi-cuadrado para 1 grado de libertad y un nivel de significancia de 0.05 es 3.84, por encima de eso habrá significancia estadística, por debajo de eso no habrá significancia.
+chi$statistic # El valor crítico de Chi-cuadrado para 1 grado de libertad y un nivel de significancia de 0.05 es 3.84, por encima de eso habrá significancia estadística, por debajo de eso no habrá significancia.
 ```
 
 Podemos extraer los residuales:
@@ -129,20 +132,18 @@ chi$stdres
 # Si los residuales estandarizados tienen valores entre -2 y 2, no difieren de los valores esperados. Si los residuales tienen valores inferiores a -2, los valores observados están por debajo de los valores esperados. Si los residuales tienen valores superiores a 2, los valores observados están por encima de los valores esperados. Valores inferiores a -2 y superiores a 2 influyen en la significancia estadística de la diferencia entre las proporciones.
 ```
 
-##### Especificar un valor esperado diferente
+<br>
 
-En la vida real, no siempre esperaremos que cada proporción sea del 50%.
 
-```{r}
-chiesp <- chisq.test(x, p = c(0.7, 0.3)) 
-# con el argumento `p =` indicamos la proporción que nosotros esperariamos (70% para tortillas y 30% para pan)
-```
+En la vida real, no siempre esperaremos que cada proporción sea del 50%, por lo que podemos modificar el valor esperado por defecto:
 
 ```{r}
-chiesp 
+chiesp <- chisq.test(x, p = c(0.7, 0.3)) # con el argumento `p` indicamos la proporción que nosotros esperariamos (70% fumadores y 30% no fumadores) según conocimientos previos.
 
-# El valor de p solo va a indicar si los valores observados son estadísticamente diferentes o no de los valores esperados, pero no nos indica la dirección de esa diferencia (menor o mayor).
+chiesp
 ```
+
+_Nota: El valor de p solo indica si los valores observados son estadísticamente diferentes o no de los valores esperados, pero no nos indica la dirección de esa diferencia (menor o mayor)._
 
 Podemos ver los valores esperados según las proporciones que especificamos:
 
@@ -162,34 +163,56 @@ Y los residuales estandarizados:
 chiesp$stdres
 ```
 
-#### Estimación de parámetros para proporciones
+<br>
 
+Para ver la **relación entre variables categóricas** utilizando el mismo ejemplo, podemos agregar la variable de sexo:
+
+```{r}
+tabla <- matrix(c(320, 100, 220, 360), nrow = 2, byrow = TRUE) # creamos una matriz de datos
+colnames(tabla) <- c("Fumadores", "No Fumadores")
+rownames(tabla) <- c("Hombres", "Mujeres")
+tabla
+```
+
+```{r}
+chisq.test(tabla)
+```
+
+Si el valor de p es mayor o igual que 0.05 indica que las categorías son independietes (no hay relación). En este caso, el valor de p es menor que 0.05, por lo que se puede concluir que existe una relación entre el sexo y el hábito de fumar.
+
+<br>
+
+#### Estimación de parámetros
+
+La estimación de parámetros permite **inferir** los valores de los parámetros desconocidos de una población a partir de una muestra de datos.
 Para conocer las proporciones de cada grupo respecto al total de la muestra podemos utilizar la función `binom.test()` (para datos binomiales).
 
 ```{r}
-binom.test(378, 700) # indicamos el número de observaciones para el primer grupo (378) respecto al total de la muestra (700)
+binom.test(540, 1000) # indicamos el número de observaciones para el primer grupo (540) respecto al total de la muestra (1000)
 
 # El resultado nos muestra un valor de p para la significancia estadística de esa proporción, al igual que en la prueba de Chi-cuadrado, el nivel de significancia por defecto es de 0.05. Además de eso, también se muestra el intervalo de confianza al 95% y el valor de la media de la proporción.
 ```
 
-El 54% de las personas encuestadas prefieren comer tortillas en lugar de pan, y se puede decir con un 95% de confianza que la verdadera proporción está entre el 50 y el 57% (p = 0.03756).
-
-```{r}
-binom.test(322, 700) # ahora indicamos el número de observaciones para el segundo grupo (322) respecto al total de la muestra (700)
-```
-
-El 46% de las personas encuestadas prefieren comer pan en lugar de tortillas, y se puede decir con un 95% de confianza que la verdadera proporción está entre el 42 y el 49% (p = 0.03756).
+El 54% de las personas encuestadas tienen el hábito de fumar, y se puede decir con un 95% de confianza que la verdadera proporción está entre el 50.8 y el 57.1% (p = 0.01244).
 
 <br>
 
-Si queremos especificar un valor esperado diferente, podemos indicarlo con el argumento `p =` para definir la proporción esperada para cada grupo
+```{r}
+binom.test(460, 1000) # ahora indicamos el número de observaciones para el segundo grupo (460) respecto al total de la muestra (1000)
+```
+
+El 46% de las personas encuestadas son no fumadoras, y se puede decir con un 95% de confianza que la verdadera proporción está entre el 42.8 y el 49.1% (p = 0.01244).
+
+<br>
+
+Si queremos especificar un valor esperado diferente, podemos indicarlo con el argumento `p =` para definir la proporción esperada para cada grupo:
 
 ```{r}
-prop.test(378, 700, p = 0.7) # proporción esperada del 70% para los que prefieran tortillas
+prop.test(540, 1000, p = 0.7) # proporción esperada del 70% para los fumadores
 ```
 
 ```{r}
-prop.test(322, 700, p = 0.3) # proporción esperada del 30% para los que prefieran pan
+prop.test(460, 1000, p = 0.3) # proporción esperada del 30% para los no fumadores
 ```
 
 <br>
@@ -197,24 +220,24 @@ prop.test(322, 700, p = 0.3) # proporción esperada del 30% para los que prefier
 También podemos estimar la diferencia (en proporción) entre los dos grupos con la función `BinomDiffCI()` del paquete `DescTools`
 
 ```{r}
-BinomDiffCI(378, 700, 322, 700) # colocamos las observaciones de la primera proporcion (378 de 700) y luego de la segunda proporcion (322 de 700)
+BinomDiffCI(540, 1000, 460, 1000) # colocamos las observaciones de la primera proporcion (540 de 1000) y luego de la segunda proporcion (460 de 1000)
 ```
 
-El resultado muestra que la diferencia es del 8% y se puede decir con un 95% de confianza que la verdadera diferencia entre los dos grupos está entre 2 y 13%
+El resultado muestra que la diferencia es del 8% y se puede decir con un 95% de confianza que la verdadera diferencia entre los dos grupos está entre 3.6 y 12.3%
 
 <br>
 
 También se puede conocer la proporción cuando hay más de dos grupos (datos multinomiales) con la función `MultinomCI()` del paquete `DescTools`.
 
 ```{r}
-x <- c(tortillas = 298, pan = 240, arepas = 162)
+x <- c("Hombres fumadores" = 320, "Mujeres fumadoras" = 220, "Hombres no fumadores" = 100, "Mujeres no fumadoras" = 360)
 ```
 
 ```{r}
 MultinomCI(x)
-
-#El estimado es la proporción (%) para cada grupo, y también muestra se muestra el intervalo de confianza al 95% para cada proporción.
 ```
+
+El estimado es la proporción (%) para cada grupo, y también se muestra el intervalo de confianza al 95% para cada proporción.
 
 <br>
 
@@ -222,9 +245,9 @@ MultinomCI(x)
 
 Las tablas de contingencia son matrices que muestran la distribución de frecuencias de las variables y son muy utilizadas cuando se realizan encuestas.
 
-<br>
 
-Para este ejercicio utilizaremos la base de datos de oncocercosis (seguera de rio provocada por un nematodo).
+
+Para este ejercicio utilizaremos la base de datos de oncocercosis (seguera de río provocada por un nematodo).
 
 ```{r}
 onco <- import("data/oncocercosis.xlsx")
@@ -236,9 +259,11 @@ Resuminos los datos en una tabla de contingencia con la función `table()`
 ```{r}
 cont <- table(onco$mf, onco$area) # haremos nuestra tabla con las variables mf (personas infectadas vs no infectadas) y area (área de procedencia). 
 cont
-
-# Esta es una tabla de contingencia de 2 x 2 
 ```
+
+Esta es una tabla de contingencia de 2 x 2 similar a la que teníamos de fumadores y no fumadores de acuardo al sexo.
+
+<br>
 
 También se puede elaborar una tabla más compleja con la función `tbl_cross()` del paquete `gtsummary`.
 
@@ -257,16 +282,21 @@ mosaic(~ mf + area, data = onco,
        shade = TRUE) # con `shade = TRUE` se colorean las celdas de acuerdo al valor de los residuales estandarizados.
 ```
 
-Parece que hay una relación entre las personas infectadas y que vienen de Rainforest (valor mayor al esperado según la escala de color de los residuales estandarizados).
+Podemos decir que hay una relación entre la infección y el área de procedencia. La mayoría de personas infectadas provienen de Rainforest (valor mayor al esperado según la escala de color de los residuales estandarizados).
 
-Esta prueba evalua la igualdad de proporciones y la independencia de los datos.
+En este gráfico de mosaico se evalúa la igualdad de proporciones y la independencia de los datos.
 
-**Igualdad de proporciones:** El análisis de esos datos dio una diferencia significativa (entre proporciones) analizada con un Chi-cuadrado
+**Igualdad de proporciones:** El análisis de esos datos mostró una diferencia significativa (p < 0.05) entre las proporciones de las categorías, evaluada con un Chi-cuadrado.
 
-**Independencia de los datos:** También prueba la independencia de los datos evaluados, si los datos que vienen de un lado son independientes de los que vienen del otro lado.
+**Independencia de los datos:** El análisis mostró que las variables infección y procedencia están relacionadas.
 
-Los grises en el gráfico representan los valores que están dentro de los valores esperados
-El azul son los que se pasaron del esperado y el rosado son los que están por debajo de lo que se esperaba
+Interpretación de la escala de color: 
+
+- El gris representa los valores observados que están dentro de los valores esperados (residuales estandarizados entre -2 y 2).
+
+- El azul representa los valores que están por encima de los valores esperados (residuales estandarizados mayores a 2). 
+
+- El rosado representa los valores que están por debajo de los valores esperados (residuales estandarizados menores a -2).
 
 Si hacemos una prueba de Chi-cuadrado de nuestra tabla tendremos lo siguiente:
 
