@@ -398,7 +398,9 @@ La tabla que devuelve la función `describe()` contiene las siguientes columnas:
 
 - se:	Error estándar de la media (aproximación de cuánto varía la media si se repite el muestreo).
 
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
+<br> 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.align='center'}
 library(knitr)
 include_graphics("Imagenes/Asimetria.png")
 include_graphics("Imagenes/Curtosis.png")
