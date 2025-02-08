@@ -265,6 +265,9 @@ tabla$Sexo <- sexo
 tabla
 ```
 
+
+_Nota: Evitar el uso de caracteres especiales como tildes o diéresis en los nombres de las variables. Si son dos o más palabras evitar los espacios entre cada una y usar separadores como guión bajo o la primera letra cada palabra en mayúscula._
+
 <br>
 
 #### Exploración de tablas

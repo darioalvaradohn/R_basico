@@ -11,6 +11,12 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -20,6 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 La estadística descriptiva es la que describe, analiza y representa un conjunto de datos utilizando métodos numéricos y gráficos para resumir y presentar la información que estos contienen.
 La estadística descriptiva se utiliza cuando los resultados del estudio no pretenden ir más allá del conjunto de datos.
+Su objetivo es describir las características principales de un conjunto de datos sin hacer inferencias sobre una población más grande.
 
 <br>
 
@@ -58,12 +65,26 @@ head(datos)
 
 <br>
 
-#### Medidas de tendencia central
+#### Medidas de tendencia central 
 
-Son medidas que nos ayudan a resumir nuestros datos en valores "típicos" que caracterizan la muestra.
+Son medidas que nos ayudan a resumir nuestros datos en valores "típicos" que caracterizan la muestra. Indican donde se concentra la mayoría de los datos.
 Las medidas de tendencia central más conocidas son la **media**, la **mediana** y la **moda**
 
-- Media
+<br>
+
+- **Media**: Suma de todos los valores dividida por el número total de observaciones.
+
+$$
+\bar{X} = \frac{\sum X_i}{n}
+$$
+
+Donde:
+
+- \( \bar{X} \) es la media
+
+- \( X_i \) representa cada uno de los valores del conjunto de datos
+
+- \( n \) es el número total de observaciones
 
 ```{r}
 mean(datos$altura)
@@ -77,7 +98,63 @@ mean(datos$peso)
 mean(datos$edad)
 ```
 
-- Mediana
+<br>
+
+- **Mediana**: Valor que divide el conjunto de datos en dos partes iguales.
+
+Si el número de observaciones \( n \) es impar, la mediana se calcula como:
+
+$$
+\tilde{X} = X_{\left(\frac{n+1}{2}\right)}
+$$
+
+Donde:
+
+- \( \tilde{X} \) : Mediana del conjunto de datos
+
+- \( X_{(k)} \) : Valor en la posición \( k \) cuando los datos están ordenados de menor a mayor
+
+- \( n \) : Número total de observaciones
+
+- \( \frac{n+1}{2} \) : Índice que indica la posición central en la lista ordenada
+
+Ejemplo: Si \( n = 5 \), la posición de la mediana es:
+
+$$
+\frac{5+1}{2} = \frac{6}{2} = 3
+$$
+
+El tercer valor en la lista ordenada es la mediana. Es decir, la mediana es el valor que ocupa la posición central.
+
+<br>
+
+Si el número de observaciones \( n \) es par, la mediana se obtiene como:
+
+$$
+\tilde{X} = \frac{X_{\left(\frac{n}{2}\right)} + X_{\left(\frac{n}{2} + 1\right)}}{2}
+$$
+
+Donde:
+
+- \( \tilde{X} \) : Mediana del conjunto de datos
+
+- \( X_{(k)} \) : Valor en la posición \( k \) cuando los datos están ordenados
+
+- \( n \) : Número total de observaciones
+
+- \( \frac{n}{2} \) : Índice del primer valor central
+
+- \( \frac{n}{2} + 1 \) : Índice del segundo valor central
+
+- \( \frac{X_a + X_b}{2} \) : Promedio de los dos valores centrales
+
+Ejemplo: Si \( n = 6 \), los valores centrales están en las posiciones:
+
+$$
+\frac{6}{2} = 3 \quad \text{y} \quad \frac{6}{2} + 1 = 4
+$$
+
+La mediana será el promedio del tercer y cuarto valor en la lista ordenada. En este caso, la mediana es el promedio de los dos valores centrales.
 
 ```{r}
 median(datos$altura)
@@ -91,9 +168,43 @@ median(datos$peso)
 median(datos$edad)
 ```
 
-- Moda
+<br>
 
-Para calcular la moda utilizaremos la función `mlv()` (most likely values) del paquete `modeest` que nos devuelve los valores más frecuentes (el valor o los valores que más se repiten) en nuestro conjunto de datos.
+- **Moda**: Valor o valores que ocurren con mayor frecuencia en el conjunto de datos.
+
+Para un conjunto de datos discretos (listas de números enteros o categorías), la moda se define como:
+
+$$
+\text{Moda} = X_i \quad \text{tal que} \quad f(X_i) \text{ es máximo}
+$$
+
+Donde:
+
+- \(X_i\) es el valor de los datos
+
+- \(f(X_i)\) es la frecuencia absolula de \(X_i\) (cantidad de veces que aparece en el conjunto de datos)
+
+<br>
+
+Para datos agrupados (variables continuas en intervalos):
+
+$$
+\text{Moda} = L + \frac{(f_1 - f_0)}{(2f_1 - f_0 - f_2)} \times h
+$$
+
+Donde:
+
+- \( L \) : Límite inferior del intervalo modal.
+
+- \( f_1 \) : Frecuencia del intervalo modal.
+
+- \( f_0 \) : Frecuencia del intervalo anterior al modal.
+
+- \( f_2 \) : Frecuencia del intervalo siguiente al modal.
+
+- \( h \) : Amplitud del intervalo.
+
+En R, la moda no tiene una función incorporada como mean() o median(), pero podemos utilizar la función `mlv()` (most likely values) del paquete `modeest` que nos devuelve el o los valores más frecuentes (que más se repiten) en nuestro conjunto de datos.
 
 ```{r}
 mlv(datos$altura)
@@ -104,7 +215,7 @@ mlv(datos$altura)
 ```{r}
 table(datos$altura)
 
-# con la función `table()` podemos observar que los valores 139 y 160 se repiten 6 veces en la variable altura.
+# con la función `table()` podemos observar que los valores 139 y 160 se repiten 6 veces cada uno en la variable altura.
 ```
 
 ```{r}
@@ -117,25 +228,41 @@ mlv(datos$edad)
 
 <br>
 
-#### Medidas de dispersión
+#### Medidas de dispersión 
 
 Las medidas de dispersión muestran la **variabilidad** de nuestro conjunto de datos. A mayor variabilidad en nuestros datos, mayor será la **incertidumbre** en los valores de los parámetros estimados para ese conjunto de datos.
 
-- Desviación estándar
+<br>
 
-```{r}
-sd(datos$altura)
-```
+- **Varianza**: Mide la dispersión de los datos con respecto a la media. Es el promedio de las diferencias al cuadrado respecto a la media. Su fórmula varía según si se trata de una población o una muestra.
 
-```{r}
-sd(datos$peso)
-```
+Para una población:
 
-```{r}
-sd(datos$edad)
-```
+$$
+\sigma^2 = \frac{\sum(X_i - \mu)^2}{N}
+$$
 
-- Varianza
+Para una muestra:
+
+$$
+s^2 = \frac{\sum(X_i - \bar{X})^2}{n-1}
+$$
+
+Donde:
+
+- \( \sigma^2 \) : Varianza poblacional
+
+- \( s^2 \) : Varianza muestral
+
+- \( N \) : Número total de elementos en la población
+
+- \( n \) : Número total de elementos en la muestra
+
+- \( X_i \) : Cada valor observado
+
+- \( \mu \) : Media poblacional
+
+- \( \bar{X} \) : Media muestral
 
 ```{r}
 var(datos$altura)
@@ -149,12 +276,90 @@ var(datos$peso)
 var(datos$edad)
 ```
 
-- Covarianza
+<br>
 
-Indica la variabilidad o variación conjunta de dos variables respecto a sus medias. Para calcularla colocamos las dos variables como argumentos dentro de nuestra función `var()`.
+- **Desviación estándar**: Mide la dispersión de los datos con respecto a la media (indica cuánto se alejan los datos de la media). Es la raíz cuadrada de la varianza. Su fórmula depende de si se calcula para una población o una muestra.
+
+Para una población:
+
+$$
+\sigma = \sqrt{\frac{\sum(X_i - \mu)^2}{N}}
+$$
+
+Para una muestra:
+
+$$
+s = \sqrt{\frac{\sum(X_i - \bar{X})^2}{n-1}}
+$$
+
+Donde:
+
+- \( \sigma \) : Desviación estándar poblacional
+
+- \( s \) : Desviación estándar muestral
+
+- \( N \) : Número total de elementos en la población
+
+- \( n \) : Número total de elementos en la muestra
+
+- \( X_i \) : Cada valor observado
+
+- \( \mu \) : Media poblacional
+
+- \( \bar{X} \) : Media muestral
+
+```{r}
+sd(datos$altura)
+```
+
+```{r}
+sd(datos$peso)
+```
+
+```{r}
+sd(datos$edad)
+```
+
+<br>
+
+- **Covarianza**: Indica la variabilidad o variación conjunta de dos variables respecto a sus medias. Se calcula de forma diferente para una población y una muestra.
+
+Para una población:
+
+$$
+\sigma_{XY} = \frac{\sum(X_i - \mu_X)(Y_i - \mu_Y)}{N}
+$$
+
+Para una muestra:
+
+$$
+s_{XY} = \frac{\sum(X_i - \bar{X})(Y_i - \bar{Y})}{n-1}
+$$
+
+Donde:
+
+- \( \sigma_{XY} \) : Covarianza poblacional
+
+- \( s_{XY} \) : Covarianza muestral
+
+- \( N \) : Número total de elementos en la población
+
+- \( n \) : Número total de elementos en la muestra
+
+- \( X_i, Y_i \) : Valores de las variables
+
+- \( \mu_X, \mu_Y \) : Medias poblacionales de \(X\) y \(Y\)
+
+- \( \bar{X}, \bar{Y} \) : Medias muestrales de \(X\) y \(Y\)
+
+Para calcularla en R, colocamos las dos variables como argumentos dentro de la función `var()` o la función `cov()`.
 
 ```{r}
 var(datos$altura, datos$peso)
+```
+
+```{r}
+cov(datos$altura, datos$peso)
 ```
 
 <br>
@@ -165,40 +370,69 @@ La función `describe()` del paquete `psych` nos muestra un resumen de nuestras 
 describe(datos)
 ```
 
+La tabla que devuelve la función `describe()` contiene las siguientes columnas:
+
+- vars:	Índice de la variable en los datos.
+
+- n:	Número de observaciones no faltantes (sin NA).
+
+- mean:	Media (promedio) de la variable.
+
+- sd:	Desviación estándar, indica la dispersión de los datos.
+
+- median:	Mediana, el valor central cuando los datos están ordenados.
+
+- trimmed:	Media recortada al 10% (descarta los valores extremos antes de calcular la media).
+
+- mad:	Desviación absoluta mediana (medida robusta de dispersión).
+
+- min:	Valor mínimo.
+
+- max:	Valor máximo.
+
+- range:	Rango (diferencia entre el valor máximo y mínimo).
+
+- skew:	(skewness) Asimetría de la distribución, indica la asimetría de los datos en torno a la media (valores positivos indican sesgo a la derecha, negativos a la izquierda).
+
+- kurtosis:	Curtosis de la distribución, mide el grado de agudeza y planitud de la distribución (valores positivos indican colas más pesadas que una distribución normal).
+
+- se:	Error estándar de la media (aproximación de cuánto varía la media si se repite el muestreo).
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(knitr)
+include_graphics("Imagenes/Asimetria.png")
+include_graphics("Imagenes/Curtosis.png")
+```
+
+
 <br>
 
-#### Gráficos exploratorios
+#### Gráficos exploratorios 
 
 <br>
 
-##### Gráficos univariados
+- **Histograma**: Muestra la distribución de frecuencias de los datos.
 
 ```{r}
-# histograma
 hist(datos$altura) 
 ```
 
-```{r}
-# gráfico de caja
-boxplot(datos$altura) 
-```
+- **Gráfico de caja (Boxplot)**: Resume la distribución de los datos y muestra valores atípicos.
 
 ```{r}
-# gráfico de barras
-barplot(datos$altura) 
-```
-
-<br>
-
-##### Gráficos multivariados
-
-```{r}
-# gráfico de cajas
 boxplot(altura ~ sexo, data = datos) 
 ```
 
+- **Gráfico de barras**: Representa datos categóricos con barras proporcionales a su frecuencia.
+
 ```{r}
-# gráfico de dispersión o scatter plot
+media_altura <- tapply(datos$altura, datos$sexo, mean) # cálculo de la media de altura por sexo para el gráfico de barras
+barplot(media_altura) 
+```
+
+- **Gráfico de dispersión (scatter plot)**: Representa la relación entre dos variables.
+
+```{r}
 plot(x = datos$peso, y = datos$altura,
      pch = 19, # `pch`, para indicar el estilo del símbolo (puede ser un valor del 1 al 25)
      cex = 1, # `cex`, para indicar el tamaño del símbolo
@@ -212,24 +446,28 @@ plot(x = datos$peso, y = datos$altura,
 
 <br>
 
+---
+
+<br>
+
 Exploremos una tabla de datos más grande. La base de datos "penguins" del paquete `palmerpenguins` presenta medidas morfométricas de tres especies de pingüinos del Archipielago de Palmer en tres islas diferentes. 
 
-_Nota: Para consultar la información de bases de datos incluidas en paquetes de R podemos colocar el nombre de la base de datos en la pestaña de ayuda del panel inferior derecho o escribir "??penguins" en el script o directamente en la consola.
+_Nota: Para consultar la información de bases de datos incluidas en paquetes de R podemos colocar el nombre de la base de datos en la pestaña de ayuda del panel inferior derecho o escribir "??penguins" en el script o directamente en la consola._
+
+Para cargar bases de datos incorporadas en paquetes de R, después de cargar el paquete solo debemos escribir `data()` y el nombre de la tabla de datos entre comillas ("").
 
 ```{r, message=FALSE, warning=FALSE}
-??penguins
-```
-
-```{r, message=FALSE, warning=FALSE}
-data("penguins") # para cargar bases de datos incorporadas en paquetes de R, después de cargr el paquete solo debemos escribir `data()` y el nombre de la tabla de datos.
+data("penguins")
 head(penguins)
 ```
 
 <br>
 
+El paquete `visdat` cuenta con funciones para la exploración de variables en un conjunto de datos
+
+
 ```{r, message=FALSE, warning=FALSE}
-vis_dat(penguins)
-# permite visulaizar todas las variables de nuestra tabla y su clase o tipo, la cantidad de observaciones y la presencia de valores NA en cada variable.
+vis_dat(penguins) # permite visulaizar todas las variables de nuestra tabla y su clase o tipo, la cantidad de observaciones y la presencia de valores NA (observaciones faltantes) en cada variable.
 ```
 
 <br>
@@ -238,20 +476,16 @@ Para eliminar los valores NA de nuestra tabla:
 
 ```{r}
 pinguinos <- na.omit(penguins)
-
-# Evitar el uso de caracteres especiales como tildes o diéresis en las palabras. Si son dos o más palabras evitar los espacios entre cada una y usar separadores como guión bajo "_" o la primera letra cada palabra en mayúscula para no separarlas.
 ```
 
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-ExpNumViz(pinguinos, Page = c(3,2))
-# permite visualizar la distribución de todas las variables numéricas de nuestra tabla de datos con gráficos de densidad. El argumento `Page =` sirve para indicar el patrón de salida de los gráficos, con `c(3,2)` estamos indicando que los gráficos se muestren en 3 filas y 2 columnas. Si no colocamos `Page =` nos mostrará los gráficos de forma individual.
+ExpNumViz(pinguinos, Page = c(3,2)) # permite visualizar la distribución de todas las variables numéricas de nuestra tabla de datos con gráficos de densidad. El argumento `Page =` sirve para indicar el patrón de salida de los gráficos, con `c(3,2)` estamos indicando que los gráficos se muestren en 3 filas y 2 columnas. Si no colocamos `Page =` nos mostrará los gráficos de forma individual.
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-ExpCatViz(pinguinos, Page = c(2,2))
-# permite visualizar la distribución de todas las variables categóricas de nuestra tabla de datos con gráficos de barra.
+ExpCatViz(pinguinos, Page = c(2,2)) # permite visualizar todas las variables categóricas de nuestra tabla de datos con gráficos de barra proporcionales a su frecuencia.
 ```
 
 <br>
@@ -262,10 +496,10 @@ Los argumentos básicos para la función `ggplot()` son `data =` (nuestra tabla 
 
 El `+` se utiliza para agregar elementos al gráfico. 
 
-Con la función `geom_ ...()` podemos agregar diferentes geometrías a nuestro gráfico (histogramas, puntos, líneas, barras, columnas, cajas, violines, entre otros). 
+Con la función `geom_...()` podemos agregar diferentes geometrías a nuestro gráfico (histogramas, puntos, líneas, barras, columnas, cajas, violines, entre otros). 
 
 ```{r, message=FALSE, warning=FALSE}
-# histograma
+# Histograma
 ggplot(data = pinguinos, aes(x = body_mass_g)) +
   geom_histogram(fill = "dodgerblue3", # `fill` para rellenar
                  col = "black", # `col` para el color del borde
@@ -277,7 +511,7 @@ ggplot(data = pinguinos, aes(x = body_mass_g)) +
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de densidad
+# Gráfico de densidad
 ggplot(pinguinos, aes(body_mass_g)) +
   geom_density(fill = "tomato", 
                alpha = 0.4) # `alpha` para indicar transparencia del relleno, valores de 0 (transparente) a 1 (sin transparencia)
@@ -286,16 +520,7 @@ ggplot(pinguinos, aes(body_mass_g)) +
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de caja
-ggplot(pinguinos, aes(y = body_mass_g)) +
-  geom_boxplot(fill = "tomato", 
-               alpha = 0.4)
-```
-
-<br>
-
-```{r, message=FALSE, warning=FALSE}
-# gráfico de columnas apiladas
+# Gráfico de barras apiladas
 ggplot(pinguinos, aes(species)) + 
   geom_bar(aes(fill = sex)) # si queremos rellenar en base a una variable categórica de nuestra tabla de datos
 ```
@@ -303,19 +528,19 @@ ggplot(pinguinos, aes(species)) +
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de columnas agrupadas
-ggplot(pinguinos, aes(species)) +
-  geom_bar(aes(fill = sex), 
-           position = "dodge") # para cambiar de columnas apiladas (`position = "stack"` [por defecto]) a columnas agrupadas.
+# Gráfico de barras apiladas
+ggplot(pinguinos, aes(species))+
+  geom_bar(aes(fill = sex)) + 
+  coord_flip() # para cambiar de columnas verticales a barras horizontales
 ```
 
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de barras apiladas
-ggplot(pinguinos, aes(species))+
-  geom_bar(aes(fill = sex)) + 
-  coord_flip() # para cambiar de columnas verticales a barras horizontales
+# Gráfico de barras agrupadas
+ggplot(pinguinos, aes(species)) +
+  geom_bar(aes(fill = sex), 
+           position = "dodge") # para cambiar de columnas apiladas (`position = "stack"` [por defecto]) a columnas agrupadas.
 ```
 
 <br>
@@ -331,7 +556,7 @@ ggplot(pinguinos, aes(species))+
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# grafico de cajas
+# Grafico de cajas (Boxplot)
 ggplot(pinguinos, aes(species, body_mass_g)) +
   geom_boxplot(aes(fill = species), 
                show.legend = NULL) + # para ocultar la leyenda
@@ -343,7 +568,7 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de violín
+# Gráfico de violín
 ggplot(pinguinos, aes(species, body_mass_g)) +
   geom_violin(aes(fill = species), 
               alpha = 0.6, 
@@ -362,7 +587,7 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
 <br>
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de violín
+# Gráfico de violín
 ggplot(pinguinos, aes(species, body_mass_g)) +
   geom_violin(fill = "gray", 
               alpha = 0.4, 
@@ -375,18 +600,29 @@ ggplot(pinguinos, aes(species, body_mass_g)) +
        y = "Masa corporal (g)",
        color = "Sexo") + # `labs` para especificar el título del gráfico, de los ejes y la leyenda que estamos utilizando
   theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5, # `theme` para modificar texto en el gráfico, con `plot.title = element_text` modificamos el texto del título del gráfico, con `hjust` justificamos horizontalmente, valores de 0 (izquierda) a 1 (derecha) 
-                                  face = 2)) # `face =` para modificar el estilo del texto (normal, negrita, cursiva, negrita + cursiva)
+  theme(plot.title = element_text(hjust = 0.5,  
+                                  face = 2)) # `theme` es un argumento para modificar elementos en el gráfico, con `plot.title = element_text` modificamos el texto del título del gráfico, con `hjust` justificamos horizontalmente, valores de 0 (izquierda) a 1 (derecha)`face =` para modificar el estilo del texto (1 = normal, 2= negrita, 3 = cursiva, 4 = negrita + cursiva)
+```
+
+```{r, message=FALSE, warning=FALSE}
+# Gráfico de dispersión (Scatter plot)
+ggplot(pinguinos, aes(body_mass_g, flipper_length_mm)) +
+  geom_point() +
+  labs(title = "Relación entre la masa corporal y la longitud de aleta",
+       subtitle = "Pingüinos del Archipielado de Palmer",
+       x = "Masa corporal (g)",
+       y = "Longitud de aleta (mm)") +
+  theme_classic()
 ```
 
 <br>
 
 ##### Exportar gráficos
 
-Para guardar el último gráfico desplegado usamos la función `ggsave()` y no se necesita asignar el gráfico a un objeto previamente, solo debemos indicar la "ruta de ubicación" de la misma manera que lo hicimos cuando guardamos las tablas:
+Para exportar el último gráfico desplegado usamos la función `ggsave()`, solo debemos indicar la "ruta de ubicación" de la misma manera que lo hicimos cuando exportamos las tablas:
 
 ```{r, message=FALSE, warning=FALSE}
-ggsave("Imagenes/masaXespecie_violin.jpg")
+ggsave("Imagenes/grafico_dispersion.jpg")
 ```
 
 <br>
@@ -394,19 +630,21 @@ ggsave("Imagenes/masaXespecie_violin.jpg")
 También podemos asignar nuestro gráfico a un objeto y especificarlo en la función `ggsave()`.
 
 ```{r, message=FALSE, warning=FALSE}
-# gráfico de dispersión (scatter plot)
+# Gráfico de dispersión (Scatter plot)
 dispersion <- ggplot(pinguinos, aes(body_mass_g, flipper_length_mm)) +
-  geom_point() +
-  labs(title = "Relación entre la masa corporal y la longitud de aleta",
+  geom_point(aes(color = sex)) +
+  labs(title = "Relación entre la masa corporal y la longitud de aleta agrupadas por el sexo",
        subtitle = "Pingüinos del Archipielado de Palmer",
        x = "Masa corporal (g)",
-       y = "Longitud de aleta (mm)") +
+       y = "Longitud de aleta (mm)",
+       color = "Sexo") +
+  scale_color_discrete(labels = c("Hembra", "Macho")) +
   theme_classic()
 dispersion
 ```
 
 ```{r, message=FALSE, warning=FALSE}
-ggsave(plot = dispersion,
+ggsave(plot = dispersion, # objeto que contiene nuestro gráfico
        "Imagenes/masaXaleta_dispersion.jpg",
        dpi = 450) # para modificar la calidad de salida en puntos por pulgada (300 dpi por defecto)
 

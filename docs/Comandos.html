@@ -519,14 +519,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 163.5246 154.2846 166.0537 168.3669 150.8665 157.5030 141.7321 144.0467</code></pre>
+<pre><code>## [1] 154.5794 183.1283 158.6688 144.4749 162.2370 171.2638 165.4916 144.5006</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 163.52 154.28 166.05 168.37 150.87 157.50 141.73 144.05</code></pre>
+<pre><code>## [1] 154.58 183.13 158.67 144.47 162.24 171.26 165.49 144.50</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 164 154 166 168 151 158 142 144</code></pre>
+<pre><code>## [1] 155 183 159 144 162 171 165 145</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -534,7 +534,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 159 154 188 155 171 150 176 174</code></pre>
+<pre><code>## [1] 150 166 184 186 183 185 187 168</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
@@ -592,6 +592,10 @@ tabla</code></pre>
 ## 6  Pedro    168   79    M
 ## 7 Javier    192  102    M
 ## 8 Andrea    174   65    F</code></pre>
+<p><em>Nota: Evitar el uso de caracteres especiales como tildes o
+diéresis en los nombres de las variables. Si son dos o más palabras
+evitar los espacios entre cada una y usar separadores como guión bajo o
+la primera letra cada palabra en mayúscula.</em></p>
 <p><br></p>
 </div>
 <div id="exploración-de-tablas" class="section level4">
