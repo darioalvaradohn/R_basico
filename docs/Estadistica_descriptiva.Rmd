@@ -465,7 +465,7 @@ head(penguins)
 
 <br>
 
-El paquete `visdat` cuenta con funciones para la exploración de variables en un conjunto de datos
+El paquete `visdat` cuenta con funciones como `vis_dat()` para explorar el contenido de la base de datos
 
 
 ```{r, message=FALSE, warning=FALSE}
@@ -482,6 +482,8 @@ pinguinos <- na.omit(penguins)
 
 <br>
 
+El paquete `SmartEDA` es un paquete que cuenta con funciones para el análisis exploratorio de datos de manera automática.
+
 ```{r, message=FALSE, warning=FALSE}
 ExpNumViz(pinguinos, Page = c(3,2)) # permite visualizar la distribución de todas las variables numéricas de nuestra tabla de datos con gráficos de densidad. El argumento `Page =` sirve para indicar el patrón de salida de los gráficos, con `c(3,2)` estamos indicando que los gráficos se muestren en 3 filas y 2 columnas. Si no colocamos `Page =` nos mostrará los gráficos de forma individual.
 ```
@@ -489,6 +491,7 @@ ExpNumViz(pinguinos, Page = c(3,2)) # permite visualizar la distribución de tod
 ```{r, message=FALSE, warning=FALSE}
 ExpCatViz(pinguinos, Page = c(2,2)) # permite visualizar todas las variables categóricas de nuestra tabla de datos con gráficos de barra proporcionales a su frecuencia.
 ```
+
 
 <br>
 
@@ -516,7 +519,25 @@ ggplot(data = pinguinos, aes(x = body_mass_g)) +
 # Gráfico de densidad
 ggplot(pinguinos, aes(body_mass_g)) +
   geom_density(fill = "tomato", 
-               alpha = 0.4) # `alpha` para indicar transparencia del relleno, valores de 0 (transparente) a 1 (sin transparencia)
+               alpha = 0.4) + # `alpha` para indicar transparencia del relleno, valores de 0 (transparente) a 1 (sin transparencia)
+  geom_vline(aes(xintercept = mean(body_mass_g))) + # grafica una línea vertical a partir de un intercepto en el eje x
+  geom_text(aes(x = mean(body_mass_g),
+                y = 0.0005,
+                label = paste("media\n", round(mean(body_mass_g),2)))) + # grafica texto dentro del gráfico en las coordenadas "x" y "y". `label` indica la etiqueta o el texto que se graficará
+  geom_vline(aes(xintercept = median(body_mass_g)),
+             color = "red") +
+  geom_text(aes(x = median(body_mass_g),
+                y = 0.0006,
+                label = paste("mediana\n", round(median(body_mass_g),2))),
+            color = "red") +
+  geom_vline(aes(xintercept = mlv(body_mass_g)),
+             color = "blue",
+             linetype = "dashed", # para cambiar el tipo de línea ("solid", "dashed", "dotted", "dotdash", "longdash", "twodash")
+             linewidth = 1) + # para modificar el grosor de la línea
+  geom_text(aes(x = mlv(body_mass_g),
+                y = 0.0007,
+                label = paste("moda\n", round(mlv(body_mass_g),2))),
+            color = "blue")
 ```
 
 <br>
