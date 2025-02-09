@@ -11,13 +11,20 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <br>
 
-Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Algunas pruebas paramétricas requieren que la varianza de los datos cumpla una **distribución normal** (supuesto de normalidad) y que sea **homogenea** o constante  (supuesto de homogeneidad/homocedasticidad de varianza).
+Para realizar algunos métodos estadísticos es necesario que nuestros datos cumplan algunos supuestos. Las pruebas paramétricas requieren que la varianza de los datos cumpla una distribución normal (**supuesto de normalidad**) y que sea homogenea o constante  (**supuesto de homogeneidad/homocedasticidad de varianza**).
 
 <br>
 
@@ -58,10 +65,14 @@ shapiro.test(datos$altura)
 ```
 
 Para interpretar el resultado de la prueba de Shapiro-Wilk se observa el valor de p tomando como referencia el valor de alpha que por defecto es de 0.05.
-Si el valor de p es mayor que alpha (0.05), nuestros datos provienen de una muestra con una distribución normal. Si el valor de p es menor que alpha (0.05), los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
+
+- Si **p ≥ 0.05**, nuestros datos provienen de una muestra con una distribución normal. 
+
+- Si **p < 0.05**, los datos no presentan una distribución normal y se debería utilizar una prueba no paramétrica para analizar los datos.
 
 Es recomendable hacer las pruebas de normalidad para una variable separándola por cada grupo de interés.
-Utilizaremos la función `subset()` para separar nuestras variables de acuerdo con los grupos de interés.
+
+Podemos utilizar la función `subset()` para separar nuestras variables en sus respectivos niveles (categorías).
 
 ```{r}
 sM <- subset(datos, sexo == "M")
@@ -76,7 +87,7 @@ shapiro.test(sM$altura)
 shapiro.test(sF$altura)
 ```
 
-O podemos hacer los subgrupos con la función `split()`. Esta función generará un dataset para cada nivel (grupo) de la variable categórica.
+O podemos hacer los subgrupos con la función `split()`. Esta función genera un dataset para cada nivel de la variable categórica.
 
 ```{r}
 subgrupos <- split(datos, datos$sexo)
@@ -86,8 +97,6 @@ subgrupos <- split(datos, datos$sexo)
 shapiro.test(subgrupos$M$altura)
 ```
 
-
-Pruebas de normalidad para la variable:
 
 <br>
 
@@ -99,29 +108,49 @@ Para tamaños de muestra mayores de 50 datos
 ks.test(datos$altura, 
         pnorm, 
         mean(datos$altura), 
-        sd(datos$altura)) 
-# para esta prueba tenemos que especificar la media y la desviación estándar de los datos, si no lo hacemos, retornará un valor de p erroneo.
+        sd(datos$altura)) # para esta prueba tenemos que especificar la media y la desviación estándar de los datos, si no lo hacemos, retornará un valor de p erroneo.
 ```
 
 <br>
 
-###### Prueba de Lilliefors 
+##### Prueba de Lilliefors 
 
-Con una función del paquete `DescTools`
+Con la función `LillieTest()` del paquete `DescTools`:
 
 ```{r}
 LillieTest(datos$altura)
 ```
 
-Con una función del paquete `nortest`
+Con la función `lillie.test()` del paquete `nortest`:
 
 ```{r}
 lillie.test(datos$altura)
 ```
 
+##### Métodos visuales
+
+- **Histogramas**
+
+Con la función `hist()` del paquete base de R:
+
+```{r}
+hist(datos$altura)
+```
+
 <br>
 
-##### Pruebas de normalidad multivariada con el paquete `MVN`
+- **Gráfico de cuantiles (Q-Q Plot)**
+
+Con la función `qqPlot()` del paquete `car`:
+
+```{r}
+qqPlot(datos$altura)
+```
+
+
+<br>
+
+##### Pruebas de normalidad multivariada con el paquete `MVN`:
 
 ```{r}
 multivariada <- mvn(data = datos[,2:4], # seleccionamos las variables de la tabla (columnas de la 2 a la 4)
@@ -152,30 +181,66 @@ multisubset$univariateNormality
 
 #### Prueba de homogeneidad de varianza
 
-Algunas pruebas paramétricas como el ANOVA requieren que nuestros datos cumplan el supuesto de homogeneidad de la varianza, también conocido como **supuesto de homocedasticidad**. Este nos dice si la varianza permanece constante entre los grupos.
+<br>
+
+Esta prueba se utiliza para evaluar si la varianza permanece constante entre los grupos.
+
+<br>
 
 ##### Prueba de Levene
 
-Con la función `leveneTest()` del paquete `car`.
+Con la función `leveneTest()` del paquete `car`:
 
 ```{r, message=FALSE, warning=FALSE}
 leveneTest(altura ~ sexo, data = datos)
 ```
 
 Al igual que para la prueba de normalidad, en la prueba de Levene se observa el valor de p tomando como referencia el valor de alpha que por defecto es de 0.05.
-Si el valor de p es mayor o igual que alpha (0.05), la varianza de nuestros datos es homogenea. Si el valor de p es menor que alpha (0.05), si hay diferencias en la varianza de nuestros datos.
 
-También podemos utilizar la función `LeveneTest()` del paquete `DescTools`.
+- Si **p ≥ 0.05**, la varianza de nuestros datos es homogénea. 
+
+- Si **p < 0.05**, la varianza es heterogénea, no permanece constante, por lo tanto, hay un problema de heterocedasticidad y deberíamos utilizar una prueba no paramétrica para analizar nuestros datos.
+
+<br>
+
+También podemos utilizar la función `LeveneTest()` del paquete `DescTools`:
 
 ```{r, message=FALSE, warning=FALSE}
 LeveneTest(altura ~ sexo, data = datos)
 ```
 
+<br>
+
 ##### Prueba F
 
-También podemos hacer una prueba F para comparar la homogeneidad entre dos varianzas
+También podemos hacer una prueba F para comparar la homogeneidad entre dos varianzas con la función `var.test()` del paquete base de R:
 
 ```{r}
 var.test(altura ~ sexo, data = datos)
 ```
 
+<br>
+
+##### Prueba de Bartlett
+
+La prueba de Bartlett con la función `bartlett.test()` del paquete base de R, también evalúa si la varianza en los diferentes grupos es la misma:
+
+```{r}
+bartlett.test(datos$altura, datos$sexo)
+```
+
+##### Métodos visuales
+
+Los gráficos de caja (Boxplots) pueden ayudarnos a evaluar visualmente la homogeneidad de varianza entre grupos.
+
+- Si las cajas tienen alturas similares, las varianzas son homogéneas.
+
+- Si una caja es mucho más alta que otra, puede haber heterogeneidad de varianza.
+
+- Si hay muchos valores atípicos (puntos fuera de los bigotes), podría haber varianza desigual.
+
+```{r}
+boxplot(altura ~ sexo, data = datos)
+```
+
+_Nota: Aunque un boxplot ayuda a detectar diferencias evidentes, no es una prueba estadística, por lo que siempre es necesario ejecutar una prueba como la de Levene o Bartlett._
