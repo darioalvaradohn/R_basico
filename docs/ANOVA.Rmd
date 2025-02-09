@@ -135,7 +135,7 @@ Estas pruebas también se conocen como pruebas **post hoc**.
 
 ##### Prueba post hoc de Tukey
 
-Podemos realizar la **prueba de Tukey** con la función `TukeyHSD()` del paquete base de R, especificando la variable que contiene los diferentes grupos.
+Podemos realizar la **prueba de Tukey** con la función `TukeyHSD()` del paquete base de R, especificando la variable que contiene los diferentes grupos. Esta prueba utiliza el criterio de diferencia honestamente significativa o "honestly significant difference" (HSD).
 
 ```{r}
 contraste <- TukeyHSD(anova, "species")
@@ -157,16 +157,27 @@ Con esta función el resultado nos muestra los **grupos de significancia estadí
 
 Si dos niveles tienen letras iguales, la diferencia de la variable respuesta entre esos dos niveles no es estadísticamente significativa, pero si tienen letras diferentes la diferencia si es estadísticamente significativa.  
 
+<br>
+
+##### Prueba LSD de Fisher
+
+Esta prueba utiliza el criterio de diferencia mínima significativa o "least significant difference" (LSD) de Fisher para realizar el contraste entre las medias. Podemos realizarla con la función `LSD.test()` del paquete `agricolae`:
+
+```{r}
+contraste3 <- LSD.test(anova, "species")
+contraste3
+```
+
 
 <br>
 
 ##### Prueba post hoc de Duncan
 
-Una alternativa a la prueba de contraste de Tukey es la **prueba de Duncan**. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`:
+Otra alternativa es la **prueba de Duncan**. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`:
 
 ```{r}
-contraste3 <- duncan.test(anova, "species")
-contraste3
+contraste4 <- duncan.test(anova, "species")
+contraste4
 ```
 
 <br>
@@ -200,8 +211,15 @@ plot(contraste2)
 <br>
 
 ```{r}
-# Gráfico de la función `duncan.test()`
+# Gráfico de la función `LSD.test()`.
 plot(contraste3)
+```
+
+<br>
+
+```{r}
+# Gráfico de la función `duncan.test()`
+plot(contraste4)
 ```
 
 <br>
