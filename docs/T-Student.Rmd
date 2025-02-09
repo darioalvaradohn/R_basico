@@ -11,13 +11,20 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <br>
 
-Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula (H0) de que no hay efecto o diferencia entre dos grupos (`grupo1` = `grupo2`). El valor de p obtenido refleja la probabilidad de rechazar la H0, pero no prueba que la hipótesis alternativa, de que si hay efecto o diferencia (`grupo1` ≠ `grupo2`), sea verdadera. 
+Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula (\(H_0\)) de que no hay efecto o diferencia entre dos grupos (`grupo1` = `grupo2`). El valor de p obtenido refleja la probabilidad de rechazar la \(H_0\), pero no prueba que la hipótesis alternativa, de que si hay efecto o diferencia (`grupo1` ≠ `grupo2`), sea verdadera. 
 
 <br>
 
@@ -67,12 +74,12 @@ shapiro.test(sF$altura)
 Realizamos la prueta de T-Student
 
 ```{r}
-t.test(altura ~ sexo, data = datos)
-# Se coloca primero la variable respuesta (dependiente) y después de `~` colocamos la variable predictora (independiente), que debe ser categórica.
+t.test(altura ~ sexo, data = datos) # Se coloca primero la variable respuesta (dependiente) y después la variable predictora (independiente) que debe ser categórica, separadas por una `~`.
 ```
 
-Si el valor de p < 0.05 = Si hay diferencias estadísticamente significativas entre los grupos.
-Si el valor de p >= 0.05 = No hay diferencias estadísticamente significativas entre los grupos.
+- Si el valor de **p < 0.05**, Si hay diferencias estadísticamente significativas entre los grupos.
+
+- Si el valor de **p ≥ 0.05**, No hay diferencias estadísticamente significativas entre los grupos.
 
 El valor de p no tiene unidades y depende del tamaño de la muestra, para obtener un resultado estadísticamente significativo se debe aumentar el tamaño de la muestra.
 
@@ -82,9 +89,24 @@ El valor de p es condiconal a que la hipotesis nula es verdadera.
 
 <br>
 
+La prueba de T-Student también puede utilizarse para comparar la media de un grupo contra un valor teórico: 
+
+```{r}
+t.test(datos$altura, mu = 160) # `mu` indica el valor teórico de la media o la diferencia entre medias
+```
+
+O la diferencia de las medias de dos grupos contra un valor teórico:
+
+```{r}
+t.test(altura ~ sexo, data = datos, mu = -15)
+```
+
+
 #### Prueba de Wilcoxon (Mann-Whitney)
 
-Cuando los datos no provienen de una muestra con distribución normal existen alternativas de estadística **no paramétrica** para analizar los datos. La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**, también conocida como **prueba de Mann-Whitney**. Esta tiene el mismo principio pero no requiere que los datos cumplan el supuesto de normalidad.
+Cuando los datos no cumplen con los supuestos de normalidad y homogeneidad de la varianza, se deben aplicar métodos estadísticos **no paramétricos** para analizar los datos. 
+
+La alternativa no paramétrica a la T-Student es la **prueba de Wilcoxon**, también conocida como **prueba de Mann-Whitney**. Esta tiene el mismo principio pero no requiere que los datos cumplan el supuesto de normalidad.
 
 ```{r}
 shapiro.test(datos$peso)
@@ -94,8 +116,9 @@ shapiro.test(datos$peso)
 wilcox.test(peso ~ sexo, data = datos)
 ```
 
-Si el valor de p < 0.05 = Si hay diferencias estadísticamente significativas entre los grupos.
-Si el valor de p >= 0.05 = No hay diferencias estadísticamente significativas entre los grupos.
+- Si el valor de **p < 0.05**, Si hay diferencias estadísticamente significativas entre los grupos.
+
+- Si el valor de **p ≥ 0.05**, No hay diferencias estadísticamente significativas entre los grupos.
 
 <br>
 
@@ -109,12 +132,14 @@ Podemos estimarlo con la función `meanCI()` del paquete `interpretCI`:
 meanCI(datos, sexo, altura)
 ```
 
-Se puede decir con un 95% de confianza que la altura de las personas de sexo masculino es 17.31 cm mayor que la de las personas de sexo femenino (IC95% = 12.31, 22.31 cm; p = 6.622e-10).
+**Interpretación**: Se puede decir con un 95% de confianza que la altura de las personas de sexo masculino es 17.31 cm mayor que la de las personas de sexo femenino (IC95% = 12.31, 22.31 cm; p = 6.622e-10).
+
+<br>
 
 ```{r}
 meanCI(datos, sexo, peso)
 ```
 
-Se puede decir con un 95% de confianza que el peso de las personas de sexo masculino es 18.16 kg mayor que el de las personas de sexo femenino (IC95% = 13.04, 23.28 cm; p = 6.01e-10).
+**Interpretación**: Se puede decir con un 95% de confianza que el peso de las personas de sexo masculino es 18.16 kg mayor que el de las personas de sexo femenino (IC95% = 13.04, 23.28 cm; p = 6.01e-10).
 
 <br>
