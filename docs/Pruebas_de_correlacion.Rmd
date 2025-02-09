@@ -11,6 +11,13 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -43,20 +50,25 @@ head(suelos)
 
 <br>
 
-Podemos explorar gráficamente si dos variables de nuestra tabla de datos están relacionadas o no.
+Podemos explorar gráficamente si dos variables de nuestra tabla de datos están correlacionadas o no.
 
 ```{r}
 ggplot(suelos, aes(K, Mg)) +
   geom_point()
-
-# con un gráfico de dispersión podemos ver si existe un patrón entre las dos variables, por ejemplo, en este gráfico se puede apreciar que no hay un patrón de relación específico entre el potasio (K) y el magnesio (Mg) según los datos de la tabla `suelos`.
 ```
+
+Con un gráfico de dispersión podemos ver si existe un patrón entre las dos variables, por ejemplo, en este gráfico se puede apreciar que no hay un patrón de relación específico entre el potasio (K) y el magnesio (Mg) según los datos de la tabla `suelos`.
+
+<br>
 
 ```{r}
 ggplot(suelos, aes(Na, Conduc)) +
   geom_point()
-# En este gráfico se puede apreciar un patrón claro de la relación entre las variables, a mayores concentraciones de sodio (Na) hay mayor conductividad (Conduc) según los datos de la tabla `suelos`.
 ```
+
+En este gráfico se puede apreciar un patrón claro de la relación entre las variables, a mayores concentraciones de sodio (Na) hay mayor conductividad (Conduc) según los datos de la tabla `suelos`.
+
+<br>
 
 Pero si queremos obtener un valor numérico de esa relación debemos utilizar pruebas de correlación.
 
@@ -68,7 +80,8 @@ Pero si queremos obtener un valor numérico de esa relación debemos utilizar pr
 
 #### Prueba de correlación de Pearson 
 
-Es un método paramétrico para determinar la correlación entre dos variables.
+Es un **método paramétrico** para determinar la correlación entre dos variables.
+
 Para utilizar la correlación de Pearson, nuestros datos deben cumplir el supuesto de normalidad.
 
 ```{r}
@@ -79,27 +92,29 @@ shapiro.test(suelos$K)
 shapiro.test(suelos$Mg)
 ```
 
-Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test()`.
+Una vez confirmada la normalidad de las dos variables, se ejecuta la función `cor.test()` del paquete base de R:
 
 ```{r}
 cor.test(suelos$K, suelos$Mg) # Aquí no importa el orden en el que coloquemos las variables.
 ```
 
 El valor de p indica la significancia estadística de la correlación entre las dos variables.
-Si el valor de p < 0.05 = La correlación entre las variables es estadísticamente significativa.
-Si el valor de p >= 0.05 = La correlación entre las variables NO es estadísticamente significativa.
 
-El valor de `cor` indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa. En este caso, las variables de K y Mg están negativamente correlacionadas (cor = -0.36). Los valores de `cor` pueden ir de -1 a 1, entre más cercano a -1 o 1 sea el valor de `cor`, más fuerte es la correlación entre las variables, entre más cercano a 0 (positiva o negativamente), la correlación es más débil. 
+- Si el valor de **p < 0.05**, La correlación entre las variables es estadísticamente significativa.
+
+- Si el valor de **p ≥ 0.05**, La correlación entre las variables NO es estadísticamente significativa.
+
+El valor de **cor** indica la magnitud y dirección de la correlación, ya que la correlación puede ser positiva o negativa. En este caso, las variables de K y Mg están negativamente correlacionadas (cor = -0.36). Los valores de cor pueden ir de -1 a 1, entre más cercano a -1 o a 1 sea el valor de cor, más fuerte es la correlación entre las variables, entre más cercano a 0 la correlación es más débil. 
 
 El intervalo de confianza al 95% nos indica que la verdadera correlación entre las variables podría estar entre -0.58 y -0.08.
 
-La correlación de Pearson es una medida de la dependencia lineal entre las dos variables. **Si la relación de una variable con la otra no es lineal, la correlación será baja.**
+_Nota: La correlación de Pearson es una medida de la dependencia lineal entre las dos variables. **Si la relación de una variable con la otra no es lineal, la correlación será baja.**_
 
 <br>
 
 #### Prueba de correlación de Spearman 
 
-Si una de las variables no cumple con el supuesto de normalidad, se puede utilizar una prueba no paramétrica, la **prueba de correlación de Spearman**.
+Si una de las variables no cumple con el supuesto de normalidad, se puede utilizar una **prueba no paramétrica**, la prueba de **correlación de Spearman**.
 
 ```{r}
 shapiro.test(suelos$Na)
@@ -109,13 +124,15 @@ shapiro.test(suelos$Na)
 shapiro.test(suelos$Conduc)
 ```
 
-Para la prueba de Spearman se utiliza la misma función `cor.test()`, pero se especifica el `method = "spearman"`.
+<br>
+
+Para la prueba de Spearman se utiliza la misma función `cor.test()`, pero se especifica el `method = "spearman"`:
 
 ```{r, message=FALSE, warning=FALSE}
 cor.test(suelos$Na, suelos$Conduc, method = "spearman")
 ```
 
-En este caso, el valor de `rho` indica la magnitud y dirección de la correlación (equivalente al valor de `cor` en la prueba de Pearson). En este ejemplo hay una correlación positiva muy fuerte entre las variables Na y Conduc (0.96).
+En este caso, el valor de **rho** indica la magnitud y dirección de la correlación (equivalente al valor de **cor** en la prueba de Pearson). En este ejemplo hay una correlación positiva muy fuerte entre las variables Na y Conduc (0.96).
 
 La prueba de Spearman es menos robusta que la de Pearson porque no es específica para un tipo de distribución de los datos. También podemos aplicar la prueba de Pearson si los datos no cumplen el supuesto de normalidad, aunque esta pierde un poco de robustez.
 
@@ -123,9 +140,9 @@ La prueba de Spearman es menos robusta que la de Pearson porque no es específic
 
 #### Correlación entre múltiples variables
 
-También podemos evaluar la correlación entre más de dos variables
+También podemos evaluar la correlación entre más de dos variables, una contra otra.
 
-Podemos utilizar la función `ggpairs()` del paquete `GGally`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos.
+Podemos utilizar la función `ggpairs()` del paquete `GGally`. Aunque para esta función debemos seleccionar solo las variables numéricas de nuestra base de datos:
 
 ```{r}
 suelosb <- suelos[,6:14] # seleccionamos de la columna 6 a la 14 que son las que contienen las variables numéricas que queremos evaluar
@@ -134,15 +151,25 @@ head(suelosb)
 
 ```{r, message=FALSE}
 ggpairs(suelosb)
-
-# El resultado nos muestra una matriz diagonal. La diagonal muestra gráficos de densidad con la distribución de cada variable (individualmente), bajo la diagonal se muestran gráficos de dispersión de la relación entre todas las variables (una contra otra), y sobre la diagonal se muestran los valores de correlación entre las variables y la significancia estadísitica de la correlación (en simbología).
 ```
+
+El resultado nos muestra una matriz diagonal. 
+
+- La diagonal muestra gráficos de densidad con la distribución de cada variable (individualmente).
+
+- Bajo la diagonal se muestran gráficos de dispersión de la relación entre todas las variables (una contra otra). 
+
+- Sobre la diagonal se muestran los valores de correlación entre las variables y la significancia estadísitica de la correlación (en simbología).
+
+<br>
 
 Para observar más detalladamente podemos seleccionar solo algunas variables de interés:
 
 ```{r, message=FALSE, warning=FALSE}
 ggpairs(suelosb, c("pH", "N", "P", "K"))
 ```
+
+<br>
 
 Este resultado es compatible con `ggplot2` y podemos guardarlo como imagen:
 
@@ -157,10 +184,13 @@ También podemos evaluar la correlación entre las variables con la función `co
 ```{r}
 c <- correlation(suelos)  
 c
-
-# Aquí, `r` = correlación de Pearson.
-# Si el IC95 no contiene (traslapa) el 0, la correlación es significativa
 ```
+
+Aquí, **r** = correlación de Pearson.
+
+Si el IC95 NO traslapa con el 0, la correlación es significativa.
+
+<br>
 
 Podemos exportar este resultado como una tabla de la siguiente manera:
 
@@ -168,6 +198,8 @@ Podemos exportar este resultado como una tabla de la siguiente manera:
 cor <- data.frame(correlation(suelos))
 export(cor,"Resultados/correlacionsuelos.xlsx")
 ```
+
+<br>
 
 También podemos graficarlo. Para esto generamos un resumen de las correlaciones entre las variables:
 
@@ -188,6 +220,8 @@ plot(sc)
 ggsave("Imagenes/corr.jpg")
 ```
 
+<br>
+
 También podemos generar esa matriz gráfica de correlación de la siguiente manera:
 
 ```{r, message=FALSE, warning=FALSE}
@@ -199,7 +233,9 @@ c
 plot(c, type = "tile", show_values= TRUE, show_p= TRUE)
 ```
 
-También podemos especificar el método que se utilice para realizar la correlación con el argumento `method =`.
+<br>
+
+También podemos especificar el método de la prueba de correlación con el argumento `method =`.
 
 ```{r}
 cor_spearman <- correlation(suelos, method = "spearman")
@@ -209,14 +245,16 @@ cor_spearman
 
 <br>
 
-Otra forma de evaluar la correlación entre variables es con la función `inspect_cor()` del paquete `inspectdf`
+Otra forma de evaluar la correlación entre variables es con la función `inspect_cor()` del paquete `inspectdf`:
 
 ```{r}
 ic <- inspect_cor(suelos)
 ic
 ```
 
-Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot()` del paquete `inspectdf`.
+<br>
+
+Y esto también podemos graficarlo incluyendo los intervalos de confianza al 95% con la función `show_plot()` del paquete `inspectdf`:
 
 ```{r}
 cor_suelos <- show_plot(ic)
@@ -228,7 +266,9 @@ cor_suelos
 ggsave("Imagenes/cor_suelos.jpg")
 ```
 
-Un ejemplo de correlaciones no significativas:
+<br>
+
+Un ejemplo con correlaciones no significativas:
 
 ```{r}
 cor_mtcars <- inspect_cor(mtcars) # "mtcars" es una base de datos del paquete base de R que contiene datos de pruebas en carretera de diferentes motores de automóviles.
