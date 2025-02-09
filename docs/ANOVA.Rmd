@@ -11,13 +11,18 @@ header-includes:
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
+```{css, echo=FALSE}
+pre code {
+  word-wrap: normal !important;
+  white-space: pre !important;
+}
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <br>
-
-#### Parte 1
 
 Un análisis de varianza es una fórmula estadística que compara las varianzas entre las medias (promedio) de diferentes grupos para comprobar si hay diferencias entre ellas.
 
@@ -50,13 +55,11 @@ head(penguins)
 
 #### ANOVA
 
-ANOVA (Analysis of variance) = ANDEVA (Análisis de varianza)
+**ANOVA** (Analysis of variance) = **ANDEVA** (Análisis de varianza)
 
 A diferencia de la prueba de T-Student, un ANOVA puede comparar las varianzas entre tres o más grupos.
 
-Podemos realizar un ANOVA con la función `aov()`.
-
-Para realizar un ANOVA nuestros datos deben cumplir los supuestos de normalidad y homogeneidad de la varianza ya que esta es una prueba paramétrica.
+Para realizar un ANOVA nuestros datos deben cumplir los **supuestos de normalidad** y **homogeneidad de varianza** ya que esta es una **prueba paramétrica**.
 
 ```{r}
 # separamos por grupos de interés para evaluar la normalidad
@@ -87,29 +90,33 @@ leveneTest(flipper_length_mm ~ species, data = penguins)
 
 ##### ANOVA de una vía
 
-También conocido como ANOVA de un factor o unidireccional, sirve para estudiar la relación entre una variable respuesta (dendiente) cuantitativa y una variable predictora (independientes) categórica (cualitativa) con varios niveles (grupos).
+También conocido como ANOVA de un factor o unidireccional, sirve para estudiar la relación entre una variable respuesta (dependiente) cuantitativa y una variable predictora (independiente) categórica (cualitativa) con varios niveles (grupos).
+
+Podemos realizar el ANOVA con la función `aov()` del paquete base de R:
 
 ```{r}
-anova <- aov(flipper_length_mm ~ species, data = penguins)
-
-# Aquí el orden de las variables si importa, colocamos primero nuestra variable respuesta y después nuestra variable predictora. 
-# El ANOVA solo permite variables predictoras categóricas.
+anova <- aov(flipper_length_mm ~ species, data = penguins) # Aquí el orden de las variables si importa, colocamos primero nuestra variable respuesta y después nuestra variable predictora. 
 ```
+
+_Nota: El ANOVA solo permite variables predictoras categóricas._
+
+Para ver el resultado del ANOVA realizamos un `summary()`:
 
 ```{r}
 summary(anova)
 ```
 
-El valor de p muestra la significancia estadística de la comparación entre los grupos. 
+El valor de p muestra la significancia estadística de la comparación entre los grupos: 
 
-Si el valor de p < 0.05, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa. 
-Si el valor de p ≥ 0.05 no hay diferencias estadísticamente significativas entre los grupos.
+- Si el valor de **p < 0.05**, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa.
+
+- Si el valor de **p ≥ 0.05**, no hay diferencias estadísticamente significativas entre los grupos.
 
 <br>
 
 ##### ANOVA de dos vías
 
-El análisis de varianza de dos vías, también conocido como plan factorial con dos factores, sirve para estudiar la relación entre una variable respuesta cuantitativa y dos variables predictoras categóricas, cada uno con varios niveles.
+El ANOVA de dos vías, también conocido como plan factorial con dos factores, sirve para estudiar la relación entre una variable respuesta cuantitativa y dos variables predictoras categóricas, cada una con varios niveles.
 
 ```{r}
 anova2vias <- aov(flipper_length_mm ~ species + island, data = penguins) # para la segunda variable predictora colocamos un `+`.
@@ -121,36 +128,41 @@ summary(anova2vias)
 
 #### Pruebas de contraste
 
+El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. 
+Estas pruebas también se conocen como pruebas **post hoc**.
+
 <br>
 
 ##### Prueba post hoc de Tukey
 
-El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. 
-Estas pruebas también se conocen como pruebas **post hoc**, y una de las más utilizadas es la **prueba de Tukey**. 
-
-Esto lo podemos hacer con la función `TukeyHSD()` especificando la variable que contiene los diferentes grupos.
+Podemos realizar la **prueba de Tukey** con la función `TukeyHSD()` del paquete base de R, especificando la variable que contiene los diferentes grupos.
 
 ```{r}
 contraste <- TukeyHSD(anova, "species")
 contraste
 ```
 
+El resultado nos muestra los diferentes niveles de la variable predictora, en este caso las especies, contrastando los diferentes niveles. Se muestra la diferencia de la variable respuesta entre las medias de cada nivel de la variable predictora, los intérvalos de confianza al 95% y el valor de p para la significancia estadística de las diferencias.
+
 <br>
 
-También se puede realizar este contraste con la función `HSD.test()` del paquete `agricolae`.
+También se puede realizar este contraste con la función `HSD.test()` del paquete `agricolae`:
 
 ```{r}
 contraste2 <- HSD.test(anova, "species")
 contraste2
-
-# Con esta función el resultado nos muestra los grupos de significancia estadística de acuerdo a las diferencias que hay entre los niveles de la variable predictora. Si dos niveles tienen letras iguales, la diferencia de la variable respuesta entre esos dos niveles no es estadísticamente significativa, pero si tienen letras diferentes la diferencia si es estadísticamente significativa.  
 ```
+
+Con esta función el resultado nos muestra los **grupos de significancia estadística** de acuerdo a las diferencias que hay entre los niveles de la variable predictora. 
+
+Si dos niveles tienen letras iguales, la diferencia de la variable respuesta entre esos dos niveles no es estadísticamente significativa, pero si tienen letras diferentes la diferencia si es estadísticamente significativa.  
+
 
 <br>
 
 ##### Prueba post hoc de Duncan
 
-Una alternativa a la prueba de contraste de Tukey es la prueba de Duncan. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`.
+Una alternativa a la prueba de contraste de Tukey es la **prueba de Duncan**. Podemos ejecutarla con la función `duncan.test()` del paquete `agricolae`:
 
 ```{r}
 contraste3 <- duncan.test(anova, "species")
@@ -159,7 +171,7 @@ contraste3
 
 <br>
 
-Para el contraste del anova de dos vías podemos utilizar cualquier opción de las anteriores, pero especificamos las dos variables predictoras
+Para el contraste del ANOVA de dos vías podemos utilizar cualquier opción de las anteriores, pero debemos especificar las dos variables predictoras.
 
 ```{r}
 contraste2vias <- HSD.test(anova2vias, c("species", "island")) # colocamos las dos variables predictoras concatenadas con `c()`.
@@ -209,7 +221,7 @@ Extraemos las medias de la salida de la prueba de contraste de la función `HSD.
 ```{r}
 medias <- data.frame(contraste2$means)
 medias
-# El error estándar es el error que calcula la prueba para cada grupo e indica la precisión de la estimación (estadística inferencial)
+# El error estándar (se) es el error que calcula la prueba para cada grupo e indica la precisión de la estimación (estadística inferencial)
 ```
 
 Con el error estándar podemos calcular el intervalo de confianza al 95%.
@@ -217,13 +229,16 @@ Con el error estándar podemos calcular el intervalo de confianza al 95%.
 El IC95% se calcula multiplicando el error estándar por el valor Z para ese nivel de confianza.
 
 - Z = 1.96, para IC95%
+
 - Z = 1.645 para IC90%
+
 - Z = 2.33 para IC98%
+
 - Z = 2.757 para IC99%
 
 ```{r}
 medias$IC95 <- medias$se * 1.96
-medias$liIC95 <- medias$flipper_length_mm - medias$ IC95# límite inferior del IC95%
+medias$liIC95 <- medias$flipper_length_mm - medias$ IC95 # límite inferior del IC95%
 medias$lsIC95 <- medias$flipper_length_mm + medias$IC95 # límite superior del IC95%
 ```
 
@@ -233,16 +248,16 @@ medias
 
 <br>
 
-Con estos datos procedemos a graficar.
+Con estos datos procedemos a graficar:
 
 ```{r}
 # Gráfico de columnas con barras de error (con el IC95%)
 ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
-  geom_col(width = 0.6, 
+  geom_col(width = 0.2, 
            color = "black", 
            fill = c("gray", "lightblue", "darkslategray")) +
   geom_errorbar(aes(ymin = liIC95, ymax = lsIC95), # indicamos el límite inferior y superior que tendran nuestras barras de error
-                width = 0.4) + 
+                width = 0.05) + 
   labs(title = "Longitud de aleta (mm) por especie",
        y = "Longitud de aleta (mm)", 
        x = "Especie") +
@@ -255,12 +270,12 @@ ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
 
 <br>
 
-Una mejor manera de graficar este tipo de resultados es mediante gráficos de punto con barras de error
+Una mejor manera de graficar este tipo de resultados es mediante gráficos de punto con barras de error:
 
 ```{r}
 # Gráfico de punto con barras de error
 ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
-  geom_errorbar(width = 0.2, 
+  geom_errorbar(width = 0.05, 
                 aes(ymin = liIC95, 
                     ymax = lsIC95)) +
   geom_point(shape = 19, 
@@ -305,7 +320,7 @@ medias2vias$grupo <- c("c", "c", "c", "b", "a")
 
 ```{r}
 ggplot(medias2vias, aes(row.names(medias2vias), flipper_length_mm)) +
-  geom_errorbar(width = 0.2, 
+  geom_errorbar(width = 0.05, 
                 aes(ymin = liIC95, 
                     ymax = lsIC95)) +
   geom_point(shape = 19, 
@@ -320,6 +335,7 @@ labs(title = "Longitud de aleta (mm) por especie e isla",
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
+<br>
 
 Para que los valores de la especie Adelie aparezcan juntos en el gráfico podemos hacer lo siguiente:
 
@@ -331,11 +347,11 @@ sum2vias
 ```
 
 ```{r}
-sum2vias <- arrange(sum2vias, species)
+sum2vias <- arrange(sum2vias, species) # con la función `arrange()` ordenamos las especies de la tabla resumen
 sum2vias
 ```
 
-Agregaos columnas con el error estándar (de la prueba de contraste) y los intervalos de confianza al 95%:
+Agregamos columnas con el error estándar (de la prueba de contraste) y los intervalos de confianza al 95%:
 
 ```{r}
 sum2vias$SE <- medias2vias$se
@@ -355,7 +371,7 @@ sum2vias$grupo <- c("", "", "c", "b", "a")
 ```{r}
 # Gráfico de punto con barras de error
 ggplot(sum2vias, aes(species, mean)) + 
-  geom_errorbar(width = 0.2, 
+  geom_errorbar(width = 0.05, 
                 aes(color = island, # indicamos que el color de las barras de error sea en base a la isla (segunda variable predictora)
                     ymin = liIC95, 
                     ymax = lsIC95)) +
