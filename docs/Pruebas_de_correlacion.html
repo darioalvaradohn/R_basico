@@ -417,8 +417,9 @@ utilizar pruebas de correlación.</p>
 <p><br></p>
 <div id="prueba-de-correlación-de-pearson" class="section level4">
 <h4>Prueba de correlación de Pearson</h4>
-<p>Es un <strong>método paramétrico</strong> para determinar la
-correlación entre dos variables.</p>
+<p>La <strong>prueba de correlación de Pearson</strong> es un
+<strong>método paramétrico</strong> para determinar la correlación entre
+dos variables.</p>
 <p>Para utilizar la correlación de Pearson, nuestros datos deben cumplir
 el supuesto de normalidad.</p>
 <pre class="r"><code>shapiro.test(suelos$K)</code></pre>
@@ -508,6 +509,24 @@ correlación positiva muy fuerte entre las variables Na y Conduc
 específica para un tipo de distribución de los datos. También podemos
 aplicar la prueba de Pearson si los datos no cumplen el supuesto de
 normalidad, aunque esta pierde un poco de robustez.</p>
+<p><br></p>
+</div>
+<div id="prueba-de-correlación-de-kendall" class="section level4">
+<h4>Prueba de correlación de Kendall</h4>
+<p>Otra alternativa <strong>no paramétrica</strong> es la <strong>prueba
+de correlación de Kendall</strong>:</p>
+<pre class="r"><code>cor.test(suelos$Na, suelos$Conduc, method = &quot;kendall&quot;)</code></pre>
+<pre><code>## 
+##  Kendall&#39;s rank correlation tau
+## 
+## data:  suelos$Na and suelos$Conduc
+## z = 8.2586, p-value &lt; 2.2e-16
+## alternative hypothesis: true tau is not equal to 0
+## sample estimates:
+##       tau 
+## 0.8254117</code></pre>
+<p>En este caso, el valor de <strong>tau</strong> indica la magnitud y
+dirección de la correlación.</p>
 <p><br></p>
 </div>
 <div id="correlación-entre-múltiples-variables" class="section level4">

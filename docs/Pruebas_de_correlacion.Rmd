@@ -80,7 +80,7 @@ Pero si queremos obtener un valor numérico de esa relación debemos utilizar pr
 
 #### Prueba de correlación de Pearson 
 
-Es un **método paramétrico** para determinar la correlación entre dos variables.
+La **prueba de correlación de Pearson** es un **método paramétrico** para determinar la correlación entre dos variables.
 
 Para utilizar la correlación de Pearson, nuestros datos deben cumplir el supuesto de normalidad.
 
@@ -135,6 +135,18 @@ cor.test(suelos$Na, suelos$Conduc, method = "spearman")
 En este caso, el valor de **rho** indica la magnitud y dirección de la correlación (equivalente al valor de **cor** en la prueba de Pearson). En este ejemplo hay una correlación positiva muy fuerte entre las variables Na y Conduc (0.96).
 
 La prueba de Spearman es menos robusta que la de Pearson porque no es específica para un tipo de distribución de los datos. También podemos aplicar la prueba de Pearson si los datos no cumplen el supuesto de normalidad, aunque esta pierde un poco de robustez.
+
+<br>
+
+#### Prueba de correlación de Kendall
+
+Otra alternativa **no paramétrica** es la **prueba de correlación de Kendall**:
+
+```{r, warning=FALSE, message=FALSE}
+cor.test(suelos$Na, suelos$Conduc, method = "kendall")
+```
+
+En este caso, el valor de **tau** indica la magnitud y dirección de la correlación.
 
 <br>
 
