@@ -379,7 +379,7 @@ File → R Script</strong> o puedes utilizar el atajo de teclado
 <p>Para <ins>ejecutar</ins> una línea de código o una selección
 presionamos <code>Ctrl + Enter</code>.</p>
 <p>Para ejecutar todo el script podemos dar clic en
-<strong>Source</strong> o utilizar el atajo de teclado
+<code>▢→ Source</code> o utilizar el atajo de teclado
 <code>Ctrl + Shift + S</code>.</p>
 <p>Para <ins>guardar</ins> el script podemos hacer clic en el ícono de
 disquete 💾 de la parte superior de la ventana o presionamos
@@ -525,14 +525,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 180.9032 155.0497 169.7030 163.4404 166.7718 154.8079 160.9677 169.2324</code></pre>
+<pre><code>## [1] 165.2558 173.1497 137.2281 143.2154 168.0305 156.1076 154.5272 158.1680</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 180.90 155.05 169.70 163.44 166.77 154.81 160.97 169.23</code></pre>
+<pre><code>## [1] 165.26 173.15 137.23 143.22 168.03 156.11 154.53 158.17</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 181 155 170 163 167 155 161 169</code></pre>
+<pre><code>## [1] 165 173 137 143 168 156 155 158</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -540,7 +540,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 173 172 150 174 155 160 171 165</code></pre>
+<pre><code>## [1] 174 168 181 186 166 150 178 171</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)

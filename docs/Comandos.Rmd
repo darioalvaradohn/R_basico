@@ -32,7 +32,7 @@ Para <ins>crear</ins> un script en RStudio ir a **File → New File → R Script
 
 Para <ins>ejecutar</ins> una línea de código o una selección presionamos `Ctrl + Enter`.
 
-Para ejecutar todo el script podemos dar clic en **Source** o utilizar el atajo de teclado `Ctrl + Shift + S`.
+Para ejecutar todo el script podemos dar clic en `▢→ Source` o utilizar el atajo de teclado `Ctrl + Shift + S`.
 
 Para <ins>guardar</ins> el script podemos hacer clic en el ícono de disquete 💾 de la parte superior de la ventana o presionamos `Ctrl + S`.
 
