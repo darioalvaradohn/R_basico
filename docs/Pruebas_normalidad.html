@@ -252,6 +252,7 @@ if (window.hljs) {
 
 
 
+<style type="text/css">.nav-pills {position: sticky;top: 10px;z-index: 999;background-color: #f8f9fa;padding: 10px;margin-top: 20px;border-radius: 5px;}.nav-pills a {margin: 5px;padding: 10px 20px;background-color: #007bff;color: white;border-radius: 3px;text-decoration: none;font-size: 16px;}.nav-pills a:hover {background-color: #0056b3;}.fixed-nav {position: fixed;right: 20px;top: 150px;}</style>
 
 
 
@@ -399,7 +400,7 @@ head(datos)</code></pre>
 <h3 class="tabset tabset-pills">Contenido</h3>
 <p><br></p>
 <div id="pruebas-de-normalidad" class="section level4">
-<h4>Pruebas de normalidad</h4>
+<h4><a id="norm">Pruebas de normalidad</a></h4>
 <div id="prueba-de-shapiro-wilk" class="section level5">
 <h5>Prueba de Shapiro-Wilk</h5>
 <p>Para muestras de tamaño pequeño (50 datos o menos)</p>
@@ -597,8 +598,8 @@ multisubset</code></pre>
 ## 3 Lilliefors (Kolmogorov-Smirnov)   edad       0.1312    0.0415    NO</code></pre>
 </div>
 </div>
-<div id="prueba-de-homogeneidad-de-varianza" class="section level4">
-<h4>Prueba de homogeneidad de varianza</h4>
+<div id="pruebas-de-homogeneidad-de-varianza" class="section level4">
+<h4><a id="var">Pruebas de homogeneidad de varianza</a></h4>
 <p><br></p>
 <p>Esta prueba se utiliza para evaluar si la varianza permanece
 constante entre los grupos.</p>
@@ -681,6 +682,17 @@ podría haber varianza desigual.</p></li>
 <p><em>Nota: Aunque un boxplot ayuda a detectar diferencias evidentes,
 no es una prueba estadística, por lo que siempre es necesario ejecutar
 una prueba como la de Levene o Bartlett.</em></p>
+<p><br></p>
+<div class="fixed-nav">
+<ul class="nav nav-pills">
+<li class="nav-item">
+<a class="nav-link" href="#norm">Pruebas de normalidad</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#var">Pruebas de homogeneidad de varianza</a>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>

@@ -37,6 +37,7 @@ library(tidyverse)
 library(palmerpenguins)
 library(agricolae)
 library(FSA)
+library(ggsignif)
 ```
 
 <br>
@@ -154,3 +155,28 @@ ggsave("Imagenes/kruskal.jpg")
 ```
 
 <br>
+
+En los gráficos también podemos graficar la significancia de las comparaciones con la función `geom_signif()` del complemento `ggsignif` para `ggplot2`:
+
+```{r}
+ggplot(sumbm, aes(island, mean)) +
+  geom_errorbar(width = 0.05, 
+                aes(ymin = liIC95, 
+                    ymax = lsIC95)) +
+  geom_point(shape = 19, 
+             size = 3, 
+             color = c("gray", "lightblue", "darkslategray")) +
+  labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
+       y = "Masa corporal (g)",
+       x = "Isla") +
+  theme_classic() +
+  geom_signif(data = penguins, aes(island, body_mass_g),
+              comparisons = list(c("Biscoe", "Dream"),
+                                 c("Biscoe", "Torgersen"),
+                                 c("Dream", "Torgersen")),
+              size = 0.5,
+              map_signif_level = TRUE,
+              y_position = c(4800,5000,3800),
+              tip_length = 0.01)
+```
+
