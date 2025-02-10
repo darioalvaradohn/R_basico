@@ -34,7 +34,7 @@ Para <ins>ejecutar</ins> una línea de código o una selección presionamos `Ctr
 
 Para ejecutar todo el script podemos dar clic en **Source** o utilizar el atajo de teclado `Ctrl + Shift + S`.
 
-Para <ins>guardar</ins> el script podemos hacer clic en el ícono de disquete de la parte superior de la ventana de script o presionamos `Ctrl + S`.
+Para <ins>guardar</ins> el script podemos hacer clic en el ícono de disquete 💾 de la parte superior de la ventana o presionamos `Ctrl + S`.
 
 ### Contenido{.tabset .tabset-pills}
 

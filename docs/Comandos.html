@@ -382,7 +382,7 @@ presionamos <code>Ctrl + Enter</code>.</p>
 <strong>Source</strong> o utilizar el atajo de teclado
 <code>Ctrl + Shift + S</code>.</p>
 <p>Para <ins>guardar</ins> el script podemos hacer clic en el ícono de
-disquete de la parte superior de la ventana de script o presionamos
+disquete 💾 de la parte superior de la ventana o presionamos
 <code>Ctrl + S</code>.</p>
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
@@ -525,14 +525,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 156.6688 162.3851 161.3861 144.7885 163.2388 169.5981 167.2786 156.0153</code></pre>
+<pre><code>## [1] 180.9032 155.0497 169.7030 163.4404 166.7718 154.8079 160.9677 169.2324</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 156.67 162.39 161.39 144.79 163.24 169.60 167.28 156.02</code></pre>
+<pre><code>## [1] 180.90 155.05 169.70 163.44 166.77 154.81 160.97 169.23</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 157 162 161 145 163 170 167 156</code></pre>
+<pre><code>## [1] 181 155 170 163 167 155 161 169</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -540,7 +540,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 161 154 189 169 190 174 158 173</code></pre>
+<pre><code>## [1] 173 172 150 174 155 160 171 165</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
