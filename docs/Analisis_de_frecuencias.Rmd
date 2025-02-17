@@ -1,4 +1,6 @@
 ---
+title: "Análisis de frecuencias"
+author: "MSc. Darío Alvarado"
 output:
   html_document: default
   word_document: default
@@ -9,7 +11,6 @@ header-includes:
 ---
 
 <div style="display:flex; align-items:center;">
-  <h1 style="margin:0;">Análisis de frecuencias</h1>
   <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 

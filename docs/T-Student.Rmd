@@ -1,4 +1,6 @@
 ---
+title: "Pruebas de hipótesis"
+author: "MSc. Darío Alvarado"
 output: html_document
 header-includes:
   - \usepackage{float}
@@ -7,8 +9,7 @@ header-includes:
 ---
 
 <div style="display:flex; align-items:center;">
-  <h1 style="margin:0;">Pruebas de hipótesis</h1>
-  <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
+ <img src="Imagenes/HNBI_LOGO1.jpeg" alt="Texto alternativo de la imagen" style="width:100px; margin-left:20px;">
 </div>
 
 ```{css, echo=FALSE}
