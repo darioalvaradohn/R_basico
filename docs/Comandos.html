@@ -525,14 +525,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 168.8238 152.4787 142.1325 164.2700 141.5692 153.3990 151.8884 141.4759</code></pre>
+<pre><code>## [1] 171.7272 177.7953 158.8500 153.7777 161.9148 158.0472 162.0265 161.8213</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 168.82 152.48 142.13 164.27 141.57 153.40 151.89 141.48</code></pre>
+<pre><code>## [1] 171.73 177.80 158.85 153.78 161.91 158.05 162.03 161.82</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 169 152 142 164 142 153 152 141</code></pre>
+<pre><code>## [1] 172 178 159 154 162 158 162 162</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -540,7 +540,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 165 181 177 166 150 183 163 173</code></pre>
+<pre><code>## [1] 189 161 175 188 164 168 181 162</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
@@ -698,6 +698,8 @@ tabla1</code></pre>
 ## 6  Pedro    168   79    M
 ## 7 Javier    192  102    M
 ## 8 Andrea    174   65    F</code></pre>
+<p><br></p>
+<p><a href="index.html">Inicio</a></p>
 </div>
 </div>
 

@@ -354,3 +354,6 @@ tabla1 <- import("data/tabla1.xlsx")
 tabla1
 ```
 
+<br>
+
+[Inicio](index.html)

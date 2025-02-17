@@ -159,7 +159,7 @@ ggsave("Imagenes/kruskal.jpg")
 
 En los gráficos también podemos graficar la significancia de las comparaciones con la función `geom_signif()` del complemento `ggsignif` para `ggplot2`:
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 ggplot(sumbm, aes(island, mean)) +
   geom_errorbar(width = 0.05, 
                 aes(ymin = liIC95, 
@@ -181,3 +181,4 @@ ggplot(sumbm, aes(island, mean)) +
               tip_length = 0.01)
 ```
 
+[Inicio](index.html)

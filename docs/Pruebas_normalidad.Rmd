@@ -247,3 +247,5 @@ boxplot(altura ~ sexo, data = datos)
 _Nota: Aunque un boxplot ayuda a detectar diferencias evidentes, no es una prueba estadística, por lo que siempre es necesario ejecutar una prueba como la de Levene o Bartlett._
 
 <br>
+
+[Inicio](index.html)

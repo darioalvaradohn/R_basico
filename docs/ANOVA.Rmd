@@ -414,3 +414,5 @@ ggsave("Imagenes/anova2vias.jpg")
 ```
 
 <br>
+
+[Inicio](index.html)

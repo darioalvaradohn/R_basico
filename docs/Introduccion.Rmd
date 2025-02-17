@@ -1,5 +1,6 @@
 ---
 title: "Introducción al curso"
+author: "MSc. Darío Alvarado"
 output: html_document
 header-includes:
   - \usepackage{float}
@@ -35,9 +36,13 @@ Descargar R Studio: [R Studio](https://posit.co/download/rstudio-desktop/)
 
 <br>
 
+[Inicio](index.html)
+
+<br>
+
 También puedes visitar nuestra página principal y conocer un poco más de nosotros
 
-Sitio web: [Página principal](https://www.hnbiology.org/)
+Sitio web: [HN Biology Investigation](https://www.hnbiology.org/)
 
 
 <br>
