@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <br>
 
-Las pruebas de correlación sirven para determinar la tendencia o el comportamiento que hay entre dos variables cuando están juntas.
+Las **pruebas de correlación** sirven para determinar la tendencia, comportamiento o relación que hay entre dos variables cuando están juntas. Su objetivo es determinar si existe una relación entre ellas y en qué dirección (positiva o negativa), es decir, si esa relación es directa o inversamente proporcional. Además, mediante las pruebas de correlación se determina si la relación entre las variables es estadísticamente significativa o no.
 
 <br>
 
@@ -151,7 +151,7 @@ En este caso, el valor de **tau** indica la magnitud y dirección de la correlac
 
 <br>
 
-#### Correlación entre múltiples variables
+#### Matrices de correlación
 
 También podemos evaluar la correlación entre más de dos variables, una contra otra.
 
