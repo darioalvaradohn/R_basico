@@ -12,7 +12,7 @@
 <meta name="author" content="MSc. Darío Alvarado" />
 
 
-<title>Comandos básicos</title>
+<title>Comandos básicos en R</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -349,7 +349,7 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">Comandos básicos</h1>
+<h1 class="title toc-ignore">Comandos básicos en R</h1>
 <h4 class="author">MSc. Darío Alvarado</h4>
 
 </div>
@@ -387,31 +387,6 @@ disquete 💾 de la parte superior de la ventana o presionamos
 <div id="contenido" class="section level3 tabset tabset-pills">
 <h3 class="tabset tabset-pills">Contenido</h3>
 <p><br></p>
-<div id="tipos-de-datos-en-r" class="section level4">
-<h4>Tipos de datos en R</h4>
-<p>R trabaja con diferentes tipos de datos:</p>
-<ol style="list-style-type: decimal">
-<li>Numéricos:</li>
-</ol>
-<pre class="r"><code>10</code></pre>
-<pre><code>## [1] 10</code></pre>
-<pre class="r"><code>500</code></pre>
-<pre><code>## [1] 500</code></pre>
-<ol start="2" style="list-style-type: decimal">
-<li>Texto (string):</li>
-</ol>
-<pre class="r"><code>&quot;Hola&quot;</code></pre>
-<pre><code>## [1] &quot;Hola&quot;</code></pre>
-<pre class="r"><code>&quot;Análisis estadístico&quot;</code></pre>
-<pre><code>## [1] &quot;Análisis estadístico&quot;</code></pre>
-<ol start="3" style="list-style-type: decimal">
-<li>Lógicos (booleano):</li>
-</ol>
-<pre class="r"><code>TRUE</code></pre>
-<pre><code>## [1] TRUE</code></pre>
-<pre class="r"><code>FALSE</code></pre>
-<pre><code>## [1] FALSE</code></pre>
-</div>
 <div id="comandos-básicos" class="section level4">
 <h4>Comandos básicos</h4>
 <p>R puede utilizarse como una calculadora para ejecutar operaciones
@@ -478,6 +453,157 @@ base con el argumento <code>base =</code> dentro de la función:</p>
 <pre class="r"><code>5^2</code></pre>
 <pre><code>## [1] 25</code></pre>
 <p><br></p>
+<p><a href="Comandos.html">Volver Arriba</a></p>
+<p><a href="index.html">Inicio</a></p>
+<p><br></p>
+</div>
+<div id="tipos-de-datos-en-r" class="section level4">
+<h4>Tipos de datos en R</h4>
+<p>En R los tipos de datos se pueden dividir en dos grupos
+principales:</p>
+<ul>
+<li>Datos básicos o atómicos</li>
+<li>Datos estructurados</li>
+</ul>
+<p>Los datos básicos pueden ser de las siguientes clases:</p>
+<ol style="list-style-type: decimal">
+<li>Numéricos (<code>dbl</code>):</li>
+</ol>
+<p>Números reales con decimales (continuos)</p>
+<pre class="r"><code>10.45</code></pre>
+<pre><code>## [1] 10.45</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Enteros (<code>int</code>):</li>
+</ol>
+<p>Números enteros, se especifican con ‘L’</p>
+<pre class="r"><code>25L</code></pre>
+<pre><code>## [1] 25</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Lógicos:</li>
+</ol>
+<p>Valores lógicos (datos booleanos)</p>
+<pre class="r"><code>TRUE</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>FALSE</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Caracter (<code>chr</code>):</li>
+</ol>
+<p>Valores de cadena de texto (string)</p>
+<pre class="r"><code>&quot;R Studio&quot;</code></pre>
+<pre><code>## [1] &quot;R Studio&quot;</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Complejos:</li>
+</ol>
+<p>Números complejos</p>
+<pre class="r"><code>2 + 3i</code></pre>
+<pre><code>## [1] 2+3i</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Raw</li>
+</ol>
+<p>Datos binarios</p>
+<pre class="r"><code>as.raw(1:5)</code></pre>
+<pre><code>## [1] 01 02 03 04 05</code></pre>
+<p><br></p>
+<div id="datos-especiales" class="section level5">
+<h5>Datos especiales</h5>
+<ol start="7" style="list-style-type: decimal">
+<li>Factor</li>
+</ol>
+<p>Datos categóricos (nominales u ordinales)</p>
+<p>Muy importante en modelos estadísticos</p>
+<p>Ej: tratamientos, especies, sitios</p>
+<pre class="r"><code>factor(&quot;especieA&quot;)</code></pre>
+<pre><code>## [1] especieA
+## Levels: especieA</code></pre>
+<ol start="8" style="list-style-type: decimal">
+<li>Date / POSIXct / POSIXlt</li>
+</ol>
+<p>Datos de fecha y tiempo.</p>
+<pre class="r"><code>as.Date(&quot;26-01-26&quot;, format = &quot;%d-%m-%y&quot;)</code></pre>
+<pre><code>## [1] &quot;2026-01-26&quot;</code></pre>
+<ol start="9" style="list-style-type: decimal">
+<li>NA / NaN / Inf</li>
+</ol>
+<p>Valores faltantes o especiales.</p>
+<ul>
+<li>NA: dato faltante</li>
+</ul>
+<pre class="r"><code>NA</code></pre>
+<pre><code>## [1] NA</code></pre>
+<ul>
+<li>NaN: resultado indefinido (Not a Number)</li>
+</ul>
+<pre class="r"><code>NaN</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<ul>
+<li>Inf: infinito (Inf, -Inf)</li>
+</ul>
+<pre class="r"><code>Inf</code></pre>
+<pre><code>## [1] Inf</code></pre>
+<pre class="r"><code>-Inf</code></pre>
+<pre><code>## [1] -Inf</code></pre>
+<p><br></p>
+</div>
+<div id="datos-estructurados-organizados" class="section level5">
+<h5>Datos estructurados (organizados)</h5>
+<ol style="list-style-type: decimal">
+<li>Vector</li>
+</ol>
+<p>Es una colección de datos del mismo tipo en una sola dimensión</p>
+<pre class="r"><code>c(49, NA, 53, 48, 39)</code></pre>
+<pre><code>## [1] 49 NA 53 48 39</code></pre>
+<pre class="r"><code>c(&quot;especieA&quot;, &quot;especieB&quot;, &quot;especieC&quot;)</code></pre>
+<pre><code>## [1] &quot;especieA&quot; &quot;especieB&quot; &quot;especieC&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Matriz</li>
+</ol>
+<p>Datos del mismo tipo en forma bidimensional</p>
+<pre class="r"><code>matrix (1:10, nrow = 5)</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    6
+## [2,]    2    7
+## [3,]    3    8
+## [4,]    4    9
+## [5,]    5   10</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Data frame</li>
+</ol>
+<p>Tabla donde cada columna puede tener un tipo distinto de dato</p>
+<pre class="r"><code>data.frame(especie = c(&quot;A&quot;, &quot;B&quot;), altura = c(10, 15))</code></pre>
+<pre><code>##   especie altura
+## 1       A     10
+## 2       B     15</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Lista</li>
+</ol>
+<p>Puede contener objetos de distintos tipos y tamaños.</p>
+<pre class="r"><code>vector &lt;- c(&quot;especieA&quot;, &quot;especieB&quot;, &quot;especieC&quot;)
+matriz &lt;- matrix (1:10, nrow = 5)
+tabla &lt;- data.frame(especie = c(&quot;A&quot;, &quot;B&quot;), altura = c(10, 15))
+
+lista &lt;- list(vector, matriz, tabla)
+lista</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;especieA&quot; &quot;especieB&quot; &quot;especieC&quot;
+## 
+## [[2]]
+##      [,1] [,2]
+## [1,]    1    6
+## [2,]    2    7
+## [3,]    3    8
+## [4,]    4    9
+## [5,]    5   10
+## 
+## [[3]]
+##   especie altura
+## 1       A     10
+## 2       B     15</code></pre>
+<p><br></p>
+<p><a href="Comandos.html">Volver arriba</a></p>
+<p><a href="index.html">Inicio</a></p>
+<p><br></p>
+</div>
 </div>
 <div id="creación-de-objetos" class="section level4">
 <h4>Creación de objetos</h4>
@@ -525,14 +651,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 171.7272 177.7953 158.8500 153.7777 161.9148 158.0472 162.0265 161.8213</code></pre>
+<pre><code>## [1] 157.8876 178.2515 150.3549 150.3894 149.9025 156.5393 159.1365 166.6359</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 171.73 177.80 158.85 153.78 161.91 158.05 162.03 161.82</code></pre>
+<pre><code>## [1] 157.89 178.25 150.35 150.39 149.90 156.54 159.14 166.64</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 172 178 159 154 162 158 162 162</code></pre>
+<pre><code>## [1] 158 178 150 150 150 157 159 167</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -540,12 +666,15 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 189 161 175 188 164 168 181 162</code></pre>
+<pre><code>## [1] 188 161 184 190 152 170 167 160</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)
 nombre</code></pre>
 <pre><code>## [1] &quot;Carlos&quot; &quot;Miguel&quot; &quot;Carmen&quot; &quot;Laura&quot;  &quot;Nancy&quot;  &quot;Pedro&quot;  &quot;Javier&quot; &quot;Andrea&quot;</code></pre>
+<p><br></p>
+<p><a href="Comandos.html">Volver arriba</a></p>
+<p><a href="index.html">Inicio</a></p>
 <p><br></p>
 </div>
 <div id="creación-de-tablas" class="section level4">
@@ -603,6 +732,9 @@ diéresis en los nombres de las variables. Si son dos o más palabras
 evitar los espacios entre cada una y usar separadores como guión bajo o
 la primera letra cada palabra en mayúscula.</em></p>
 <p><br></p>
+<p><a href="Comandos.html">Volver arriba</a></p>
+<p><a href="index.html">Inicio</a></p>
+<p><br></p>
 </div>
 <div id="exploración-de-tablas" class="section level4">
 <h4>Exploración de tablas</h4>
@@ -644,6 +776,9 @@ siguientes:</p>
 ##  $ Peso  : num  80 67 54 62 65 79 102 65
 ##  $ Sexo  : chr  &quot;M&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; ...</code></pre>
 <pre class="r"><code># muestra la estructura de nuestra tabla</code></pre>
+<p><br></p>
+<p><a href="Comandos.html">Volver arriba</a></p>
+<p><a href="index.html">Inicio</a></p>
 <p><br></p>
 </div>
 <div id="exportar-e-importar-tablas" class="section level4">
@@ -699,7 +834,9 @@ tabla1</code></pre>
 ## 7 Javier    192  102    M
 ## 8 Andrea    174   65    F</code></pre>
 <p><br></p>
+<p><a href="Comandos.html">Volver arriba</a></p>
 <p><a href="index.html">Inicio</a></p>
+<p><br></p>
 </div>
 </div>
 

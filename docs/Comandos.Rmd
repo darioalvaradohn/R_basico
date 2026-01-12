@@ -1,5 +1,5 @@
 ---
-title: "Comandos básicos"
+title: "Comandos básicos en R"
 author: "MSc. Darío Alvarado"
 output: html_document
 header-includes:
@@ -40,33 +40,6 @@ Para <ins>guardar</ins> el script podemos hacer clic en el ícono de disquete �
 ### Contenido{.tabset .tabset-pills}
 
 <br>
-
-#### Tipos de datos en R
-
-R trabaja con diferentes tipos de datos:
-
-1. Numéricos:
-
-```{r}
-10
-500
-```
-
-2. Texto (string):
-
-```{r}
-"Hola"
-"Análisis estadístico"
-```
-
-
-3. Lógicos (booleano):
-
-```{r}
-TRUE
-FALSE
-```
-
 
 #### Comandos básicos
 
@@ -136,12 +109,176 @@ Utilizamos la función `exp()`:
 ```{r}
 exp(1.386294)
 ```
+
 - Elevar por un exponente
 
 ```{r}
 5^2
 ```
 
+<br>
+
+[Volver Arriba](Comandos.html)
+
+[Inicio](index.html)
+
+<br>
+
+#### Tipos de datos en R
+
+En R los tipos de datos se pueden dividir en dos grupos principales:
+
+- Datos básicos o atómicos
+- Datos estructurados
+
+Los datos básicos pueden ser de las siguientes clases:
+
+1. Numéricos (`dbl`):
+
+Números reales con decimales (continuos)
+
+```{r}
+10.45
+```
+
+2. Enteros (`int`):
+
+Números enteros, se especifican con 'L'
+
+```{r}
+25L
+```
+
+3. Lógicos:
+
+Valores lógicos (datos booleanos)
+
+```{r}
+TRUE
+FALSE
+```
+
+4. Caracter (`chr`):
+
+Valores de cadena de texto (string)
+
+```{r}
+"R Studio"
+```
+
+5. Complejos:
+
+Números complejos
+
+```{r}
+2 + 3i
+```
+
+6. Raw
+
+Datos binarios
+
+```{r}
+as.raw(1:5)
+```
+
+<br>
+
+##### Datos especiales
+
+7. Factor
+
+Datos categóricos (nominales u ordinales)
+
+Muy importante en modelos estadísticos
+
+Ej: tratamientos, especies, sitios
+
+```{r}
+factor("especieA")
+```
+
+8. Date / POSIXct / POSIXlt
+
+Datos de fecha y tiempo.
+
+```{r}
+as.Date("26-01-26", format = "%d-%m-%y")
+```
+
+9. NA / NaN / Inf
+
+Valores faltantes o especiales.
+
+- NA: dato faltante
+
+```{r}
+NA
+```
+
+- NaN: resultado indefinido (Not a Number)
+
+```{r}
+NaN
+```
+
+- Inf: infinito (Inf, -Inf)
+
+```{r}
+Inf
+-Inf
+```
+
+<br>
+
+##### Datos estructurados (organizados)
+
+1. Vector
+
+Es una colección de datos del mismo tipo en una sola dimensión
+
+```{r}
+c(49, NA, 53, 48, 39)
+```
+
+```{r}
+c("especieA", "especieB", "especieC")
+```
+
+2. Matriz
+
+Datos del mismo tipo en forma bidimensional
+
+```{r}
+matrix (1:10, nrow = 5)
+```
+
+3. Data frame
+
+Tabla donde cada columna puede tener un tipo distinto de dato
+
+```{r}
+data.frame(especie = c("A", "B"), altura = c(10, 15))
+```
+
+4. Lista
+
+Puede contener objetos de distintos tipos y tamaños.
+
+```{r}
+vector <- c("especieA", "especieB", "especieC")
+matriz <- matrix (1:10, nrow = 5)
+tabla <- data.frame(especie = c("A", "B"), altura = c(10, 15))
+
+lista <- list(vector, matriz, tabla)
+lista
+```
+
+<br>
+
+[Volver arriba](Comandos.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -231,6 +368,11 @@ nombre <- c("Carlos", "Miguel", "Carmen", "Laura", "Nancy", "Pedro", "Javier", "
 nombre
 ```
 
+<br>
+
+[Volver arriba](Comandos.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -277,6 +419,13 @@ _Nota: Evitar el uso de caracteres especiales como tildes o diéresis en los nom
 
 <br>
 
+[Volver arriba](Comandos.html)
+
+[Inicio](index.html)
+
+<br>
+
+
 #### Exploración de tablas
 
 Algunas formas para explorar nuestras tablas de datos son las siguientes:
@@ -307,6 +456,13 @@ str(tabla)
 ```
 
 <br>
+
+[Volver arriba](Comandos.html)
+
+[Inicio](index.html)
+
+<br>
+
 
 #### Exportar e importar tablas
 
@@ -356,4 +512,8 @@ tabla1
 
 <br>
 
+[Volver arriba](Comandos.html)
+
 [Inicio](index.html)
+
+<br>

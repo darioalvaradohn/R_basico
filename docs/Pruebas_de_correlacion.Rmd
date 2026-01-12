@@ -224,7 +224,8 @@ sc
 Y graficamos con la función `plot()` del paquete `see`.
 
 ```{r}
-plot(sc)
+plot(sc) +
+  theme_bw()
 
 # El resultado nos muestra una matriz de correlación de una forma más gráfica, los colores indican la dirección y la magnitud de la correlación.
 ```

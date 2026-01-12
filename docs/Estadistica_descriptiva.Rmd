@@ -538,7 +538,8 @@ ggplot(pinguinos, aes(body_mass_g)) +
   geom_text(aes(x = mlv(body_mass_g),
                 y = 0.0007,
                 label = paste("moda\n", round(mlv(body_mass_g),2))),
-            color = "blue")
+            color = "blue") +
+  theme_bw()
 ```
 
 <br>

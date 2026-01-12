@@ -67,7 +67,7 @@ Ya que es una prueba no paramétrica, la prueba de Kruskal-Wallis no asume norma
 Podemos ejecutar la prueba de Kruskal-Wallis con la función `kruskal.test()` del paquete base de R:
 
 ```{r}
-kruskal.test(body_mass_g ~ island, data = penguins)
+kruskal.test(body_mass_g ~ species, data = penguins)
 ```
 
 El valor de p muestra la significancia estadística de la comparación entre los grupos. 
@@ -81,7 +81,7 @@ El valor de p muestra la significancia estadística de la comparación entre los
 También podemos hacer la prueba con la función `kruskal()` del paquete `agricolae`:
 
 ```{r}
-k <- kruskal(penguins$body_mass_g, penguins$island)
+k <- kruskal(penguins$body_mass_g, penguins$species)
 k
 ```
 
@@ -96,7 +96,7 @@ El formato del resultado es el mismo que muestran las funciones `HSD.test()`, `L
 Para realizar la prueba de contraste después de realizar la prueba de Kruskal-Wallis con la función `kruskal.test()` podemos utilizar la prueba de Dunn con la función `dunnTest()` del paquete `FSA`:
 
 ```{r, message=FALSE, warning=FALSE}
-dunnTest(body_mass_g ~ island, data = penguins)
+dunnTest(body_mass_g ~ species, data = penguins)
 ```
 
 <br>
@@ -117,7 +117,7 @@ Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos prep
 Preparamos un resumen de nuestros datos de masa corporal de los pingüinos por isla con la función `Summarize()` del paquete `FSA`.
 
 ```{r}
-sumbm <- Summarize(body_mass_g ~ island, data = penguins)
+sumbm <- Summarize(body_mass_g ~ species, data = penguins)
 sumbm
 ```
 
@@ -135,7 +135,7 @@ sumbm
 Con estos datos procedemos a graficar.
 
 ```{r}
-ggplot(sumbm, aes(island, mean)) +
+ggplot(sumbm, aes(species, mean)) +
   geom_errorbar(width = 0.05, 
                 aes(ymin = liIC95, 
                     ymax = lsIC95)) +
@@ -144,10 +144,10 @@ ggplot(sumbm, aes(island, mean)) +
              color = c("gray", "lightblue", "darkslategray")) +
 labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
      y = "Masa corporal (g)",
-     x = "Isla") +
-  geom_text(aes(label = c("a", "b", "b")), 
+     x = "Especie") +
+  geom_text(aes(label = c("b", "b", "a")), 
             vjust = -3.5) +
-  ylim(c(3500, 5000)) +
+  ylim(c(3500, 5500)) +
   theme_classic()
 ```
 
@@ -160,24 +160,24 @@ ggsave("Imagenes/kruskal.jpg")
 En los gráficos también podemos graficar la significancia de las comparaciones con la función `geom_signif()` del complemento `ggsignif` para `ggplot2`:
 
 ```{r, warning=FALSE, message=FALSE}
-ggplot(sumbm, aes(island, mean)) +
+ggplot(sumbm, aes(species, mean)) +
   geom_errorbar(width = 0.05, 
                 aes(ymin = liIC95, 
                     ymax = lsIC95)) +
   geom_point(shape = 19, 
              size = 3, 
              color = c("gray", "lightblue", "darkslategray")) +
-  labs(title = "Diferencias entre la masa corporal de pingüinos por isla",
+  labs(title = "Diferencias entre la masa corporal de pingüinos por especie",
        y = "Masa corporal (g)",
-       x = "Isla") +
+       x = "Especie") +
   theme_classic() +
-  geom_signif(data = penguins, aes(island, body_mass_g),
-              comparisons = list(c("Biscoe", "Dream"),
-                                 c("Biscoe", "Torgersen"),
-                                 c("Dream", "Torgersen")),
+  geom_signif(data = penguins, aes(species, body_mass_g),
+              comparisons = list(c("Adelie", "Chinstrap"),
+                                 c("Adelie", "Gentoo"),
+                                 c("Chinstrap", "Gentoo")),
               size = 0.5,
               map_signif_level = TRUE,
-              y_position = c(4800,5000,3800),
+              y_position = c(3800,5300,5100),
               tip_length = 0.01)
 ```
 
