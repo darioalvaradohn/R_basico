@@ -40,7 +40,7 @@ library(psych)
 library(palmerpenguins)
 library(visdat)
 library(SmartEDA)
-library(tidyverse) # El paquete `tidyverse` es un conglomerado de paquetes que sirven para manejar, modificar y visualizar datos
+library(tidyverse) # El paquete `tidyverse` es una coleccion de paquetes que sirven para manejar, modificar y visualizar datos
 ```
 
 <br>
@@ -365,7 +365,7 @@ cov(datos$altura, datos$peso)
 
 <br>
 
-La función `describe()` del paquete `psych` nos muestra un resumen de nuestras variables con algunas medidas de tendencia central y medidas de dispersión.
+La función `describe()` del paquete `psych` nos muestra un resumen de nuestras variables numéricas con algunas medidas de tendencia central y medidas de dispersión.
 
 ```{r}
 describe(datos)
@@ -407,6 +407,25 @@ include_graphics("Imagenes/Asimetria.png")
 include_graphics("Imagenes/Curtosis.png")
 ```
 
+<br> 
+
+También podemos explorar nuestras bases de datos con diferentes funciones del paquete `SmartEDA` que está dedicado al "Exploratory Data Analysis":
+
+```{r}
+ExpData(datos, type = 1)
+```
+
+```{r}
+ExpData(datos, type = 2)
+```
+
+```{r}
+ExpData(datos, type = 2, fun = c("mean", "median", "sd"))
+```
+
+```{r}
+ExpNumStat(datos, Outlier = TRUE)
+```
 
 <br>
 

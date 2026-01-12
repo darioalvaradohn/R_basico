@@ -462,69 +462,57 @@ base con el argumento <code>base =</code> dentro de la función:</p>
 <p>En R los tipos de datos se pueden dividir en dos grupos
 principales:</p>
 <ul>
-<li>Datos básicos o atómicos</li>
-<li>Datos estructurados</li>
+<li><p><strong>Datos básicos o atómicos</strong></p></li>
+<li><p><strong>Datos estructurados</strong></p></li>
 </ul>
-<p>Los datos básicos pueden ser de las siguientes clases:</p>
-<ol style="list-style-type: decimal">
+<p>Entre los datos básicos tenemos:</p>
+<ul>
 <li>Numéricos (<code>dbl</code>):</li>
-</ol>
+</ul>
 <p>Números reales con decimales (continuos)</p>
 <pre class="r"><code>10.45</code></pre>
 <pre><code>## [1] 10.45</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Enteros (<code>int</code>):</li>
-</ol>
+</ul>
 <p>Números enteros, se especifican con ‘L’</p>
 <pre class="r"><code>25L</code></pre>
 <pre><code>## [1] 25</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ul>
 <li>Lógicos:</li>
-</ol>
+</ul>
 <p>Valores lógicos (datos booleanos)</p>
 <pre class="r"><code>TRUE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>FALSE</code></pre>
 <pre><code>## [1] FALSE</code></pre>
-<ol start="4" style="list-style-type: decimal">
+<ul>
 <li>Caracter (<code>chr</code>):</li>
-</ol>
+</ul>
 <p>Valores de cadena de texto (string)</p>
 <pre class="r"><code>&quot;R Studio&quot;</code></pre>
 <pre><code>## [1] &quot;R Studio&quot;</code></pre>
-<ol start="5" style="list-style-type: decimal">
-<li>Complejos:</li>
-</ol>
-<p>Números complejos</p>
-<pre class="r"><code>2 + 3i</code></pre>
-<pre><code>## [1] 2+3i</code></pre>
-<ol start="6" style="list-style-type: decimal">
-<li>Raw</li>
-</ol>
-<p>Datos binarios</p>
-<pre class="r"><code>as.raw(1:5)</code></pre>
-<pre><code>## [1] 01 02 03 04 05</code></pre>
 <p><br></p>
 <div id="datos-especiales" class="section level5">
 <h5>Datos especiales</h5>
-<ol start="7" style="list-style-type: decimal">
+<ul>
 <li>Factor</li>
-</ol>
+</ul>
 <p>Datos categóricos (nominales u ordinales)</p>
 <p>Muy importante en modelos estadísticos</p>
 <p>Ej: tratamientos, especies, sitios</p>
 <pre class="r"><code>factor(&quot;especieA&quot;)</code></pre>
 <pre><code>## [1] especieA
 ## Levels: especieA</code></pre>
-<ol start="8" style="list-style-type: decimal">
+<ul>
 <li>Date / POSIXct / POSIXlt</li>
-</ol>
+</ul>
 <p>Datos de fecha y tiempo.</p>
 <pre class="r"><code>as.Date(&quot;26-01-26&quot;, format = &quot;%d-%m-%y&quot;)</code></pre>
 <pre><code>## [1] &quot;2026-01-26&quot;</code></pre>
-<ol start="9" style="list-style-type: decimal">
+<ul>
 <li>NA / NaN / Inf</li>
-</ol>
+</ul>
 <p>Valores faltantes o especiales.</p>
 <ul>
 <li>NA: dato faltante</li>
@@ -547,17 +535,17 @@ principales:</p>
 </div>
 <div id="datos-estructurados-organizados" class="section level5">
 <h5>Datos estructurados (organizados)</h5>
-<ol style="list-style-type: decimal">
+<ul>
 <li>Vector</li>
-</ol>
+</ul>
 <p>Es una colección de datos del mismo tipo en una sola dimensión</p>
 <pre class="r"><code>c(49, NA, 53, 48, 39)</code></pre>
 <pre><code>## [1] 49 NA 53 48 39</code></pre>
 <pre class="r"><code>c(&quot;especieA&quot;, &quot;especieB&quot;, &quot;especieC&quot;)</code></pre>
 <pre><code>## [1] &quot;especieA&quot; &quot;especieB&quot; &quot;especieC&quot;</code></pre>
-<ol start="2" style="list-style-type: decimal">
+<ul>
 <li>Matriz</li>
-</ol>
+</ul>
 <p>Datos del mismo tipo en forma bidimensional</p>
 <pre class="r"><code>matrix (1:10, nrow = 5)</code></pre>
 <pre><code>##      [,1] [,2]
@@ -566,17 +554,17 @@ principales:</p>
 ## [3,]    3    8
 ## [4,]    4    9
 ## [5,]    5   10</code></pre>
-<ol start="3" style="list-style-type: decimal">
+<ul>
 <li>Data frame</li>
-</ol>
+</ul>
 <p>Tabla donde cada columna puede tener un tipo distinto de dato</p>
 <pre class="r"><code>data.frame(especie = c(&quot;A&quot;, &quot;B&quot;), altura = c(10, 15))</code></pre>
 <pre><code>##   especie altura
 ## 1       A     10
 ## 2       B     15</code></pre>
-<ol start="4" style="list-style-type: decimal">
+<ul>
 <li>Lista</li>
-</ol>
+</ul>
 <p>Puede contener objetos de distintos tipos y tamaños.</p>
 <pre class="r"><code>vector &lt;- c(&quot;especieA&quot;, &quot;especieB&quot;, &quot;especieC&quot;)
 matriz &lt;- matrix (1:10, nrow = 5)
@@ -651,14 +639,14 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 157.8876 178.2515 150.3549 150.3894 149.9025 156.5393 159.1365 166.6359</code></pre>
+<pre><code>## [1] 185.6485 182.3939 157.6366 175.4198 171.6904 175.4545 160.6593 155.9911</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 157.89 178.25 150.35 150.39 149.90 156.54 159.14 166.64</code></pre>
+<pre><code>## [1] 185.65 182.39 157.64 175.42 171.69 175.45 160.66 155.99</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 158 178 150 150 150 157 159 167</code></pre>
+<pre><code>## [1] 186 182 158 175 172 175 161 156</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
@@ -666,7 +654,7 @@ aleatoria con la función <code>sample()</code> definiendo el
 <code>size =</code></p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 188 161 184 190 152 170 167 160</code></pre>
+<pre><code>## [1] 175 185 189 158 173 154 176 174</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)

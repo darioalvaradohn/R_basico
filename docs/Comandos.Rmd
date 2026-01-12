@@ -128,12 +128,13 @@ exp(1.386294)
 
 En R los tipos de datos se pueden dividir en dos grupos principales:
 
-- Datos básicos o atómicos
-- Datos estructurados
+- **Datos básicos o atómicos**
 
-Los datos básicos pueden ser de las siguientes clases:
+- **Datos estructurados**
 
-1. Numéricos (`dbl`):
+Entre los datos básicos tenemos:
+
+- Numéricos (`dbl`):
 
 Números reales con decimales (continuos)
 
@@ -141,7 +142,7 @@ Números reales con decimales (continuos)
 10.45
 ```
 
-2. Enteros (`int`):
+- Enteros (`int`):
 
 Números enteros, se especifican con 'L'
 
@@ -149,7 +150,7 @@ Números enteros, se especifican con 'L'
 25L
 ```
 
-3. Lógicos:
+- Lógicos:
 
 Valores lógicos (datos booleanos)
 
@@ -158,7 +159,7 @@ TRUE
 FALSE
 ```
 
-4. Caracter (`chr`):
+- Caracter (`chr`):
 
 Valores de cadena de texto (string)
 
@@ -166,27 +167,12 @@ Valores de cadena de texto (string)
 "R Studio"
 ```
 
-5. Complejos:
-
-Números complejos
-
-```{r}
-2 + 3i
-```
-
-6. Raw
-
-Datos binarios
-
-```{r}
-as.raw(1:5)
-```
 
 <br>
 
 ##### Datos especiales
 
-7. Factor
+- Factor
 
 Datos categóricos (nominales u ordinales)
 
@@ -198,7 +184,7 @@ Ej: tratamientos, especies, sitios
 factor("especieA")
 ```
 
-8. Date / POSIXct / POSIXlt
+- Date / POSIXct / POSIXlt
 
 Datos de fecha y tiempo.
 
@@ -206,7 +192,7 @@ Datos de fecha y tiempo.
 as.Date("26-01-26", format = "%d-%m-%y")
 ```
 
-9. NA / NaN / Inf
+- NA / NaN / Inf
 
 Valores faltantes o especiales.
 
@@ -233,7 +219,7 @@ Inf
 
 ##### Datos estructurados (organizados)
 
-1. Vector
+- Vector
 
 Es una colección de datos del mismo tipo en una sola dimensión
 
@@ -245,7 +231,7 @@ c(49, NA, 53, 48, 39)
 c("especieA", "especieB", "especieC")
 ```
 
-2. Matriz
+- Matriz
 
 Datos del mismo tipo en forma bidimensional
 
@@ -253,7 +239,7 @@ Datos del mismo tipo en forma bidimensional
 matrix (1:10, nrow = 5)
 ```
 
-3. Data frame
+- Data frame
 
 Tabla donde cada columna puede tener un tipo distinto de dato
 
@@ -261,7 +247,7 @@ Tabla donde cada columna puede tener un tipo distinto de dato
 data.frame(especie = c("A", "B"), altura = c(10, 15))
 ```
 
-4. Lista
+- Lista
 
 Puede contener objetos de distintos tipos y tamaños.
 
