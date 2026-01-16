@@ -38,16 +38,16 @@ library(interpretCI)
 
 <br>
 
+### Contenido{.tabset .tabset-pills}
+
+<br>
+
 #### Datos
 
 ```{r}
 datos <- import("data/medidas_personas.csv")
 head(datos)
 ```
-
-<br>
-
-### Contenido{.tabset .tabset-pills}
 
 <br>
 
@@ -102,6 +102,13 @@ O la diferencia de las medias de dos grupos contra un valor teórico:
 t.test(altura ~ sexo, data = datos, mu = -15)
 ```
 
+<br>
+
+[Volver arriba](T-Student.html)
+
+[Inicio](index.html)
+
+<br>
 
 #### Prueba de Wilcoxon (Mann-Whitney)
 
@@ -120,6 +127,12 @@ wilcox.test(peso ~ sexo, data = datos)
 - Si el valor de **p < 0.05**, Si hay diferencias estadísticamente significativas entre los grupos.
 
 - Si el valor de **p ≥ 0.05**, No hay diferencias estadísticamente significativas entre los grupos.
+
+<br>
+
+[Volver arriba](T-Student.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -145,4 +158,8 @@ meanCI(datos, sexo, peso)
 
 <br>
 
+[Volver arriba](T-Student.html)
+
 [Inicio](index.html)
+
+<br>

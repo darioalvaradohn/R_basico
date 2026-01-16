@@ -183,6 +183,12 @@ Si el valor de p es mayor o igual que 0.05 indica que las categorías son indepe
 
 <br>
 
+[Volver arriba](Analisis_de_frecuencias.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### Estimación de parámetros
 
 La estimación de parámetros permite **inferir** los valores de los parámetros desconocidos de una población a partir de una muestra de datos.
@@ -239,6 +245,12 @@ MultinomCI(x)
 ```
 
 El estimado es la proporción (%) para cada grupo, y también se muestra el intervalo de confianza al 95% para cada proporción.
+
+<br>
+
+[Volver arriba](Analisis_de_frecuencias.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -339,4 +351,8 @@ mosaic(HairEyeColor, shade = TRUE)
 
 <br>
 
+[Volver arriba](Analisis_de_frecuencias.html)
+
 [Inicio](index.html)
+
+<br>

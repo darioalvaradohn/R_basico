@@ -1,5 +1,5 @@
 ---
-title: "Pruebas de normalidad y homocedasticidad"
+title: "Pruebas de Supuestos Estadísticos"
 author: "MSc. Darío Alvarado"
 output: html_document
 header-includes:
@@ -42,6 +42,10 @@ library(MVN)
 
 <br>
 
+### Contenido{.tabset .tabset-pills}
+
+<br>
+
 #### Datos
 
 ```{r}
@@ -51,7 +55,9 @@ head(datos)
 
 <br>
 
-### Contenido{.tabset .tabset-pills}
+[Volver arriba](Pruebas_normalidad.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -97,7 +103,6 @@ subgrupos <- split(datos, datos$sexo)
 ```{r}
 shapiro.test(subgrupos$M$altura)
 ```
-
 
 <br>
 
@@ -155,8 +160,8 @@ qqPlot(datos$altura)
 
 ```{r}
 multivariada <- mvn(data = datos[,2:4], # seleccionamos las variables de la tabla (columnas de la 2 a la 4)
-                    mvnTest = "royston", # indicamos el método para calcular la normalidad multivariada
-                    univariateTest = "SW") # indicamos el método para calcular la normalidad univariada
+                    mvn_test = "royston", # indicamos el método para calcular la normalidad multivariada
+                    univariate_test = "SW") # indicamos el método para calcular la normalidad univariada
 
 multivariada # para ver el resultado completo de la prueba
 
@@ -168,8 +173,8 @@ multivariada$univariateNormality # para ver el resultado de la normalidad univar
 ```{r}
 multisubset <- mvn(data = datos, 
                    subset = "sexo", # podemos indicar que divida los datos según los grupos de interés
-                   mvnTest = "royston", 
-                   univariateTest = "Lillie")
+                   mvn_test = "royston", 
+                   univariate_test = "Lillie")
 
 multisubset
 
@@ -179,6 +184,13 @@ multisubset$univariateNormality
 ```
 
 
+<br>
+
+[Volver arriba](Pruebas_normalidad.html)
+
+[Inicio](index.html)
+
+<br>
 
 #### Pruebas de homogeneidad de varianza
 
@@ -248,4 +260,8 @@ _Nota: Aunque un boxplot ayuda a detectar diferencias evidentes, no es una prueb
 
 <br>
 
+[Volver arriba](Pruebas_normalidad.html)
+
 [Inicio](index.html)
+
+<br>
