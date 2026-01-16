@@ -36,12 +36,17 @@ Su objetivo es describir las características principales de un conjunto de dato
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
 library(modeest)
+library(skimr)
 library(psych)
 library(palmerpenguins)
 library(visdat)
 library(SmartEDA)
 library(tidyverse) # El paquete `tidyverse` es una coleccion de paquetes que sirven para manejar, modificar y visualizar datos
 ```
+
+<br>
+
+### Contenido{.tabset .tabset-pills}
 
 <br>
 
@@ -62,7 +67,9 @@ head(datos)
 
 <br>
 
-### Contenido{.tabset .tabset-pills}
+[Volver arriba](Estadistica_descriptiva.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -229,6 +236,12 @@ mlv(datos$edad)
 
 <br>
 
+[Volver arriba](Estadistica_descriptiva.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### Medidas de dispersión 
 
 Las medidas de dispersión muestran la **variabilidad** de nuestro conjunto de datos. A mayor variabilidad en nuestros datos, mayor será la **incertidumbre** en los valores de los parámetros estimados para ese conjunto de datos.
@@ -365,6 +378,28 @@ cov(datos$altura, datos$peso)
 
 <br>
 
+[Volver arriba](Estadistica_descriptiva.html)
+
+[Inicio](index.html)
+
+<br>
+
+#### Resumen descriptivo
+
+En R podemos utilizar varias funciones que nos brindan un resumen de nuestras tablas de datos, que incluyen varias de las medidas antes vistas.
+
+La función `summary()` del paquete base de R muestra una descripción rápida de los datos, con la cantidad de observaciones para las variables categóricas, y medidas básicas para las variables numéricas:
+
+```{r}
+summary(datos)
+```
+
+La función `skim()` del paquete `skimr` hace algo similar, pero separa la información de la tabla, las variables categóricas y las variables numéricas en pestañas diferentes:
+
+```{r}
+skim(datos)
+```
+
 La función `describe()` del paquete `psych` nos muestra un resumen de nuestras variables numéricas con algunas medidas de tendencia central y medidas de dispersión.
 
 ```{r}
@@ -426,6 +461,12 @@ ExpData(datos, type = 2, fun = c("mean", "median", "sd"))
 ```{r}
 ExpNumStat(datos, Outlier = TRUE)
 ```
+
+<br>
+
+[Volver arriba](Estadistica_descriptiva.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -543,23 +584,27 @@ ggplot(pinguinos, aes(body_mass_g)) +
   geom_vline(aes(xintercept = mean(body_mass_g))) + # grafica una línea vertical a partir de un intercepto en el eje x
   geom_text(aes(x = mean(body_mass_g),
                 y = 0.0005,
+                hjust = -0.1,
                 label = paste("media\n", round(mean(body_mass_g),2)))) + # grafica texto dentro del gráfico en las coordenadas "x" y "y". `label` indica la etiqueta o el texto que se graficará
   geom_vline(aes(xintercept = median(body_mass_g)),
              color = "red") +
   geom_text(aes(x = median(body_mass_g),
                 y = 0.0006,
+                hjust = -0.1,
                 label = paste("mediana\n", round(median(body_mass_g),2))),
             color = "red") +
   geom_vline(aes(xintercept = mlv(body_mass_g)),
-             color = "blue",
+             color = "steelblue",
              linetype = "dashed", # para cambiar el tipo de línea ("solid", "dashed", "dotted", "dotdash", "longdash", "twodash")
              linewidth = 1) + # para modificar el grosor de la línea
   geom_text(aes(x = mlv(body_mass_g),
                 y = 0.0007,
+                hjust = -0.1,
                 label = paste("moda\n", round(mlv(body_mass_g),2))),
-            color = "blue") +
+            color = "steelblue") +
   theme_bw()
 ```
+
 
 <br>
 
@@ -697,4 +742,8 @@ ggsave(plot = dispersion, # objeto que contiene nuestro gráfico
 
 <br>
 
+[Volver arriba](Estadistica_descriptiva.html)
+
 [Inicio](index.html)
+
+<br>
