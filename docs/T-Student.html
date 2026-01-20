@@ -418,7 +418,8 @@ sF &lt;- subset(datos, sexo == &quot;F&quot;)</code></pre>
 ## data:  sF$altura
 ## W = 0.97515, p-value = 0.333</code></pre>
 <p>Realizamos la prueta de T-Student</p>
-<pre class="r"><code>t.test(altura ~ sexo, data = datos) # Se coloca primero la variable respuesta (dependiente) y después la variable predictora (independiente) que debe ser categórica, separadas por una `~`.</code></pre>
+<pre class="r"><code>Ttest &lt;- t.test(altura ~ sexo, data = datos) # Se coloca primero la variable respuesta (dependiente) y después la variable predictora (independiente) que debe ser categórica, separadas por una `~`.
+Ttest</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 

@@ -75,7 +75,8 @@ shapiro.test(sF$altura)
 Realizamos la prueta de T-Student
 
 ```{r}
-t.test(altura ~ sexo, data = datos) # Se coloca primero la variable respuesta (dependiente) y después la variable predictora (independiente) que debe ser categórica, separadas por una `~`.
+Ttest <- t.test(altura ~ sexo, data = datos) # Se coloca primero la variable respuesta (dependiente) y después la variable predictora (independiente) que debe ser categórica, separadas por una `~`.
+Ttest
 ```
 
 - Si el valor de **p < 0.05**, Si hay diferencias estadísticamente significativas entre los grupos.
