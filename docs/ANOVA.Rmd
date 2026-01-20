@@ -37,7 +37,13 @@ library(tidyverse)
 library(agricolae)
 library(palmerpenguins)
 library(FSA)
+library(ggeffects)
+library(ggsignif)
 ```
+
+<br>
+
+### Contenido{.tabset .tabset-pills}
 
 <br>
 
@@ -45,12 +51,9 @@ library(FSA)
 
 ```{r}
 data("penguins")
+penguins <- drop_na(penguins, flipper_length_mm)
 head(penguins)
 ```
-
-<br>
-
-### Contenido{.tabset .tabset-pills}
 
 <br>
 
@@ -107,9 +110,21 @@ Para ver el resultado del ANOVA realizamos un `summary()`:
 summary(anova)
 ```
 
-El valor de p muestra la significancia estadística de la comparación entre los grupos: 
+En la primera columna del output encontramos las fuentes de variación: el **factor** (tratamiento o variable explicativa) y los **Residuals** que es la variación no explicada (error).
 
-- Si el valor de **p < 0.05**, la diferencia entre la vaianza de las medias de los grupos es estadísticamente significativa.
+La columna **Df** (degrees of freedom) indica los grados de libertad de cada fuente de variación (n-1).
+
+La Suma de Cuadrados (**Sum Sq**) cuantifica la variabilidad total asociada a cada fuente.
+
+El Cuadrado Medio (**Mean Sq**) es la suma de cuadrados dividida entre los grados de libertad
+
+El Estadístico F (**F value**) es la razón entre el Mean Sq del factor y el Mean Sq del error.
+
+Un valor F alto indica que la variación entre grupos es mucho mayor que la variación dentro de los grupos.
+
+El valor de p (Pr(>F)) indica la probabilidad de observar un valor F igual o mayor al obtenido si la hipótesis nula fuera cierta. 
+
+- Si el valor de **p < 0.05**, la diferencia entre la varianza de las medias entre al menos dos grupos es estadísticamente significativa.
 
 - Si el valor de **p ≥ 0.05**, no hay diferencias estadísticamente significativas entre los grupos.
 
@@ -233,7 +248,9 @@ plot(contraste2vias)
 
 <br>
 
-Y también podemos hacerlo con el paquete `ggplot2`, pero para esto debemos preparar nuestros datos.
+Para realizar gráficos más elaborados utilizamos el paquete `ggplot2`.
+
+Podemos hacerlo de varias formas:
 
 Extraemos las medias de la salida de la prueba de contraste de la función `HSD.test` y lo convertimos en un dataframe: 
 
@@ -245,7 +262,7 @@ medias
 
 Con el error estándar podemos calcular el intervalo de confianza al 95%.
 
-El IC95% se calcula multiplicando el error estándar por el valor Z para ese nivel de confianza.
+El IC95% se calcula multiplicando el error estándar por el _valor Z_ para ese nivel de confianza.
 
 - Z = 1.96, para IC95%
 
@@ -265,8 +282,6 @@ medias$lsIC95 <- medias$flipper_length_mm + medias$IC95 # límite superior del I
 medias
 ```
 
-<br>
-
 Con estos datos procedemos a graficar:
 
 ```{r}
@@ -276,7 +291,8 @@ ggplot(medias, aes(row.names(medias), flipper_length_mm)) +
            color = "black", 
            fill = c("gray", "lightblue", "darkslategray")) +
   geom_errorbar(aes(ymin = liIC95, ymax = lsIC95), # indicamos el límite inferior y superior que tendran nuestras barras de error
-                width = 0.05) + 
+                width = 0.05,
+                ) + 
   labs(title = "Longitud de aleta (mm) por especie",
        y = "Longitud de aleta (mm)", 
        x = "Especie") +
@@ -306,12 +322,35 @@ labs(title = "Longitud de aleta (mm) por especie",
   geom_text(aes(label = c("c", "b", "a")), 
             vjust = -1.5) +
   ylim(c(185,225)) +
-  theme(plot.title = element_text(hjust = 0.5)) +
-  theme_classic()
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 ```{r, message=FALSE, warning=FALSE}
 ggsave("Imagenes/anova.jpg")
+```
+
+<br>
+
+También podemos calcular las medias y los intervalos de confianza con la función `ggpredict()` del paquete `ggeffects`:
+
+```{r}
+pred <- ggpredict(anova, terms = "species")
+ggplot(pred, aes(x, predicted)) +
+  geom_point(size = 2) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high),
+                width = 0.05) +
+  labs(y = "Longitud de aleta (mm)",
+       x = "Especie") +
+  geom_signif(data = penguins, aes(species, flipper_length_mm),
+              comparisons = list(c("Adelie", "Chinstrap"),
+                                 c("Adelie", "Gentoo"),
+                                 c("Chinstrap", "Gentoo")),
+              size = 0.5,
+              map_signif_level = TRUE,
+              y_position = c(196,217,220),
+              tip_length = 0.01) +
+  theme_classic()
 ```
 
 <br>
@@ -390,23 +429,23 @@ sum2vias$grupo <- c("", "", "c", "b", "a")
 ```{r}
 # Gráfico de punto con barras de error
 ggplot(sum2vias, aes(species, mean)) + 
-  geom_errorbar(width = 0.05, 
-                aes(color = island, # indicamos que el color de las barras de error sea en base a la isla (segunda variable predictora)
+  geom_errorbar(aes(color = island, # indicamos que el color de las barras de error sea en base a la isla (segunda variable predictora)
                     ymin = liIC95, 
-                    ymax = lsIC95)) +
-  geom_point(shape = 19, 
+                    ymax = lsIC95),
+                width = 0.05, 
+                position = position_dodge(width = 0.3)) +
+  geom_point(aes(color = island),
+             shape = 19, 
              size = 2,
-             aes(color = island)) + # indicamos que el color de los puntos sea en base a la isla
-labs(title = "Longitud de aleta (mm) por especie e isla",
-     y = "Longitud de aleta (mm)",
+             position = position_dodge(width = 0.3)) + # indicamos que el color de los puntos sea en base a la isla
+labs(y = "Longitud de aleta (mm)",
      x = "Especie",
      color = "Isla") +
   scale_color_manual(values = c("gray", "lightblue", "darkslategray")) + # para especificar los colores de forma manual
   geom_text(aes(label = grupo), 
             vjust = -1.5) +
   ylim(c(185,230)) +
-  theme_classic() +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme_classic()
 ```
 
 ```{r, message=FALSE, warning=FALSE}

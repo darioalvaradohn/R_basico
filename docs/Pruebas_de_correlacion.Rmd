@@ -42,6 +42,10 @@ library(inspectdf)
 
 <br>
 
+### Contenido{.tabset .tabset-pills}
+
+<br>
+
 #### Datos
 
 ```{r}
@@ -73,9 +77,12 @@ En este gráfico se puede apreciar un patrón claro de la relación entre las va
 
 Pero si queremos obtener un valor numérico de esa relación debemos utilizar pruebas de correlación.
 
+
 <br>
 
-### Contenido{.tabset .tabset-pills}
+[Volver arriba](Pruebas_de_correlacion.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -113,6 +120,12 @@ _Nota: La correlación de Pearson es una medida de la dependencia lineal entre l
 
 <br>
 
+[Volver arriba](Pruebas_de_correlacion.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### Prueba de correlación de Spearman 
 
 Si una de las variables no cumple con el supuesto de normalidad, se puede utilizar una **prueba no paramétrica**, la prueba de **correlación de Spearman**.
@@ -139,6 +152,12 @@ La prueba de Spearman es menos robusta que la de Pearson porque no es específic
 
 <br>
 
+[Volver arriba](Pruebas_de_correlacion.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### Prueba de correlación de Kendall
 
 Otra alternativa **no paramétrica** es la **prueba de correlación de Kendall**:
@@ -148,6 +167,12 @@ cor.test(suelos$Na, suelos$Conduc, method = "kendall")
 ```
 
 En este caso, el valor de **tau** indica la magnitud y dirección de la correlación.
+
+<br>
+
+[Volver arriba](Pruebas_de_correlacion.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -236,19 +261,6 @@ ggsave("Imagenes/corr.jpg")
 
 <br>
 
-También podemos generar esa matriz gráfica de correlación de la siguiente manera:
-
-```{r, message=FALSE, warning=FALSE}
-c <- as.table(c) # para hacer la matriz de correlación 
-c
-```
-
-```{r}
-plot(c, type = "tile", show_values= TRUE, show_p= TRUE)
-```
-
-<br>
-
 También podemos especificar el método de la prueba de correlación con el argumento `method =`.
 
 ```{r}
@@ -292,4 +304,8 @@ show_plot(cor_mtcars)
 
 <br>
 
+[Volver arriba](Pruebas_de_correlacion.html)
+
 [Inicio](index.html)
+
+<br>
