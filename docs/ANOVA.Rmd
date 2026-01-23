@@ -57,6 +57,12 @@ head(penguins)
 
 <br>
 
+[Volver arriba](ANOVA.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### ANOVA
 
 **ANOVA** (Analysis of variance) = **ANDEVA** (Análisis de varianza)
@@ -142,6 +148,12 @@ summary(anova2vias)
 
 <br>
 
+[Volver arriba](ANOVA.html)
+
+[Inicio](index.html)
+
+<br>
+
 #### Pruebas de contraste
 
 El ANOVA solo nos brinda la significancia estadística de la comparación entre los grupos, por lo que se debe realizar una **prueba de contraste** entre las medias de los diferentes grupos. 
@@ -205,6 +217,12 @@ contraste2vias <- HSD.test(anova2vias, c("species", "island")) # colocamos las d
 
 contraste2vias
 ```
+
+<br>
+
+[Volver arriba](ANOVA.html)
+
+[Inicio](index.html)
 
 <br>
 
@@ -454,4 +472,8 @@ ggsave("Imagenes/anova2vias.jpg")
 
 <br>
 
+[Volver arriba](ANOVA.html)
+
 [Inicio](index.html)
+
+<br>
