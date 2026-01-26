@@ -467,31 +467,37 @@ principales:</p>
 </ul>
 <p>Entre los datos básicos tenemos:</p>
 <ul>
-<li>Numéricos (<code>dbl</code>):</li>
+<li>Numéricos (“numeric”):</li>
 </ul>
 <p>Números reales con decimales (continuos)</p>
-<pre class="r"><code>10.45</code></pre>
-<pre><code>## [1] 10.45</code></pre>
+<pre class="r"><code>n &lt;- 10.45
+class(n)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
 <ul>
-<li>Enteros (<code>int</code>):</li>
+<li>Enteros (“integer”):</li>
 </ul>
 <p>Números enteros, se especifican con ‘L’</p>
-<pre class="r"><code>25L</code></pre>
-<pre><code>## [1] 25</code></pre>
+<pre class="r"><code>e &lt;- 25L
+class(e)</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
 <ul>
-<li>Lógicos:</li>
+<li>Lógicos (“logical”):</li>
 </ul>
 <p>Valores lógicos (datos booleanos)</p>
 <pre class="r"><code>TRUE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>FALSE</code></pre>
 <pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>l &lt;- 5 &gt; 3
+class(l)</code></pre>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
 <ul>
-<li>Caracter (<code>chr</code>):</li>
+<li>Caracter (“character”):</li>
 </ul>
 <p>Valores de cadena de texto (string)</p>
-<pre class="r"><code>&quot;R Studio&quot;</code></pre>
-<pre><code>## [1] &quot;R Studio&quot;</code></pre>
+<pre class="r"><code>c &lt;- &quot;R Studio&quot;
+class(c)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
 <p><br></p>
 <div id="datos-especiales" class="section level5">
 <h5>Datos especiales</h5>
@@ -501,15 +507,16 @@ principales:</p>
 <p>Datos categóricos (nominales u ordinales)</p>
 <p>Muy importante en modelos estadísticos</p>
 <p>Ej: tratamientos, especies, sitios</p>
-<pre class="r"><code>factor(&quot;especieA&quot;)</code></pre>
-<pre><code>## [1] especieA
-## Levels: especieA</code></pre>
+<pre class="r"><code>f &lt;- factor(&quot;especieA&quot;)
+class(f)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
 <ul>
 <li>Date / POSIXct / POSIXlt</li>
 </ul>
 <p>Datos de fecha y tiempo.</p>
-<pre class="r"><code>as.Date(&quot;26-01-26&quot;, format = &quot;%d-%m-%y&quot;)</code></pre>
-<pre><code>## [1] &quot;2026-01-26&quot;</code></pre>
+<pre class="r"><code>d &lt;- as.Date(&quot;26-01-26&quot;, format = &quot;%d-%m-%y&quot;)
+class(d)</code></pre>
+<pre><code>## [1] &quot;Date&quot;</code></pre>
 <ul>
 <li>NA / NaN / Inf</li>
 </ul>
@@ -539,29 +546,27 @@ principales:</p>
 <li>Vector</li>
 </ul>
 <p>Es una colección de datos del mismo tipo en una sola dimensión</p>
-<pre class="r"><code>c(49, NA, 53, 48, 39)</code></pre>
-<pre><code>## [1] 49 NA 53 48 39</code></pre>
+<pre class="r"><code>v &lt;- c(49, NA, 53, 48, 39)
+class(v)</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<pre class="r"><code>is.na(v)</code></pre>
+<pre><code>## [1] FALSE  TRUE FALSE FALSE FALSE</code></pre>
 <pre class="r"><code>c(&quot;especieA&quot;, &quot;especieB&quot;, &quot;especieC&quot;)</code></pre>
 <pre><code>## [1] &quot;especieA&quot; &quot;especieB&quot; &quot;especieC&quot;</code></pre>
 <ul>
 <li>Matriz</li>
 </ul>
 <p>Datos del mismo tipo en forma bidimensional</p>
-<pre class="r"><code>matrix (1:10, nrow = 5)</code></pre>
-<pre><code>##      [,1] [,2]
-## [1,]    1    6
-## [2,]    2    7
-## [3,]    3    8
-## [4,]    4    9
-## [5,]    5   10</code></pre>
+<pre class="r"><code>m &lt;- matrix (1:10, nrow = 5)
+class(m)</code></pre>
+<pre><code>## [1] &quot;matrix&quot; &quot;array&quot;</code></pre>
 <ul>
 <li>Data frame</li>
 </ul>
 <p>Tabla donde cada columna puede tener un tipo distinto de dato</p>
-<pre class="r"><code>data.frame(especie = c(&quot;A&quot;, &quot;B&quot;), altura = c(10, 15))</code></pre>
-<pre><code>##   especie altura
-## 1       A     10
-## 2       B     15</code></pre>
+<pre class="r"><code>df &lt;- data.frame(especie = c(&quot;A&quot;, &quot;B&quot;), altura = c(10, 15))
+class(df)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <ul>
 <li>Lista</li>
 </ul>
@@ -587,6 +592,8 @@ lista</code></pre>
 ##   especie altura
 ## 1       A     10
 ## 2       B     15</code></pre>
+<pre class="r"><code>class(lista)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
 <p><br></p>
 <p><a href="Comandos.html">Volver arriba</a></p>
 <p><a href="index.html">Inicio</a></p>
@@ -639,22 +646,32 @@ altura</code></pre>
 <code>sd</code></p>
 <pre class="r"><code>altura2 &lt;- rnorm(n = 8, mean = 160, sd = 11)
 altura2</code></pre>
-<pre><code>## [1] 185.6485 182.3939 157.6366 175.4198 171.6904 175.4545 160.6593 155.9911</code></pre>
+<pre><code>## [1] 167.6059 154.5202 131.5748 150.2080 184.1705 179.0822 161.7652 163.4518</code></pre>
 <p>Con la función <code>round()</code> podemos redondear los valores, y
 con el argumento <code>digits =</code> indicamos la cantidad de
 decimales.</p>
 <pre class="r"><code>round(altura2, digits = 2)</code></pre>
-<pre><code>## [1] 185.65 182.39 157.64 175.42 171.69 175.45 160.66 155.99</code></pre>
+<pre><code>## [1] 167.61 154.52 131.57 150.21 184.17 179.08 161.77 163.45</code></pre>
 <pre class="r"><code>round(altura2, digits = 0)</code></pre>
-<pre><code>## [1] 186 182 158 175 172 175 161 156</code></pre>
+<pre><code>## [1] 168 155 132 150 184 179 162 163</code></pre>
 <p>También podemos generar una variable de una forma completamente
 aleatoria con la función <code>sample()</code> definiendo el
 <code>rango</code> que contendrá nuestras observaciones y la cantidad de
 <code>muestras</code> que es el número de observaciones con el argumento
-<code>size =</code></p>
+<code>size =</code>.</p>
 <pre class="r"><code>altura3 &lt;- sample(150:190, size = 8)
 altura3</code></pre>
-<pre><code>## [1] 175 185 189 158 173 154 176 174</code></pre>
+<pre><code>## [1] 159 164 179 150 183 155 182 163</code></pre>
+<p>Si el número de observaciones que colocamos supera el rango definido
+debemos agregar el argumento <code>replace = TRUE</code> para permitir
+que se repitan diferentes observaciones:</p>
+<pre class="r"><code>altura4 &lt;- sample(150:190, size = 100, replace = TRUE)
+table(altura4)</code></pre>
+<pre><code>## altura4
+## 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 
+##   2   3   3   3   1   2   4   4   1   1   1   2   3   4   2   4   4   4   3   1 
+## 170 171 172 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 
+##   8   1   1   1   1   2   3   3   5   2   1   2   3   2   3   3   3   4</code></pre>
 <p>Para crear un vector de textos, cada observación o valor debe ir
 entre comillas <code>&quot; &quot;</code>.</p>
 <pre class="r"><code>nombre &lt;- c(&quot;Carlos&quot;, &quot;Miguel&quot;, &quot;Carmen&quot;, &quot;Laura&quot;, &quot;Nancy&quot;, &quot;Pedro&quot;, &quot;Javier&quot;, &quot;Andrea&quot;)

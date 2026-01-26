@@ -134,23 +134,25 @@ En R los tipos de datos se pueden dividir en dos grupos principales:
 
 Entre los datos básicos tenemos:
 
-- Numéricos (`dbl`):
+- Numéricos ("numeric"):
 
 Números reales con decimales (continuos)
 
 ```{r}
-10.45
+n <- 10.45
+class(n)
 ```
 
-- Enteros (`int`):
+- Enteros ("integer"):
 
 Números enteros, se especifican con 'L'
 
 ```{r}
-25L
+e <- 25L
+class(e)
 ```
 
-- Lógicos:
+- Lógicos ("logical"):
 
 Valores lógicos (datos booleanos)
 
@@ -159,12 +161,18 @@ TRUE
 FALSE
 ```
 
-- Caracter (`chr`):
+```{r}
+l <- 5 > 3
+class(l)
+```
+
+- Caracter ("character"):
 
 Valores de cadena de texto (string)
 
 ```{r}
-"R Studio"
+c <- "R Studio"
+class(c)
 ```
 
 
@@ -181,7 +189,8 @@ Muy importante en modelos estadísticos
 Ej: tratamientos, especies, sitios
 
 ```{r}
-factor("especieA")
+f <- factor("especieA")
+class(f)
 ```
 
 - Date / POSIXct / POSIXlt
@@ -189,7 +198,8 @@ factor("especieA")
 Datos de fecha y tiempo.
 
 ```{r}
-as.Date("26-01-26", format = "%d-%m-%y")
+d <- as.Date("26-01-26", format = "%d-%m-%y")
+class(d)
 ```
 
 - NA / NaN / Inf
@@ -224,7 +234,9 @@ Inf
 Es una colección de datos del mismo tipo en una sola dimensión
 
 ```{r}
-c(49, NA, 53, 48, 39)
+v <- c(49, NA, 53, 48, 39)
+class(v)
+is.na(v)
 ```
 
 ```{r}
@@ -236,7 +248,8 @@ c("especieA", "especieB", "especieC")
 Datos del mismo tipo en forma bidimensional
 
 ```{r}
-matrix (1:10, nrow = 5)
+m <- matrix (1:10, nrow = 5)
+class(m)
 ```
 
 - Data frame
@@ -244,7 +257,8 @@ matrix (1:10, nrow = 5)
 Tabla donde cada columna puede tener un tipo distinto de dato
 
 ```{r}
-data.frame(especie = c("A", "B"), altura = c(10, 15))
+df <- data.frame(especie = c("A", "B"), altura = c(10, 15))
+class(df)
 ```
 
 - Lista
@@ -258,6 +272,7 @@ tabla <- data.frame(especie = c("A", "B"), altura = c(10, 15))
 
 lista <- list(vector, matriz, tabla)
 lista
+class(lista)
 ```
 
 <br>
@@ -340,11 +355,18 @@ round(altura2, digits = 2)
 round(altura2, digits = 0)
 ```
 
-También podemos generar una variable de una forma completamente aleatoria con la función `sample()` definiendo el `rango` que contendrá nuestras observaciones y la cantidad de `muestras` que es el número de observaciones con el argumento `size =`
+También podemos generar una variable de una forma completamente aleatoria con la función `sample()` definiendo el `rango` que contendrá nuestras observaciones y la cantidad de `muestras` que es el número de observaciones con el argumento `size =`. 
 
 ```{r}
 altura3 <- sample(150:190, size = 8)
 altura3
+```
+
+Si el número de observaciones que colocamos supera el rango definido debemos agregar el argumento `replace = TRUE` para permitir que se repitan diferentes observaciones:
+
+```{r}
+altura4 <- sample(150:190, size = 100, replace = TRUE)
+table(altura4)
 ```
 
 Para crear un vector de textos, cada observación o valor debe ir entre comillas `" "`.
