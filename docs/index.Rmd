@@ -35,12 +35,12 @@ Este es un curso introductorio al análisis estadístico en R utilizando R Studi
 [Estadística descriptiva](Estadistica_descriptiva.html)
 
 [Pruebas de normalidad y homocedasticidad](Pruebas_normalidad.html) 
-        
-[Pruebas de hipótesis (T-Student)](T-Student.html)
 
 [Análisis de frecuencias (Chi-cuadrado)](Analisis_de_frecuencias.html) 
 
 [Pruebas de Correlación](Pruebas_de_correlacion.html)
+
+[Pruebas de hipótesis (T-Student)](T-Student.html)
 
 [Análisis de varianza parte 1](ANOVA.html)
 
