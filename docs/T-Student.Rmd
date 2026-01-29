@@ -34,6 +34,7 @@ Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
 library(interpretCI)
+library(dabestr)
 ```
 
 <br>
@@ -156,6 +157,42 @@ meanCI(datos, sexo, peso)
 ```
 
 **Interpretación**: Se puede decir con un 95% de confianza que el peso de las personas de sexo masculino es 18.16 kg mayor que el de las personas de sexo femenino (IC95% = 13.04, 23.28 cm; p = 6.01e-10).
+
+<br>
+
+[Volver arriba](T-Student.html)
+
+[Inicio](index.html)
+
+<br>
+
+#### Gráfico
+
+Para realizar un gráfico comparativo podemos utilizar funciones del paquete `dabestr`.
+
+Primero cargamos los datos para realizar la comparación con la función `load()`:
+
+```{r}
+comp <- load(datos, #datos
+             x = sexo, # var. predictora
+             y = altura, # var. respuesta
+             idx = c("M", "F")) # grupos
+```
+
+Después realizamos el contraste para estimar la diferencia entre las medias y el intervalo de confianza al 95% con la función `mean_diff()`:
+
+```{r}
+md <- mean_diff(comp)
+md
+```
+
+Por último graficamos ese contraste con la función `dabest_plot()`:
+
+```{r}
+dabest_plot(md)
+```
+
+En este gráfico tenemos dos escalas, la de la izquierda es la dispersión de los datos, y la de la derecha es la diferencia entre los grupos (**Tamaño/magnitud del efecto**).
 
 <br>
 
