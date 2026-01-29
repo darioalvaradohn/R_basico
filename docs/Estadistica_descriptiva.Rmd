@@ -40,6 +40,8 @@ library(skimr)
 library(psych)
 library(palmerpenguins)
 library(visdat)
+library(FSA)
+library(collapse)
 library(SmartEDA)
 library(tidyverse) # El paquete `tidyverse` es una coleccion de paquetes que sirven para manejar, modificar y visualizar datos
 ```
@@ -278,6 +280,10 @@ Donde:
 
 - \( \bar{X} \) : Media muestral
 
+<br>
+
+Por defecto R aplica la fórmula para calcular la varianza muestral con el denominador \(n - 1\):
+
 ```{r}
 var(datos$altura)
 ```
@@ -288,6 +294,19 @@ var(datos$peso)
 
 ```{r}
 var(datos$edad)
+```
+
+Al trabajar con una población completa es correcto utilizar la varianza poblacional. Para calcularla debemos modificar manualmente el factor de corrección multiplicando por 
+\(\frac{(n - 1)}{n}\) para pasar a denominador \(N\):
+
+```{r}
+var(datos$altura) * (length(datos$altura) - 1) / length(datos$altura)
+```
+
+También podemos escribir la fórmula de la varianza poblacional directamente:
+
+```{r}
+mean((datos$altura - mean(datos$altura))^2)
 ```
 
 <br>
@@ -322,6 +341,10 @@ Donde:
 
 - \( \bar{X} \) : Media muestral
 
+<br>
+
+De igual forma que con la varianza, R calcula de forma automática la desviación estándar muestral, esto porque produce estimadores insesgados y es estándar en estadística inferencial:
+
 ```{r}
 sd(datos$altura)
 ```
@@ -332,6 +355,18 @@ sd(datos$peso)
 
 ```{r}
 sd(datos$edad)
+```
+
+Como la desviación estándar es la raíz cuadrada de la varianza, para calcular la desviación poblacional corregimos el factor multiplicando por \(\sqrt{\frac{(n - 1)}{n}}\) para pasar a denominador \(N\):
+
+```{r}
+sd(datos$altura) * sqrt((length(datos$altura) - 1) / length(datos$altura))
+```
+
+También podemos aplicar la raíz cuadrada directamente a la fórmula de la varianza:
+
+```{r}
+sqrt(mean((datos$altura - mean(datos$altura))^2))
 ```
 
 <br>
@@ -366,6 +401,20 @@ Donde:
 
 - \( \bar{X}, \bar{Y} \) : Medias muestrales de \(X\) y \(Y\)
 
+<br>
+
+En concreto, la covarianza indica la dirección de la relación entre dos variables:
+
+- Covarianza positiva: cuando una variable aumenta, la otra tiende a aumentar.
+
+- Covarianza negativa: cuando una variable aumenta, la otra tiende a disminuir.
+
+- Covarianza cercana a cero: no hay una relación lineal clara entre ellas.
+
+En la práctica la covarianza se utiliza para explorar relaciones entre variables antes de análisis más formales. 
+Es la base para calcular la correlación (Pearson).
+En biología y ecología, ayuda a ver si dos rasgos o variables ambientales cambian conjuntamente.
+
 Para calcularla en R, colocamos las dos variables como argumentos dentro de la función `var()` o la función `cov()`.
 
 ```{r}
@@ -375,6 +424,8 @@ var(datos$altura, datos$peso)
 ```{r}
 cov(datos$altura, datos$peso)
 ```
+
+La covarianza depende de las unidades de medida, por lo que su valor no es fácil de interpretar por sí solo. Por eso, muchas veces se prefiere la correlación, que está estandarizada entre −1 y 1
 
 <br>
 
@@ -444,6 +495,14 @@ include_graphics("Imagenes/Curtosis.png")
 
 <br> 
 
+La función `descr()` del paquete `collapse` hace lo mismo que la función `describe()` pero nos muestra todas las variables por separado, no en una tabla:
+
+```{r}
+descr(datos)
+```
+
+<br>
+
 También podemos explorar nuestras bases de datos con diferentes funciones del paquete `SmartEDA` que está dedicado al "Exploratory Data Analysis":
 
 ```{r}
@@ -461,6 +520,13 @@ ExpData(datos, type = 2, fun = c("mean", "median", "sd"))
 ```{r}
 ExpNumStat(datos, Outlier = TRUE)
 ```
+
+Si queremos ver un resumen descriptivo de nuestras variables numéricas agrupadas de acuerdo a una variable categórica, podemos utilizar la función `Summarize()` del paquete `FSA`:
+
+```{r}
+Summarize(altura ~ sexo, data = datos)
+```
+
 
 <br>
 
