@@ -33,6 +33,7 @@ Las pruebas de hipótesis evaluan la probabilidad asociada a la hipótesis nula 
 
 ```{r, message=FALSE, warning=FALSE}
 library(rio)
+library(car)
 library(interpretCI)
 library(dabestr)
 ```
@@ -71,6 +72,12 @@ shapiro.test(sM$altura)
 
 ```{r}
 shapiro.test(sF$altura)
+```
+
+Evaluamos si las varianzas entre los grupos son homogéneas:
+
+```{r}
+leveneTest(datos$altura, datos$sexo)
 ```
 
 Realizamos la prueta de T-Student
